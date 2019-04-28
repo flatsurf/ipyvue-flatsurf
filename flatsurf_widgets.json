@@ -1,0 +1,5 @@
+{
+  "load_extensions": {
+    "flatsurf_widgets/extension": true
+  }
+}

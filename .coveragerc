@@ -1,0 +1,2 @@
+[run]
+omit = flatsurf_widgets/tests/*
