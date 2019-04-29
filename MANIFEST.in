@@ -25,6 +25,7 @@ prune tests/build
 
 # Javascript files
 graft flatsurf_widgets/nbextension
+graft bootstrap
 graft src
 prune **/node_modules
 prune coverage

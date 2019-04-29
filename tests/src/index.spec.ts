@@ -12,8 +12,8 @@ import {
 } from './utils.spec';
 
 import {
-  ExampleModel, ExampleView
-} from '../../src/'
+  ExampleModel
+} from '../../src/flatsurf-widgets-bundle'
 
 
 describe('Example', () => {

@@ -13,7 +13,8 @@ import {
   IJupyterWidgetRegistry
  } from '@jupyter-widgets/base';
 
-import * as widgetExports from './widget';
+// @ts-ignore
+import * as widgetExports from './flatsurf-widgets-bundle';
 
 import {
   MODULE_NAME, MODULE_VERSION

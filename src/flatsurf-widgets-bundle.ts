@@ -46,6 +46,7 @@ class ExampleView extends DOMWidgetView {
   }
 
   value_changed() {
+    console.log("changed");
     this.el.textContent = this.model.get('value');
   }
 }

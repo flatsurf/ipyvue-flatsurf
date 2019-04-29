@@ -13,10 +13,29 @@ const externals = ['@jupyter-widgets/base'];
 
 const resolve = {
   // Add '.ts' and '.tsx' as resolvable extensions.
-  extensions: [".webpack.js", ".web.js", ".ts", ".js"]
+  extensions: [".webpack.js", ".web.js", ".ts", ".js"],
 };
 
 module.exports = [
+  /**
+   * JupyterLab widget implementation
+   *
+   * This bundle is imported by the typescript code in bootstrap/
+   */
+  {
+    entry: './src/flatsurf-widgets-bundle.ts',
+    output: {
+      filename: 'flatsurf-widgets-bundle.js',
+      path: path.resolve(__dirname, 'lib'),
+      libraryTarget: 'commonjs'
+    },
+    module: {
+      rules: rules
+    },
+    devtool: 'source-map',
+    externals,
+    resolve,
+  },
   /**
    * Notebook extension
    *

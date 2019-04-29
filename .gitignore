@@ -60,9 +60,9 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
-docs/source/_static/embed-bundle.js
-docs/source/_static/embed-bundle.js.map
+/docs/_build/
+/docs/source/_static/embed-bundle.js
+/docs/source/_static/embed-bundle.js.map
 
 # PyBuilder
 target/
@@ -144,13 +144,13 @@ $RECYCLE.BIN/
 # NPM
 # ----
 
-**/node_modules/
-flatsurf_widgets/nbextension/static/index.*
-flatsurf_widgets/labextension/*.tgz
+node_modules/
+/flatsurf_widgets/nbextension/static/index.*
+/flatsurf_widgets/labextension/*.tgz
 
 # Coverage data
 # -------------
-**/coverage/
+coverage/
 
 # Packed lab extensions
 flatsurf_widgets/labextension
