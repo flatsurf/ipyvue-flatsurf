@@ -21,8 +21,6 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 ## Development
 
-** PLEASE IGNORE EVERYTHING ABOUT HOT RELOADING BELOW AS IT DOES NOT WORK YET :( **
-
 Development is probably best done in a dedicated conda environment
 
 ```bash
@@ -73,10 +71,22 @@ jupyter lab &
 
 If you don't want to use Hot Module Reloading, you can now start to develop your extension.
 
-If you are working in the *classical notebook*, changes to Python code should take effect by restarting the Kernel, and when the frontend code changes, run `yarn build:nbextension` and reload your browser tab.
+If you are working in the *classical notebook*, changes to Python code should
+take effect by restarting the Kernel, and when the frontend code changes, run
+`yarn build:nbextension` and reload your browser tab.
 
-If you are working in *Jupyter Lab*, just reload your browser tab. A dialog should ask whether you want to rebuild (which takes a while) and then accept to reload again for the changes to take affect.
+If you are working in *Jupyter Lab*, just reload your browser tab. A dialog
+should ask whether you want to rebuild (which takes a while) and then accept to
+reload again for the changes to take affect.
 
 ### Hot Module Reloading
 
+At the moment only works in the classical notebook. The configuration in
+`webpack-hot-config.js` is assuming that your notebook started on port 8889.
 
+```bash
+yarn webpack-dev-server --config webpack-hot.config.js --hot --progress
+```
+
+Now you should be able to connect to a notebook by changing `:8889` in the URL
+to `:9000`.
