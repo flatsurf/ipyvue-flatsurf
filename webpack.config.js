@@ -1,15 +1,21 @@
 const path = require('path');
 const version = require('./package.json').version;
+const { VueLoaderPlugin } = require('vue-loader');
 
 // Custom webpack rules
 const rules = [
-  { test: /\.ts$/, loader: 'ts-loader' },
+  { test: /\.ts$/, loader: 'ts-loader' , options: {
+    appendTsSuffixTo: [/\.vue$/],
+  } },
   { test: /\.js$/, loader: 'source-map-loader' },
-  { test: /\.css$/, use: ['style-loader', 'css-loader']}
+  { test: /\.css$/, use: ['style-loader', 'css-loader']},
+  { test: /\.vue$/, use: ['vue-loader']}
 ];
 
 // Packages that shouldn't be bundled but loaded at runtime
 const externals = ['@jupyter-widgets/base'];
+
+const plugins = [ new VueLoaderPlugin() ];
 
 const resolve = {
   // Add '.ts' and '.tsx' as resolvable extensions.
@@ -35,6 +41,7 @@ module.exports = [
     devtool: 'source-map',
     externals,
     resolve,
+    plugins,
   },
   /**
    * Notebook extension
@@ -55,6 +62,7 @@ module.exports = [
     devtool: 'source-map',
     externals,
     resolve,
+    plugins,
   },
 
   /**
@@ -82,6 +90,7 @@ module.exports = [
     },
     externals,
     resolve,
+    plugins,
   },
 
 
@@ -104,6 +113,7 @@ module.exports = [
     devtool: 'source-map',
     externals,
     resolve,
+    plugins,
   }
 
 ];

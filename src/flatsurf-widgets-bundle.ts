@@ -1,6 +1,10 @@
 // Copyright (c) Julian Rüth
 // Distributed under the terms of the Modified BSD License.
 
+import Vue from "vue";
+
+import App from "./App.vue";
+
 import {
   DOMWidgetModel, DOMWidgetView, ISerializers
 } from '@jupyter-widgets/base';
@@ -41,12 +45,21 @@ class ExampleModel extends DOMWidgetModel {
 export
 class ExampleView extends DOMWidgetView {
   render() {
-    this.value_changed();
-    this.model.on('change:value', this.value_changed, this);
-  }
-
-  value_changed() {
-    console.log("changed");
-    this.el.textContent = this.model.get('value');
+    const value = this.model.get('value')
+    let app: Vue = undefined!;
+    setTimeout(() => {
+      app = new Vue({
+        el: this.el,
+        data() {
+          return {value};
+        },
+        render(h) {
+          return h(App, { props: { value: (this as any).value } });
+        }
+      });
+    }, 0);
+    this.model.on('change:value', () => {
+      (app as any).value = this.model.get('value');
+    });
   }
 }
