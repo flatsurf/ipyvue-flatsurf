@@ -21,6 +21,8 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 ## Development
 
+** PLEASE IGNORE EVERYTHING ABOUT HOT RELOADING BELOW AS IT DOES NOT WORK YET :( **
+
 Development is probably best done in a dedicated conda environment
 
 ```bash
