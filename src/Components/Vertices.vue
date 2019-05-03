@@ -1,6 +1,7 @@
 <template>
   <g>
-	<vertex-flow v-if="active" :half-edge="halfEdges[active]" :angle="addAngle" />
+	<vertex-flow v-if="active" :half-edge="halfEdges[active]" :angle="addAngle" :atRest="addAngle === 0" />
+	<vertex-flow v-if="active && addAngle === 0" :half-edge="halfEdges[nextEdge(active, -1)]" :angle="angle(nextEdge(active, -1))" :atRest="addAngle === 0" />
 	<vertex v-for="halfEdge in Object.keys(halfEdges)" :key="halfEdge" :vertex="halfEdges[halfEdge].ps"
 	  :class="{
 		   highlight: hovered[vertex(halfEdge)],
@@ -49,15 +50,14 @@ export default class Vertices extends Vue {
 	  for(const edge of atVertex) {
 		  const angle = this.angle(edge);
 		  this.timeline.add( () => { this.active = edge; this.addAngle = 0; });
-		  this.timeline.add( TweenLite.to(this, 3.141/8, { addAngle: angle, delay: 0.3, ease: Power0.easeInOut}) );
+		  this.timeline.add( TweenLite.to(this, 3.141/12, { addAngle: angle, delay: 0.3, ease: Power0.easeInOut}) );
 	  }
 	  this.timeline.add( () => { this.timeline!.restart(); });
   }
 
   angle(halfEdge: string) {
 	  const vertex = this.vertex(halfEdge);
-	  const vertices = this.vertices[vertex];
-	  const nextHalfEdge = vertices[(vertices.indexOf(halfEdge) + 1) % vertices.length];
+	  const nextHalfEdge = this.nextEdge(halfEdge);
 	  return this.halfEdges[halfEdge].tangentInStart().angleTo(
 		this.halfEdges[nextHalfEdge].tangentInStart());
   }
@@ -74,6 +74,20 @@ export default class Vertices extends Vue {
 	const vertex = findIndex(this.vertices, (v) => includes(v, halfEdge));
 	console.assert(vertex !== -1);
 	return vertex;
+  }
+
+  nextEdge(halfEdge: string, delta?: number): string {
+	if (delta === 0)
+		return halfEdge;
+	if (delta === undefined)
+		delta = 1;
+
+	const vertex = this.vertex(halfEdge);
+	const outEdges = this.vertices[vertex];
+	if (delta < 0)
+		return this.nextEdge(halfEdge, outEdges.length + delta);
+	const nextHalfEdge = outEdges[(outEdges.indexOf(halfEdge) + 1) % outEdges.length];
+	return this.nextEdge(nextHalfEdge, delta - 1);
   }
 }
 </script>

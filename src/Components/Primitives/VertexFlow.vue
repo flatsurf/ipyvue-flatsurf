@@ -1,6 +1,6 @@
 <template>
     <g>
-	  <circle class="vertex-flow" :class="{rest: angle===0}" :cx="pos.x" :cy="pos.y" :r="2" />
+	  <circle class="vertex-flow" :class="{rest: atRest}" :cx="pos.x" :cy="pos.y" :r="3" />
 	</g>
 </template>
 <script lang="ts">
@@ -15,6 +15,7 @@ import HalfEdge from './HalfEdge.vue';
 export default class VertexFlow extends Vue {
 	@Prop({required: true, type: Object}) halfEdge!: Flatten.Segment;
 	@Prop({required: true, type: Number}) angle!: number;
+	@Prop({default: false, type: Boolean}) atRest!: boolean;
 
 	get pos() {
 		// Since we are not in a Cartesian coordinate system (the y-axis is flipped)
