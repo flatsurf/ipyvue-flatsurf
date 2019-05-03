@@ -1,6 +1,6 @@
 <template>
     <!-- we mousedown.prevent.stop so our parents won't see drag events -->
-	<g class="extended-click-area" @mousedown.prevent.stop="emit('mousedown')" @click="$emit('click')" @mouseenter="$emit('mouseenter')" @mouseleave="$emit('mouseleave')" >
+	<g class="extended-click-area" @mousedown.prevent.stop="$emit('mousedown')" @click="$emit('click')" @mouseenter="$emit('mouseenter')" @mouseleave="$emit('mouseleave')" >
 		<g class="extension">
 		  <slot/>
 		</g>
@@ -21,6 +21,14 @@ export default class ExtendedClickArea extends Vue {}
 		stroke-linejoin: round !important;
 		stroke-linecap: butt !important;
 		pointer-events: all !important;
+	}
+
+	.extension circle {
+        stroke-width: inherit !important;
+		transform-origin: center center;
+		transform-box: fill-box;
+		transform: scale(4);
+
 	}
 }
 </style>

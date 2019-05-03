@@ -19,9 +19,10 @@ export default class HalfEdge extends Vue {
 <style lang="scss">
 .flatsurf {
 	.highlight line {
-		stroke: green;
+		stroke: #1b9e77;
 		stroke-width: 2px;
 		cursor: pointer;
+		// cursor: url("../../../node_modules/octicons/build/svg/git-branch.svg"), auto;
 	}
 
 	.selected line {

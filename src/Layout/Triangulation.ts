@@ -13,6 +13,7 @@ export type Face<T = string> = [T, T, T];
 export type Faces<T = string> = Array<Face<T>>;
 export type Vectors = {[id: string]: Flatten.Vector};
 export type Layout = {[id: string]: Flatten.Segment};
+export type Glueings = string[];
 export type Priorities = string[];
 
 export default class Triangulation {
@@ -28,8 +29,9 @@ export default class Triangulation {
 	private readonly faces: Faces;
 	private readonly vectors: Vectors;
 
-	public layout(priorities: Priorities) : Layout {
+	public layout(priorities: Priorities) : {layout: Layout, glueings: Glueings} {
 		const ret: Layout = {};
+		const glueings: Glueings = [];
 
 		while(size(ret) != size(this.halfEdges)) {
 		  let reachableHalfEdges = flattenDeep(keys(size(ret) ? ret : this.halfEdges).map((he) => this.face(he))) as unknown as string[];
@@ -37,9 +39,14 @@ export default class Triangulation {
 		  const bestHalfEdge = minBy(
 			reachableHalfEdges.filter((halfEdge) => !(this.inOtherFace(halfEdge) in ret)),
 			(halfEdge) => findIndex(priorities, (he) => he === halfEdge || he === this.inOtherFace(halfEdge)))!;
-	
+
 		  const newHalfEdge = this.inOtherFace(bestHalfEdge);
 		  console.assert(!(String(newHalfEdge) in ret));
+
+		  if (Object.keys(ret).length) {
+		  	glueings.push(bestHalfEdge);
+			glueings.push(newHalfEdge);
+		  }
 			
 		  const newFace = clone(this.face(newHalfEdge))!;
 		  while(newFace[0] !== newHalfEdge)
@@ -52,7 +59,10 @@ export default class Triangulation {
 		  }
 		}
 	
-		return ret;
+		return {
+			layout: ret,
+			glueings
+		};
 	}
 
 	private face(halfEdge: string) {

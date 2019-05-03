@@ -1,5 +1,7 @@
 <template>
-	<g v-html="polygon.svg()" />
+    <g>
+		<path class="face" v-for="(face, i) in polygon.faces" :key="i" :d="face.svg()" />
+	</g>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
@@ -11,9 +13,14 @@ export default class Triangulation extends Vue {
 }
 </script>
 <style lang="scss">
-path {
-	stroke: grey;
-	stroke-width: 1px;
-	fill: transparent;
+.flatsurf {
+	path.face {
+		stroke: #d1d1d1;
+		stroke-width: 1px;
+		fill: transparent;
+		&:hover {
+			fill: lightcyan;
+		}
+	}
 }
 </style>
