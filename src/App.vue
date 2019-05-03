@@ -1,9 +1,9 @@
 <template>
   <resizable-widget class="flatsurf" :initial-height="height" @resize="resize">
-	<pan-zoom-widget :client-viewport="{width, height}" @pan-zoom="moved">
+	<pan-zoom-widget :client-viewport="clientViewport" @pan-zoom="moved">
 		<svg :height="height" width="100%">
 			<g :transform="svgTranslation">
-				<flat-triangulation :width="width * svgScale - 2*padding" :height="height * svgScale - 2*padding" :vertices=vertices :halfEdges=halfEdges :faces=faces :vectors=vectors />
+				<flat-triangulation :width="clientViewport.width * svgScale" :height="clientViewport.height * svgScale" :vertices=vertices :halfEdges=halfEdges :faces=faces :vectors=vectors />
 			</g>
 		</svg>
 	</pan-zoom-widget>
@@ -17,7 +17,6 @@ import PanZoomWidget from "./Components/Shared/PanZoom.vue";
 import ResizeSensor from "css-element-queries/src/ResizeSensor"
 import Flatten from "@flatten-js/core";
 
-// TODO: Use BBOX.ts's transform
 @Component({
 	components: { FlatTriangulation, ResizableWidget, PanZoomWidget },
 })
@@ -52,6 +51,10 @@ export default class App extends Vue {
   protected height: number = this.initialHeight;
   protected width: number = this.initialHeight;
 
+  get clientViewport() {
+	  return { width: this.width - 2*this.padding, height: this.height - 2*this.padding };
+  }
+
   // We only show a portion of the underlying SVG when this is >1
   protected svgScale: number = 1;
   protected svgLeft: number = 0;
@@ -74,7 +77,7 @@ export default class App extends Vue {
   protected moved(viewport: {left: number, top: number, width: number, height: number}) {
 	// The factor by which we have to scale the SVG so that
 	// one pixel in the client is one pixel in the virtual viewport.
-	const scale = this.width / viewport.width;
+	const scale = this.clientViewport.width / viewport.width;
 	this.svgScale = scale;
 	this.svgLeft = viewport.left * scale;
 	this.svgTop = viewport.top * scale;

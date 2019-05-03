@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div @dblclick="reset" >
 		<slot />
 	</div>
 </template>
@@ -11,7 +11,7 @@ import panzoom from "pan-zoom";
 export default class PanZoomWidget extends Vue {
 	@Prop({required: true, type: Object}) protected clientViewport!: {width: number, height: number};
 
-	private virtualLeft = 0;
+	private virtualLeft = 0
 	private virtualTop = 0;
 	// The size of one virtual pixel in the client viewport.
 	// zoomed in when < 1, zoomed out when > 1.
@@ -30,6 +30,7 @@ export default class PanZoomWidget extends Vue {
 
 	mounted() {
 		this.unpanzoom = panzoom(this.$el, this.change);
+		this.reset();
 	}
 
 	beforeDestroy() {
@@ -54,6 +55,14 @@ export default class PanZoomWidget extends Vue {
 			this.virtualLeft -= e.dx * this.scale;
 			this.virtualTop -= e.dy * this.scale;
 		}
+
+		this.$emit("pan-zoom", this.virtualViewport);
+	}
+
+	protected reset() {
+		this.virtualLeft = 0;
+		this.virtualTop = 0;
+		this.scale = 1;
 
 		this.$emit("pan-zoom", this.virtualViewport);
 	}
