@@ -1,3 +1,6 @@
+<!--
+TODO: Make all naming ressemble here the naming in libpolygon, i.e., things such as half-edge-map are not consistent.
+-->
 <template>
   <g>
   	<triangulation :polygon=layoutedPolygon.polygon />
