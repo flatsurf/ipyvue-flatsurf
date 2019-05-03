@@ -6,14 +6,14 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
-    "noUnusedLocals": true,
     "outDir": "./lib",
     "resolveJsonModule": true,
     "rootDir": "..",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2015"
+    "target": "es2015",
+    "experimentalDecorators": true
   },
   "include": [
     "**/*.ts",

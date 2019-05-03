@@ -9,8 +9,10 @@ const rules = [
     appendTsSuffixTo: [/\.vue$/],
   } },
   { test: /\.js$/, loader: 'source-map-loader' },
-  { test: /\.css$/, use: ['style-loader', 'css-loader']},
-  { test: /\.vue$/, use: ['vue-loader']}
+  { test: /\.css$/, use: ['vue-style-loader', 'css-loader']},
+  { test: /\.scss$/, use: ['vue-style-loader', 'css-loader' , 'sass-loader']},
+  { test: /\.vue$/, use: ['vue-loader']},
+  { test: /\.svg$/, use: ['svg-url-loader']},
 ];
 
 // Packages that shouldn't be bundled but loaded at runtime
