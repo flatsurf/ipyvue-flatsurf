@@ -27,9 +27,9 @@ export default class HalfEdge extends Vue {
 
 	.selected line {
 		stroke: red;
-		stroke-width: 4px;
+		stroke-width: 2px;
 		stroke-dasharray: 10;
-		animation: dash 250ms linear;
+		animation: dash 300ms linear;
 	}
 }
 

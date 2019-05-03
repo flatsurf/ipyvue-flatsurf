@@ -7,43 +7,47 @@ import includes from "lodash/includes";
 import clone from "lodash/clone";
 import Flatten from "@flatten-js/core";
 
-export type Vertices = string[][];
-export type HalfEdges = {[id: string]: string};
-export type Face<T = string> = [T, T, T];
-export type Faces<T = string> = Array<Face<T>>;
-export type Vectors = {[id: string]: Flatten.Vector};
-export type Layout = {[id: string]: Flatten.Segment};
-export type Glueings = string[];
-export type Priorities = string[];
+export type IVertices = string[][];
+export type IHalfEdges = {[id: string]: string};
+export type IFace<T = string> = [T, T, T];
+export type IFaces<T = string> = Array<IFace<T>>;
+export type IVectors = {[id: string]: Flatten.Vector};
+export type IGlueings = string[];
+export type IHalfEdgeLayout = {[id: string]: Flatten.Segment};
+export type ILayout = {
+	layout: IHalfEdgeLayout,
+	glueings: IGlueings,
+};
+export type IPriorities = string[];
 
 export default class Triangulation {
-	constructor(vertices: Vertices, halfEdges: HalfEdges, faces: Faces, vectors: Vectors) {
+	constructor(vertices: IVertices, halfEdges: IHalfEdges, faces: IFaces, vectors: IVectors) {
 		this.vertices = vertices;
 		this.halfEdges = halfEdges;
 		this.faces = faces;
 		this.vectors = vectors;
 	}
 
-	private readonly vertices: Vertices;
-	private readonly halfEdges: HalfEdges;
-	private readonly faces: Faces;
-	private readonly vectors: Vectors;
+	private readonly vertices: IVertices;
+	private readonly halfEdges: IHalfEdges;
+	private readonly faces: IFaces;
+	private readonly vectors: IVectors;
 
-	public layout(priorities: Priorities) : {layout: Layout, glueings: Glueings} {
-		const ret: Layout = {};
-		const glueings: Glueings = [];
+	public layout(priorities: IPriorities) : ILayout {
+		const layout: IHalfEdgeLayout = {};
+		const glueings: IGlueings = [];
 
-		while(size(ret) != size(this.halfEdges)) {
-		  let reachableHalfEdges = flattenDeep(keys(size(ret) ? ret : this.halfEdges).map((he) => this.face(he))) as unknown as string[];
+		while(size(layout) != size(this.halfEdges)) {
+		  let reachableHalfEdges = flattenDeep(keys(size(layout) ? layout : this.halfEdges).map((he) => this.face(he))) as unknown as string[];
 	
 		  const bestHalfEdge = minBy(
-			reachableHalfEdges.filter((halfEdge) => !(this.inOtherFace(halfEdge) in ret)),
+			reachableHalfEdges.filter((halfEdge) => !(this.inOtherFace(halfEdge) in layout)),
 			(halfEdge) => findIndex(priorities, (he) => he === halfEdge || he === this.inOtherFace(halfEdge)))!;
 
 		  const newHalfEdge = this.inOtherFace(bestHalfEdge);
-		  console.assert(!(String(newHalfEdge) in ret));
+		  console.assert(!(String(newHalfEdge) in layout));
 
-		  if (Object.keys(ret).length) {
+		  if (Object.keys(layout).length) {
 		  	glueings.push(bestHalfEdge);
 			glueings.push(newHalfEdge);
 		  }
@@ -52,17 +56,14 @@ export default class Triangulation {
 		  while(newFace[0] !== newHalfEdge)
 			  newFace.push(newFace.shift()!);
 		  
-		  let start = (ret[bestHalfEdge] || {pe: new Flatten.Point(0,0) }).pe;
+		  let start = (layout[bestHalfEdge] || {pe: new Flatten.Point(0,0) }).pe;
 		  for(const halfEdge of newFace) {
-			  ret[halfEdge] = new Flatten.Segment(start, start.translate(this.vectors[halfEdge]));
+			  layout[halfEdge] = new Flatten.Segment(start, start.translate(this.vectors[halfEdge]));
 			  start = start.translate(this.vectors[halfEdge]);
 		  }
 		}
 	
-		return {
-			layout: ret,
-			glueings
-		};
+		return { layout, glueings };
 	}
 
 	private face(halfEdge: string) {

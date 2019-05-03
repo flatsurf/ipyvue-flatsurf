@@ -1,22 +1,9 @@
 <template>
   <g>
   	<triangulation :polygon=layoutedPolygon.polygon />
-	<half-edge v-for="halfEdge in halfEdges" :key="halfEdge" :edge="layoutedPolygon.halfEdges[halfEdge]"
-	  :class="{
-		  highlight: hoveredHalfEdge[halfEdge] || hoveredHalfEdge[halfEdges[halfEdge]],
-		  selected: selectedHalfEdge[halfEdge],
-	  }"
-	  @click="reprioritize(halfEdge)"
-	  @mouseenter="hoveredHalfEdge[halfEdge] = true"
-	  @mouseleave="hoveredHalfEdge[halfEdge] = false"
-	/>
-	<vertex v-for="halfEdge in halfEdges" :key="'v' + halfEdge" :vertex="layoutedPolygon.halfEdges[halfEdge].ps"
-	  :class="{
-		   highlight: hoveredVertex[vertex(halfEdge)],
-	  }"
-	  @mouseenter="hoveredVertex[vertex(halfEdge)] = true"
-	  @mouseleave="hoveredVertex[vertex(halfEdge)] = false"
-	/>
+	<half-edges :half-edges="layoutedPolygon.halfEdges" :selected="selectedHalfEdges" :half-edge-map="halfEdges"
+	  @reprioritize=reprioritize />
+	<vertices :half-edges="layoutedPolygon.halfEdges" :vertices="vertices" />
   </g>
 </template>
 <script lang="ts">
@@ -28,35 +15,32 @@ import includes from "lodash/includes";
 import Flatten from "@flatten-js/core";
 
 import Triangulation from "./Primitives/Triangulation.vue";
-import HalfEdge from "./Primitives/HalfEdge.vue";
-import Vertex from "./Primitives/Vertex.vue";
-import Layout, { Vertices, HalfEdges, Faces, Vectors, Face } from "../Layout/Triangulation";
+import HalfEdges from "./HalfEdges.vue";
+import Vertices from "./Vertices.vue";
+import Layout, { IVertices, IHalfEdges, IFaces, IVectors, IFace } from "../Layout/Triangulation";
 import BBox from "../Layout/BBox";
 import {transform} from "../Layout/Viewport"
 
 @Component({
-	components: { Triangulation, HalfEdge, Vertex },
+	components: { Triangulation, HalfEdges, Vertices },
 })
 export default class FlatTriangulation extends Vue {
   @Prop({required: true}) private width!: number;
   @Prop({required: true}) private height!: number;
-  @Prop({required: true}) private vertices!: Vertices;
-  @Prop({required: true}) private halfEdges!: HalfEdges;
-  @Prop({required: true}) private faces!: Faces;
-  @Prop({required: true}) private vectors!: Vectors;
+  @Prop({required: true}) private vertices!: IVertices;
+  @Prop({required: true}) private halfEdges!: IHalfEdges;
+  @Prop({required: true}) private faces!: IFaces;
+  @Prop({required: true}) private vectors!: IVectors;
 
   protected priorities = Object.keys(this.halfEdges);
-
-  protected hoveredHalfEdge = mapValues(this.halfEdges, (v) => false);
-  protected hoveredVertex = mapValues({...this.vertices}, (v) => false);
-  protected selectedHalfEdge = mapValues(this.halfEdges, (v) => false);
+  protected selectedHalfEdges : string[] = [];
 
   get layout() {
 	return new Layout(this.vertices, this.halfEdges, this.faces, this.vectors);
   }
 
   get layouted() {
-	return this.layout.layout(this.priorities);
+    return this.layout.layout(this.priorities);
   }
 
   get layoutedPolygon() {
@@ -64,7 +48,7 @@ export default class FlatTriangulation extends Vue {
 	const target = new Flatten.Box(0, 0, this.width, this.height);
 	const scaled = mapValues(this.layouted.layout, (p) => transform(p, bbox, target, "CENTER"));
 	const polygon = new Flatten.Polygon();
-	const faces = this.faces.map((face) => [face, polygon.addFace(face.map((he) => scaled[he]))] as [Face, Flatten.Face]);
+	const faces = this.faces.map((face) => [face, polygon.addFace(face.map((he) => scaled[he]))] as [IFace, Flatten.Face]);
 	return {
 	  halfEdges: scaled,
 	  faces: new Map(faces),
@@ -72,19 +56,14 @@ export default class FlatTriangulation extends Vue {
 	};
   }
 
-  vertex(halfEdge: string) {
-	return findIndex(this.vertices, (v) => includes(v, halfEdge));
-  }
-
   reprioritize(halfEdge: string) {
 	  const isGlued = includes(this.layouted.glueings, halfEdge);
 
-	  this.selectedHalfEdge[halfEdge] = true;
-	  setTimeout(() => { this.selectedHalfEdge[halfEdge] = false }, 250);
+	  this.selectedHalfEdges = [halfEdge]
 	  if (isGlued) {
-		this.selectedHalfEdge[this.halfEdges[halfEdge]] = true;
-		setTimeout(() => { this.selectedHalfEdge[this.halfEdges[halfEdge]] = false }, 250);  
+		  this.selectedHalfEdges = [...this.selectedHalfEdges, this.halfEdges[halfEdge]];
 	  }
+	  setTimeout(() => { this.selectedHalfEdges = [] }, 300);
 
 	  const oldPriorities = this.priorities.filter((he) => he !== halfEdge && he !== this.halfEdges[halfEdge]);
 	  if (isGlued) {
@@ -92,21 +71,6 @@ export default class FlatTriangulation extends Vue {
 	  } else {
 		  this.priorities = [halfEdge, this.halfEdges[halfEdge], ...oldPriorities];
 	  }
-	  
   }
 }
 </script>
-<style scoped>
-line.selected {
-	stroke: green;
-	stroke-dasharray: 10px;
-}
-
-line.selectedInOtherFace {
-	stroke: red;
-}
-
-line {
-	transition: all 1s eas-in-out;
-}
-</style>
