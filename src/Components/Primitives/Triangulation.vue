@@ -17,10 +17,7 @@ export default class Triangulation extends Vue {
 	path.face {
 		stroke: #d1d1d1;
 		stroke-width: 1px;
-		fill: transparent;
-		&:hover {
-			fill: lightcyan;
-		}
+		fill: rgba(lightcyan, .5);
 	}
 }
 </style>

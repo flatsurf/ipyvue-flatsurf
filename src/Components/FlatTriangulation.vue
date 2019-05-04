@@ -5,7 +5,7 @@ TODO: Make all naming ressemble here the naming in libpolygon, i.e., things such
   <g>
   	<triangulation :polygon=layoutedPolygon.polygon />
 	<saddle-connections :saddle-connections="saddleConnections" :layout="layoutedSaddleConnections" />
-	<half-edges :half-edges="layoutedPolygon.halfEdges" :selected="selectedHalfEdges" :half-edge-map="halfEdges"
+	<half-edges :half-edges="layoutedPolygon.halfEdges" :selected="selectedHalfEdges" :half-edge-map="halfEdges" :glueings="layouted.glueings"
 	  @reprioritize=reprioritize />
 	<vertices :half-edges="layoutedPolygon.halfEdges" :vertices="vertices" :vectors="vectors" />
   </g>

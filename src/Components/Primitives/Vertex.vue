@@ -1,6 +1,3 @@
-<!--
-TODO: Would be cool to have a dot travel around the vertex on hover.
--->
 <template>
 	<extended-click-area @click="$emit('click')" @mouseenter="$emit('mouseenter')" @mouseleave="$emit('mouseleave')">
 		<circle class="vertex" :cx="vertex.x" :cy="vertex.y" :r="3" />
@@ -22,14 +19,12 @@ export default class Vertex extends Vue {
 <style lang="scss">
 .flatsurf {
 	circle {
-		stroke: transparent;
+		stroke-width: 0;
 		fill: transparent;
 	}
 
 	.highlight circle {
-		stroke: #d95f02;
 		fill: #d95f02;
-		stroke-width: 3px;
 	}
 }
 </style>

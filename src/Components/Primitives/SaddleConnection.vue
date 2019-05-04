@@ -35,12 +35,17 @@ export default class SaddleConnection extends Vue {
 		fill: rgba(#a6761d, .2);
 	}
 
-	.vector:hover,
+	.vector:hover {
+		stroke-width: 3px;
+		stroke: rgba(#a6761d, .5);
+		fill: rgba(#a6761d, .5);
+		cursor: pointer;
+	}
+
 	.selected .vector {
 		stroke-width: 3px;
 		stroke: #a6761d;
 		fill: #a6761d;
-		cursor: pointer;
 	}
 
 	.flow line {
@@ -48,9 +53,12 @@ export default class SaddleConnection extends Vue {
 		stroke: rgba(#e6ab02, .2);
 	}
 
-	.vector:hover ~ .flow line,
+	.vector:hover ~ .flow line {
+		stroke: rgba(#e6ab02, .5);
+	}
+
 	.selected .flow line {
-		stroke: #e6ab02;
+		stroke: #e6ab02 !important;
 	}
 }
 </style>

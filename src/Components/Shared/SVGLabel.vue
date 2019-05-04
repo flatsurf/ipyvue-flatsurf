@@ -17,7 +17,7 @@ export default class SVGLabel extends Vue {
 	get position() {
 		const midpoint = this.at.middle();
 		let normal = this.at.tangentInStart().rotate90CW().normalize();
-		return midpoint.translate(normal.multiply(10));
+		return midpoint.translate(normal.multiply(8));
 	}
 
 	get transformation() {
@@ -29,7 +29,7 @@ export default class SVGLabel extends Vue {
 		if (Math.abs(angle) > 30) {
 			angle = 0;
 		}
-		return `translate(${this.position.x} ${this.position.y}) rotate(${angle}) translate(-6 6)`;
+		return `translate(${this.position.x} ${this.position.y}) rotate(${angle}) translate(-6 4)`;
 	}
 }
 </script>
