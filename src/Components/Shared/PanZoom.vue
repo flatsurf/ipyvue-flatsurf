@@ -6,11 +6,11 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import panzoom from "pan-zoom";
+import Viewport from "./Viewport";
 
 @Component
 export default class PanZoomWidget extends Vue {
-	@Prop({required: true, type: Object}) protected clientViewport!: {width: number, height: number};
-	@Prop({default: false, type: Boolean}) protected cartesian!: boolean;
+	@Prop({required: true, type: Object}) protected clientViewport!: Viewport;
 
 	private virtualLeft = 0
 	private virtualTop = 0;
@@ -39,7 +39,7 @@ export default class PanZoomWidget extends Vue {
 	}
 
 	protected change(e: any) {
-		if (this.cartesian) {
+		if (this.clientViewport.cartesian) {
 			e.y = this.clientViewport.height - e.y;
 			e.dy = -e.dy;
 		}

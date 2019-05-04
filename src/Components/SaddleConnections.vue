@@ -18,14 +18,6 @@ import { ISaddleConnection, ILayoutedSaddleConnection } from "../Layout/SaddleCo
 export default class SaddleConnections extends Vue {
 	@Prop({required: true, type: Array}) private saddleConnections!: ISaddleConnection[];
 	@Prop({required: true, type: Array}) private layout!: ILayoutedSaddleConnection[];
-
-	mounted() {
-		const segments = this.layout[0].segments;
-		console.log("slopes");
-		console.log(this.layout);
-		console.log((segments[0].end.y - segments[0].start.y)/(segments[0].end.x - segments[0].start.x));
-		console.log(this.saddleConnections[0].vector.y / this.saddleConnections[0].vector.x);
-	}
 }
 </script>
 <style lang="scss">

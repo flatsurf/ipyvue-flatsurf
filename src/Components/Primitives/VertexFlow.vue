@@ -18,9 +18,9 @@ export default class VertexFlow extends Vue {
 	@Prop({default: false, type: Boolean}) atRest!: boolean;
 
 	get pos() {
-		// Since we are not in a Cartesian coordinate system (the y-axis is flipped)
-		// we turn CW here.
-		const rotated = this.halfEdge.rotate(this.angle, this.halfEdge.start);
+		// Since we are not in a positive Cartesian coordinate system
+		// (the y-axis is flipped on screen) we turn CW here.
+		const rotated = this.halfEdge.rotate(-this.angle, this.halfEdge.start);
 		const unit = rotated.tangentInStart();
 		return rotated.ps.translate(unit.multiply(10));
 	}

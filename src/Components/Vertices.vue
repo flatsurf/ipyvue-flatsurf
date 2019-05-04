@@ -2,7 +2,7 @@
   <g>
 	<vertex-flow v-if="active" :half-edge="halfEdges[active]" :angle="addAngle" :atRest="addAngle === 0" />
 	<vertex-flow v-if="active && addAngle === 0" :half-edge="halfEdges[nextEdge(active, -1)]" :angle="angle(nextEdge(active, -1))" :atRest="addAngle === 0" />
-	<vertex v-for="halfEdge in Object.keys(halfEdges)" :key="halfEdge" :vertex="halfEdges[halfEdge].ps"
+	<vertex v-for="halfEdge in Object.keys(halfEdges)" :key="halfEdge" :vertex="halfEdges[halfEdge].start"
 	  :class="{
 		   highlight: hovered[vertex(halfEdge)],
 	  }"
@@ -20,7 +20,7 @@ import clone from "lodash-es/clone";
 import sum from "lodash-es/sum";
 import { TweenLite, TimelineLite, Power0 } from "gsap";
 
-import { IVertices, IHalfEdgeLayout } from "../Layout/Triangulation";
+import { IVertices, IHalfEdgeLayout, IVectors } from "../Layout/Triangulation";
 import Vertex from "./Primitives/Vertex.vue";
 import VertexFlow from "./Primitives/VertexFlow.vue";
 
@@ -29,6 +29,7 @@ import VertexFlow from "./Primitives/VertexFlow.vue";
 })
 export default class Vertices extends Vue {
   @Prop({required: true}) private vertices!: IVertices;
+  @Prop({required: true}) private vectors!: IVectors;
   @Prop({required: true}) private halfEdges!: IHalfEdgeLayout;
 
   protected hovered = this.vertices.map(() => false);
@@ -58,8 +59,8 @@ export default class Vertices extends Vue {
   angle(halfEdge: string) {
 	  const vertex = this.vertex(halfEdge);
 	  const nextHalfEdge = this.nextEdge(halfEdge);
-	  return this.halfEdges[halfEdge].tangentInStart().angleTo(
-		this.halfEdges[nextHalfEdge].tangentInStart());
+	  return this.vectors[halfEdge].angleTo(
+		this.vectors[nextHalfEdge]);
   }
 
   unhover(halfEdge: string) {

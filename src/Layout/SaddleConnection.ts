@@ -20,7 +20,6 @@ export type ILayoutedSaddleConnection = {
 }
 
 export function layout(saddleConnection: ISaddleConnection, triangulation: ILayout, halfEdges: IHalfEdges) {
-	console.log(`${saddleConnection.source} -> ${saddleConnection.target}`);
 	const segments: Flatten.Segment[] = [];
 	let start = triangulation.layout[saddleConnection.source].start;
 	const direction = new Flatten.Segment(start, start.translate(saddleConnection.vector));
@@ -28,12 +27,10 @@ export function layout(saddleConnection: ISaddleConnection, triangulation: ILayo
 	while(crossings.length) {
 		const crossing = crossings.shift()!;
 		if (contains(triangulation.glueings, crossing)) {
-			console.log(`crossing ${crossing} - but it's glued`);
 			continue;
 		}
 
 		// Since this half edge is not glued, we compute the intersection of our ray with it and add it to segments.
-		console.log(`crossing ${crossing}.`);
 		const line = new Flatten.Line(start, start.translate(saddleConnection.vector));
 		const crossingEdge = triangulation.layout[crossing];
 		const crossingLine = new Flatten.Line(crossingEdge.start, crossingEdge.end);

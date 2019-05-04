@@ -2,13 +2,11 @@
   <resizable-widget class="flatsurf" :initial-height="height" @resize="resize">
 	<pan-zoom-widget :client-viewport="clientViewport" @pan-zoom="moved" :cartesian="true" >
 		<svg :height="height" width="100%">
-				<cartesian :height="height">
 			<g :transform="svgTranslation">
 					<flat-triangulation :width="clientViewport.width * svgScale" :height="clientViewport.height * svgScale"
 						:vertices=vertices :halfEdges=halfEdges :faces=faces :vectors=vectors
 						:saddle-connections=saddleConnections />
 			</g>
-				</cartesian>
 		</svg>
 	</pan-zoom-widget>
   </resizable-widget>
@@ -18,14 +16,13 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import FlatTriangulation from "./Components/FlatTriangulation.vue";
 import ResizableWidget from "./Components/Shared/ResizeCell.vue";
 import PanZoomWidget from "./Components/Shared/PanZoom.vue";
-import Cartesian from "./Components/Shared/Cartesian.vue";
 import ResizeSensor from "css-element-queries/src/ResizeSensor"
 import Flatten from "@flatten-js/core";
 import mapValues from "lodash/mapValues";
 import transform from "lodash/transform";
 
 @Component({
-	components: { FlatTriangulation, ResizableWidget, PanZoomWidget, Cartesian },
+	components: { FlatTriangulation, ResizableWidget, PanZoomWidget },
 })
 export default class App extends Vue {
   @Prop({required: true}) public value!: string;

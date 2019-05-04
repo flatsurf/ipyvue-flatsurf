@@ -7,7 +7,7 @@ TODO: Make all naming ressemble here the naming in libpolygon, i.e., things such
 	<saddle-connections :saddle-connections="saddleConnections" :layout="layoutedSaddleConnections" />
 	<half-edges :half-edges="layoutedPolygon.halfEdges" :selected="selectedHalfEdges" :half-edge-map="halfEdges"
 	  @reprioritize=reprioritize />
-	<vertices :half-edges="layoutedPolygon.halfEdges" :vertices="vertices" />
+	<vertices :half-edges="layoutedPolygon.halfEdges" :vertices="vertices" :vectors="vectors" />
   </g>
 </template>
 <script lang="ts">
@@ -26,7 +26,7 @@ import SaddleConnections from "./SaddleConnections.vue";
 import Layout, { IVertices, IHalfEdges, IFaces, IVectors, IFace } from "../Layout/Triangulation";
 import { layout as layoutSaddleConnection, ISaddleConnection } from "../Layout/SaddleConnection";
 import BBox from "../Layout/BBox";
-import {transform} from "../Layout/Viewport"
+import Viewport from "./Shared/Viewport"
 
 @Component({
 	components: { Triangulation, HalfEdges, Vertices, SaddleConnections },
@@ -51,10 +51,16 @@ export default class FlatTriangulation extends Vue {
     return this.layout.layout(this.priorities);
   }
 
+  get sourceViewport() {
+	return new Viewport(BBox(values(this.layouted.layout)), true);
+  }
+
+  get targetViewport() {
+	return new Viewport(new Flatten.Box(0, 0, this.width, this.height), false);
+  }
+
   get layoutedPolygon() {
-	const bbox = BBox(values(this.layouted.layout));
-	const target = new Flatten.Box(0, 0, this.width, this.height);
-	const scaled = mapValues(this.layouted.layout, (p) => transform(p, bbox, target, "CENTER"));
+	const scaled = mapValues(this.layouted.layout, (p) => this.sourceViewport.transform(p, this.targetViewport, "CENTER"));
 	const polygon = new Flatten.Polygon();
 	const faces = this.faces.map((face) => [face, polygon.addFace(face.map((he) => scaled[he]))] as [IFace, Flatten.Face]);
 	return {
@@ -65,12 +71,10 @@ export default class FlatTriangulation extends Vue {
   }
 
   get layoutedSaddleConnections() {
-	const bbox = BBox(values(this.layouted.layout));
-	const target = new Flatten.Box(0, 0, this.width, this.height);
 	return this.saddleConnections.map((sc) => layoutSaddleConnection(sc, this.layouted, this.halfEdges))
 		.map((layout) => { return {
-			direction: transform(layout.direction, bbox, target, "CENTER"),
-			segments: layout.segments.map((segment) => transform(segment, bbox, target, "CENTER")),
+			direction: this.sourceViewport.transform(layout.direction, this.targetViewport, "CENTER"),
+			segments: layout.segments.map((segment) => this.sourceViewport.transform(segment, this.targetViewport, "CENTER")),
 		}});
   }
 

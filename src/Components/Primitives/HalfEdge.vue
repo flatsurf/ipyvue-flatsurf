@@ -1,6 +1,6 @@
 <template>
     <g>
-		<text :x="edge.ps.x" :y="edge.ps.y" :transform="`translate(${Math.round(edge.ps.x)} ${Math.round(edge.ps.y)}) scale(1 -1) translate(${Math.round(-edge.ps.x)} ${Math.round(-edge.ps.y)})`">{{ halfEdge }}</text>
+		<text :x="edge.ps.x" :y="edge.ps.y">{{ halfEdge }}</text>
 		<extended-click-area @click="$emit('click')" @mouseenter="$emit('mouseenter')" @mouseleave="$emit('mouseleave')">
 			<line class="half-edge" :x1="edge.ps.x" :y1="edge.ps.y" :x2="edge.pe.x" :y2="edge.pe.y" />
 		</extended-click-area>
