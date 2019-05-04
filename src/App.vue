@@ -5,7 +5,8 @@
 				<cartesian :height="height">
 			<g :transform="svgTranslation">
 					<flat-triangulation :width="clientViewport.width * svgScale" :height="clientViewport.height * svgScale"
-						:vertices=vertices :halfEdges=halfEdges :faces=faces :vectors=vectors />
+						:vertices=vertices :halfEdges=halfEdges :faces=faces :vectors=vectors
+						:saddle-connections=saddleConnections />
 			</g>
 				</cartesian>
 		</svg>
@@ -77,6 +78,14 @@ export default class App extends Vue {
 		  data[-Number(he)] = [-data[he][0], -data[he][1]];
 	  }
 	  return mapValues(data, (v) => new Flatten.Vector(v[0], v[1]));
+  }
+
+  get saddleConnections() {
+	  return [
+		  // TODO: Should we keep the weird semantics of target? (see saddle_connection.hpp)
+		  { source: "11", target: "3", vector: new Flatten.Vector(6.00339,5.19811), crossings: ["12", "-2", "12", "-4", "5", "-10"] },
+		  { source: "-5", target: "-2", vector: new Flatten.Vector(6.00339, 5.19811), crossings: ["-10", "9", "-11", "12", "-2", "12"] }
+	  ]
   }
 
   protected height: number = this.initialHeight;

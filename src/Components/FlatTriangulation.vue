@@ -4,6 +4,7 @@ TODO: Make all naming ressemble here the naming in libpolygon, i.e., things such
 <template>
   <g>
   	<triangulation :polygon=layoutedPolygon.polygon />
+	<saddle-connections :saddle-connections="saddleConnections" :layout="layoutedSaddleConnections" />
 	<half-edges :half-edges="layoutedPolygon.halfEdges" :selected="selectedHalfEdges" :half-edge-map="halfEdges"
 	  @reprioritize=reprioritize />
 	<vertices :half-edges="layoutedPolygon.halfEdges" :vertices="vertices" />
@@ -15,17 +16,20 @@ import values from "lodash/values";
 import mapValues from "lodash/mapValues";
 import findIndex from "lodash/findIndex";
 import includes from "lodash/includes";
+import zip from "lodash-es/zip";
 import Flatten from "@flatten-js/core";
 
 import Triangulation from "./Primitives/Triangulation.vue";
 import HalfEdges from "./HalfEdges.vue";
 import Vertices from "./Vertices.vue";
+import SaddleConnections from "./SaddleConnections.vue";
 import Layout, { IVertices, IHalfEdges, IFaces, IVectors, IFace } from "../Layout/Triangulation";
+import { layout as layoutSaddleConnection, ISaddleConnection } from "../Layout/SaddleConnection";
 import BBox from "../Layout/BBox";
 import {transform} from "../Layout/Viewport"
 
 @Component({
-	components: { Triangulation, HalfEdges, Vertices },
+	components: { Triangulation, HalfEdges, Vertices, SaddleConnections },
 })
 export default class FlatTriangulation extends Vue {
   @Prop({required: true}) private width!: number;
@@ -34,6 +38,7 @@ export default class FlatTriangulation extends Vue {
   @Prop({required: true}) private halfEdges!: IHalfEdges;
   @Prop({required: true}) private faces!: IFaces;
   @Prop({required: true}) private vectors!: IVectors;
+  @Prop({default: () => []}) private saddleConnections!: ISaddleConnection[];
 
   protected priorities = Object.keys(this.halfEdges);
   protected selectedHalfEdges : string[] = [];
@@ -55,11 +60,22 @@ export default class FlatTriangulation extends Vue {
 	return {
 	  halfEdges: scaled,
 	  faces: new Map(faces),
-	  polygon
+	  polygon,
 	};
   }
 
+  get layoutedSaddleConnections() {
+	const bbox = BBox(values(this.layouted.layout));
+	const target = new Flatten.Box(0, 0, this.width, this.height);
+	return this.saddleConnections.map((sc) => layoutSaddleConnection(sc, this.layouted, this.halfEdges))
+		.map((layout) => { return {
+			direction: transform(layout.direction, bbox, target, "CENTER"),
+			segments: layout.segments.map((segment) => transform(segment, bbox, target, "CENTER")),
+		}});
+  }
+
   reprioritize(halfEdge: string) {
+	  console.log(halfEdge);
 	  const isGlued = includes(this.layouted.glueings, halfEdge);
 
 	  this.selectedHalfEdges = [halfEdge]

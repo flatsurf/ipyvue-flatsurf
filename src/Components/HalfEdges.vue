@@ -1,6 +1,6 @@
 <template>
   <g>
-	<half-edge v-for="halfEdge in Object.keys(halfEdges)" :key="halfEdge" :edge="halfEdges[halfEdge]"
+	<half-edge v-for="halfEdge in Object.keys(halfEdges)" :key="halfEdge" :edge="halfEdges[halfEdge]" :half-edge="halfEdge"
 	  :class="{
 		  highlight: hovered[halfEdge] || hovered[halfEdgeMap[halfEdge]],
 		  selected: includes(selected, halfEdge),
