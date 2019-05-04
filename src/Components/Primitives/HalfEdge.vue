@@ -1,5 +1,5 @@
 <template>
-    <g>
+    <g class="half-edge">
 		<text :x="edge.ps.x" :y="edge.ps.y">{{ halfEdge }}</text>
 		<extended-click-area @click="$emit('click')" @mouseenter="$emit('mouseenter')" @mouseleave="$emit('mouseleave')">
 			<line class="half-edge" :x1="edge.ps.x" :y1="edge.ps.y" :x2="edge.pe.x" :y2="edge.pe.y" />
@@ -21,21 +21,21 @@ export default class HalfEdge extends Vue {
 }
 </script>
 <style lang="scss">
-.flatsurf {
+.flatsurf .half-edge {
 	text {
 		visibility: hidden;
 	}
-	.highlight text {
+	&.highlight text {
 		visibility: visible;
 	}
-	.highlight line {
+	&.highlight line {
 		stroke: #1b9e77;
 		stroke-width: 2px;
 		cursor: pointer;
 		// cursor: url("../../../node_modules/octicons/build/svg/git-branch.svg"), auto;
 	}
 
-	.selected line {
+	&.selected line {
 		stroke: red;
 		stroke-width: 2px;
 		stroke-dasharray: 10;

@@ -1,0 +1,64 @@
+<template>
+	<g :class="{selected}">
+		<extended-click-area class="vector" @click="selected = !selected">
+			<line :x1="layout.direction.start.x" :y1="layout.direction.start.y"
+				  :x2="layout.direction.end.x" :y2="layout.direction.end.y" />
+		</extended-click-area>
+		<g class="flow">
+			<line v-for="(segment, i) in layout.segments" :key="i"
+				:x1="segment.start.x" :x2="segment.end.x"
+				:y1="segment.start.y" :y2="segment.end.y" />
+		</g>
+	</g>
+</template>
+<script lang="ts">
+import { Prop, Vue, Component } from "vue-property-decorator";
+
+import { ILayoutedSaddleConnection, ISaddleConnection } from "../../Layout/SaddleConnection";
+import ExtendedClickArea from "../Shared/ExtendedClickArea.vue";
+
+@Component({
+	components: { ExtendedClickArea }
+})
+export default class SaddleConnection extends Vue {
+	@Prop({required: true, type: Object}) private saddleConnection!: ISaddleConnection;
+	@Prop({required: true, type: Object}) private layout!: ILayoutedSaddleConnection;
+
+	protected selected: boolean = false;
+}
+</script>
+<style lang="scss">
+.flatsurf {
+	.vector line {
+		stroke-width: 2px;
+		stroke: rgba(#a6761d, .2);
+	}
+
+	.vector:hover line,
+	.selected .vector line {
+		stroke-width: 3px;
+		stroke: #a6761d;
+		cursor: pointer;
+	}
+
+	.flow line {
+		stroke-width: 2px;
+		stroke: rgba(#e6ab02, .2);
+	}
+
+	.vector:hover ~ .flow line,
+	.selected .flow line {
+		stroke: #e6ab02;
+	}
+}
+/*.flatsurf .flow {
+	stroke-width: 3px;
+	stroke: red;
+}
+
+.flatsurf .vector {
+	stroke-width: 3px;
+	stroke:pink;
+}*/
+</style>
+
