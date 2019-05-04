@@ -26,7 +26,7 @@ import SaddleConnections from "./SaddleConnections.vue";
 import Layout, { IVertices, IHalfEdges, IFaces, IVectors, IFace } from "../Layout/Triangulation";
 import { layout as layoutSaddleConnection, ISaddleConnection } from "../Layout/SaddleConnection";
 import BBox from "../Layout/BBox";
-import Viewport from "./Shared/Viewport"
+import Viewport from "./Shared/Viewport";
 
 @Component({
 	components: { Triangulation, HalfEdges, Vertices, SaddleConnections },
@@ -79,7 +79,6 @@ export default class FlatTriangulation extends Vue {
   }
 
   reprioritize(halfEdge: string) {
-	  console.log(halfEdge);
 	  const isGlued = includes(this.layouted.glueings, halfEdge);
 
 	  this.selectedHalfEdges = [halfEdge]
