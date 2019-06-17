@@ -1,9 +1,9 @@
 <template>
     <g>
-		<saddle-connection v-for="(connection, i) in saddleConnections" :key="i"
-		  :saddle-connection="connection"
-		  :layout="layout[i]"
-		/>
+		  <saddle-connection v-for="(connection, i) in saddleConnections" :key="i"
+		    :saddle-connection="connection"
+		    :layout="layout[i]"
+		  />
   	</g>
 </template>
 <script lang="ts">

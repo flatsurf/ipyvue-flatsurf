@@ -1,5 +1,5 @@
 <template>
-	<g :class="{selected}">
+	<g class="saddle-connection" :class="{selected}">
 		<extended-click-area class="vector" @click="selected = !selected">
 			<arrow :segment="layout.direction" />
 		</extended-click-area>

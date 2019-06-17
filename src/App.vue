@@ -29,6 +29,10 @@ export default class App extends Vue {
   @Prop({default: 200}) public initialHeight!: number;
   @Prop({default: 5}) public padding!: number;
 
+  get halfEdges() {
+	  return transform(this.vectors, (r, v, k) => r[k] = String(-Number(k)));
+  }
+
 /*
   get vertices() {
 	  return [["1", "2", "3", "-1", "-2", "-3"]];
@@ -54,6 +58,7 @@ export default class App extends Vue {
   }
 */
 
+/*
   get vertices() {
 	  return [["-12", "4", "-6", "-1", "-8", "6", "-5", "3", "-10", "5", "-4", "2"],["-11", "7", "1", "8", "-7", "9", "-3", "10", "-9", "11", "-2", "12"]];
   }
@@ -78,10 +83,42 @@ export default class App extends Vue {
   }
 
   get saddleConnections() {
-	  return [
+	  return [];
 		  // TODO: Should we keep the weird semantics of target? (see saddle_connection.hpp)
 		  { source: "11", target: "3", vector: new Flatten.Vector(6.00339,5.19811), crossings: ["12", "-2", "12", "-4", "5", "-10"] },
 		  { source: "-5", target: "-2", vector: new Flatten.Vector(6.00339, 5.19811), crossings: ["-10", "9", "-11", "12", "-2", "12"] }
+	  ]
+  }
+*/
+
+  get vertices() {
+	  return [[-18, 7, 14, -13, 5, 12, -11, -8, 17, -16, 6, 15, -14, 1, -10, -12, -3, 18, -17, -9, 13, -15, 4, 11, 10, -2, 16], [-7, 3, -5, 9, 8, -4, -6, 2, -1]]
+	  	.map((v) => v.map((he) => String(he)));
+  }
+
+  get faces() {
+	  return [[-18, -3, -7], [-17, -8, 9], [-16, -2, -6], [-15, 6, -4], [-14, 7, -1], [-13, -9, -5], [-12, 5, 3], [-11, 4, 8], [-10, 11, 12], [1, 2, 10], [13, 14, 15], [16, 17, 18]]
+		.map((v) => v.map((he) => String(he)));
+  }
+
+  get vectors() {
+	  const data = {
+		  [1]: [-0.673648,-0.565258], [2]: [0.673648,-0.565258], [3]: [-0.826352,-0.300767], [4]: [0.826352,-0.300767],
+		  [5]: [-0.152704,0.866025], [6]: [0.439693,0.76157], [7]: [0.439693,-0.76157], [8]: [0.152704,0.866025],
+		  [9]: [0.879385,0], [10]: [0,1.13052], [11]: [0.979055,0.565258], [12]: [-0.979055,0.565258],
+		  [13]: [-0.726682,-0.866025], [14]: [1.11334,-0.196312], [15]: [-0.386659,1.06234], [16]: [-1.11334,-0.196312],
+		  [17]: [0.726682,-0.866025], [18]: [0.386659,1.06234]
+	  } as any;
+	  for (let he in data) {
+		  data[-Number(he)] = [-data[he][0], -data[he][1]];
+	  }
+	  return mapValues(data, (v) => new Flatten.Vector(v[0], v[1]));
+  }
+
+  get saddleConnections() {
+	  return [
+		  { source: "-3", target: "5", vector: new Flatten.Vector(3.43969, 2.49362), crossings: ["-7", "-14", "15", "6", "-2", "10", "12"] },
+		  { source: "11", target: "18", vector: new Flatten.Vector(8.70961, 6.31407), crossings: ["12", "5", "-13", "15", "-4", "8", "-17", "16", "-2", "10", "12", "5", "-9", "-17", "18", "-7", "-14", "15", "-4", "8", "-17"]}
 	  ]
   }
 
