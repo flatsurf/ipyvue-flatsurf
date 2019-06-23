@@ -159,3 +159,6 @@ flatsurf_widgets/labextension
 *.hot-update.json
 *.hot-update.js
 *.hot-update.js.map
+
+# VisualStudio Code
+.vscode
