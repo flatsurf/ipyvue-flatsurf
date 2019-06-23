@@ -1,8 +1,5 @@
 # flatsurf-widgets
 
-[![Build Status](https://travis-ci.org/flatsurf/flatsurf-widgets.svg?branch=master)](https://travis-ci.org/flatsurf/flatsurf_widgets)
-[![codecov](https://codecov.io/gh/flatsurf/flatsurf-widgets/branch/master/graph/badge.svg)](https://codecov.io/gh/flatsurf/flatsurf-widgets)
-
 Jupyter Widgets for flatsurf
 
 ## Installation
@@ -10,7 +7,7 @@ Jupyter Widgets for flatsurf
 Enable this extension in Jupyter Notebooks with
 
 ```bash
-pip install flatsurf_widgets
+pip install .
 ```
 
 If you use jupyterlab, you also need jupyterlab-manager

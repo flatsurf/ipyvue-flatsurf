@@ -28,7 +28,6 @@
     "url": "https://github.com/flatsurf/flatsurf-widgets"
   },
   "scripts": {
-    "build": "npm run build:lib && npm run build:nbextension",
     "build:labextension": "npm run clean:labextension && mkdirp flatsurf_widgets/labextension && cd flatsurf_widgets/labextension && npm pack ../..",
     "build:lib": "cd bootstrap && tsc && cd .. && webpack -p",
     "build:nbextension": "npm run build:lib",
