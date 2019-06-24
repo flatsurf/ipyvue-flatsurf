@@ -44,19 +44,14 @@ package_data_spec = {
 }
 
 data_files_spec = [
-    ('share/jupyter/nbextensions/flatsurf_widgets',
-        nb_path, '*.js*'),
+    ('share/jupyter/nbextensions/flatsurf_widgets', nb_path, '*.js*'),
     ('share/jupyter/lab/extensions', lab_path, '*.tgz'),
     ('etc/jupyter/nbconfig/notebook.d' , HERE, 'flatsurf_widgets.json')
 ]
 
 
-cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data_spec,
-    data_files_spec=data_files_spec)
-cmdclass['jsdeps'] = combine_commands(
-    install_npm(HERE, build_cmd='build:all'),
-    ensure_targets(jstargets),
-)
+cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data_spec, data_files_spec=data_files_spec)
+cmdclass['jsdeps'] = combine_commands(install_npm(HERE, build_cmd='build:all'), ensure_targets(jstargets),)
 
 
 setup_args = dict(

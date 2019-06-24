@@ -55,44 +55,43 @@ module.exports = [
       index: '',
       sockPath: '/hot-node',
       proxy: {
-	target: notebookPath,
-	context: function(path) {
-	  let ret = true;
-	  if (path.match(/^\/hot-node\//)) {
-	    // The dev server handles websocket connections to the hot-reloading machinery
-	    ret = false;
-	  } else if (path.match(/^\/nbextensions\/flatsurf_widgets\/index\.js/)) {
-	    // The dev server handles this extension's bundle
-	    ret = false;
-	  } else if (path.match(isHotUpdate)) {
-	    if (path.match(/.+\//)) {
-	      // We proxy hot requests so we can fix their path (strip initial
+        target: notebookPath,
+        context: function(path) {
+          let ret = true;
+          if (path.match(/^\/hot-node\//)) {
+            // The dev server handles websocket connections to the hot-reloading machinery
+            ret = false;
+          } else if (path.match(/^\/nbextensions\/flatsurf_widgets\/index\.js/)) {
+            // The dev server handles this extension's bundle
+            ret = false;
+          } else if (path.match(isHotUpdate)) {
+            if (path.match(/.+\//)) {
+              // We proxy hot requests so we can fix their path (strip initial
               // path components such as /notebooks/examples)
-	      ret = true;
-	    } else {
-	      // If the path is already stripped, we want to handle it from the dev server
-	      ret = false;
-	    }
-	  }
-	  return ret;
-	},
-	pathRewrite: function(path) {
-	  let ret = path;
-	  if (path.match(isHotUpdate)) {
-	    ret =  path.replace(/.*\//, '/');
-	  }
-	  // console.log(`${path} -> ${ret}`);
-	  return ret;
-	},
-	router: function(req) {
-	  const path = req.url;
-	  if (path.match(isHotUpdate)) {
-	    return "http://localhost:9000";
-	  } else {
-	    return notebookPath;
-	  }
-	},
-	ws: true,
+              ret = true;
+            } else {
+              // If the path is already stripped, we want to handle it from the dev server
+              ret = false;
+            }
+          }
+          return ret;
+        },
+        pathRewrite: function(path) {
+          let ret = path;
+          if (path.match(isHotUpdate)) {
+            ret =  path.replace(/.*\//, '/');
+          }
+          return ret;
+        },
+        router: function(req) {
+          const path = req.url;
+          if (path.match(isHotUpdate)) {
+            return "http://localhost:9000";
+          } else {
+            return notebookPath;
+          }
+        },
+        ws: true,
       },
     }
   },

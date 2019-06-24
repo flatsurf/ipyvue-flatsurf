@@ -10,10 +10,12 @@ Enable this extension in Jupyter Notebooks with
 pip install .
 ```
 
-If you use jupyterlab, you also need jupyterlab-manager
+If you use *Jupyter Lab*, you also need jupyterlab-manager and you might want to
+rebuild for the new extensions to be immediately available:
 
 ```bash
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter lab build
 ```
 
 ## Development
@@ -37,7 +39,8 @@ install all extra requirements that they configure in `setup.py`.
 pip install -e ".[test, examples]"
 ```
 
-For the *classical notebook*, we need to make our Python package available to the notebook
+For the *classical notebook*, we need to make our Python package available to
+the notebook
 
 ```bash
 jupyter nbextension install --sys-prefix --symlink --overwrite --py flatsurf_widgets
@@ -52,8 +55,7 @@ jupyter notebook &
 
 For *Jupyter Lab*, install the jupyterlab-manager and then *link* the
 JavaScript bits of your extension so that Jupyter Lab automatically rebuilds
-when they change. This only affects the bootstrapping JavaScript, the bigger
-part is going to be reloaded automatically through Hot Module Reloading (see below).
+when they change.
 
 ```bash
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
@@ -63,23 +65,22 @@ jupyter labextension link .
 Start *Jupyter Lab* and have a look at the files in `examples/`
 
 ```bash
-jupyter lab &
+jupyter lab --watch &
 ```
 
-If you don't want to use Hot Module Reloading, you can now start to develop your extension.
+If working with *Jupyter Lab*, you should also spawn `yarn run watch` so that
+our JavaScript bits get rebuilt when necessary. (These rebuilds trigger a
+rebuild of Jupyter Lab's bundle because we gave it the `--watch` parameter.)
 
-If you are working in the *classical notebook*, changes to Python code should
-take effect by restarting the Kernel, and when the frontend code changes, run
-`yarn build:nbextension` and reload your browser tab.
-
-If you are working in *Jupyter Lab*, just reload your browser tab. A dialog
-should ask whether you want to rebuild (which takes a while) and then accept to
-reload again for the changes to take affect.
+When not using Hot Reloading (below) and the JavaScript code has changed, you
+need to reload the browser tab for changes to take effect once the rebuild is
+complete. When the Python code changes you need to restart the kernel for the
+changes to take effect (shortcut <key>Esc</key><key>0</key><key>0</key>.)
 
 ### Hot Module Reloading
 
-At the moment only works in the classical notebook. The configuration in
-`webpack-hot-config.js` is assuming that your notebook started on port 8889.
+Assuming that you started a *classical notebook* on port 8889 as described
+above, you can enable hot reloading with
 
 ```bash
 yarn webpack-dev-server --config webpack-hot.config.js --hot --progress
@@ -87,3 +88,20 @@ yarn webpack-dev-server --config webpack-hot.config.js --hot --progress
 
 Now you should be able to connect to a notebook by changing `:8889` in the URL
 to `:9000`.
+
+In this mode, changes to JavaScript should be visible (almost) immediately. For
+Python changes, you still need to restart the kernel.
+
+Unfortunately, this mode seems not to be easily possible in *Jupyter Lab* as
+much of Jupyter Lab's code and extensions are bundled and then shipped to the
+client as one file which makes it much harder to intercept just the bits
+pertaining to this widget.
+
+## Troubleshooting
+
+* *Jupyter Lab* sometimes fails to realize that Java Script assets have changed
+  when reinstalling with `pip install .`. In fact, `yarn` seems to pull the
+  wrong package from its internal cache. This might be related to installing
+  the same version of this package without creating a new commit in git. In any
+  case, wiping `~/.cache/yarn` and `node_modules` in Jupyter Lab's `staging/`
+  area, followed by a `jupyter lab build` seems to resolve this problem.
