@@ -75,7 +75,7 @@ rebuild of Jupyter Lab's bundle because we gave it the `--watch` parameter.)
 When not using Hot Reloading (below) and the JavaScript code has changed, you
 need to reload the browser tab for changes to take effect once the rebuild is
 complete. When the Python code changes you need to restart the kernel for the
-changes to take effect (shortcut <key>Esc</key><key>0</key><key>0</key>.)
+changes to take effect (shortcut <kbd>Esc</kbd><kbd>0</kbd><kbd>0</kbd>.)
 
 ### Hot Module Reloading
 
