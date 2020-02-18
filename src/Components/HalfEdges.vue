@@ -17,11 +17,10 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Flatten from "@flatten-js/core";
 import mapValues from "lodash/mapValues";
 import includes from "lodash/includes";
 
-import Layout, { IVertices, IHalfEdges, IFaces, IVectors, IFace, IHalfEdgeLayout, IGlueings } from "../Layout/Triangulation";
+import { IHalfEdges, IHalfEdgeLayout, IGlueings } from "../Layout/Triangulation";
 import HalfEdge from "./Primitives/HalfEdge.vue";
 
 @Component({

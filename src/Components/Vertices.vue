@@ -12,12 +12,9 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Flatten from "@flatten-js/core";
-import mapValues from "lodash-es/mapValues";
 import findIndex from "lodash-es/findIndex";
 import includes from "lodash-es/includes";
 import clone from "lodash-es/clone";
-import sum from "lodash-es/sum";
 import { TweenLite, TimelineLite, Power0 } from "gsap";
 
 import { IVertices, IHalfEdgeLayout, IVectors } from "../Layout/Triangulation";

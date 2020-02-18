@@ -7,10 +7,8 @@
   	</g>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import Flatten from "@flatten-js/core";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-import { IHalfEdgeLayout } from "../Layout/Triangulation";
 import { ISaddleConnection, ILayoutedSaddleConnection } from "../Layout/SaddleConnection";
 import SaddleConnection from "./Primitives/SaddleConnection.vue";
 

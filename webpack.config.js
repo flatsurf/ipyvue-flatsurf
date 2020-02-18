@@ -4,9 +4,14 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 // Custom webpack rules
 const rules = [
-  { test: /\.ts$/, loader: 'ts-loader' , options: {
-    appendTsSuffixTo: [/\.vue$/],
-  } },
+  { test: /\.ts$/,
+    exclude: /node_modules/,
+    loader: 'ts-loader',
+    options: {
+      appendTsSuffixTo: [/\.vue$/],
+      context: __dirname,
+    } 
+  },
   { test: /\.js$/, loader: 'source-map-loader' },
   { test: /\.css$/, use: ['vue-style-loader', 'css-loader']},
   { test: /\.scss$/, use: ['vue-style-loader', 'css-loader', 'sass-loader']},
@@ -21,8 +26,7 @@ const externals = ['@jupyter-widgets/base'];
 const plugins = [ new VueLoaderPlugin() ];
 
 const resolve = {
-  // Add '.ts' and '.tsx' as resolvable extensions.
-  extensions: [".webpack.js", ".web.js", ".ts", ".js"],
+  extensions: [".vue", ".ts", ".js"],
 };
 
 module.exports = [

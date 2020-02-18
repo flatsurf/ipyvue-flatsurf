@@ -1,13 +1,15 @@
-const path = require('path');
-const version = require('./package.json').version;
 const { VueLoaderPlugin } = require('vue-loader');
-const webpack = require('webpack');
 
 // Custom webpack rules
 const rules = [
-  { test: /\.ts$/, loader: 'ts-loader' , options: {
-    appendTsSuffixTo: [/\.vue$/],
-  } },
+  { test: /\.ts$/,
+    exclude: /node_modules/,
+    loader: 'ts-loader',
+    options: {
+      appendTsSuffixTo: [/\.vue$/],
+      context: __dirname,
+    } 
+  },
   { test: /\.js$/, loader: 'source-map-loader' },
   { test: /\.css$/, use: ['vue-style-loader', 'css-loader']},
   { test: /\.scss$/, use: ['vue-style-loader', 'css-loader' , 'sass-loader']},
@@ -24,7 +26,7 @@ const plugins = [
 
 const resolve = {
   // Add '.ts' and '.tsx' as resolvable extensions.
-  extensions: [".webpack.js", ".web.js", ".ts", ".js"],
+  extensions: [".vue", ".ts", ".js"],
 };
 
 const isHotUpdate = /\.hot-update\.(js|json|js\.map)$/;

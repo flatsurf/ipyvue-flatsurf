@@ -33,7 +33,6 @@ lab_path = pjoin(HERE, name, 'labextension')
 # Representative files that should exist after a successful build
 jstargets = [
     pjoin(nb_path, 'index.js'),
-    pjoin(HERE, 'lib', 'plugin.js'),
 ]
 
 package_data_spec = {

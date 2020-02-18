@@ -6,17 +6,17 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
-    "outDir": "./lib",
-    "resolveJsonModule": true,
+    "outDir": "../lib",
     "rootDir": "..",
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2015",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "target": "es2015"
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx"
+    "src/*.ts",
+    "src/*.vue"
   ]
 }

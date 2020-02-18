@@ -12,7 +12,7 @@
   </resizable-widget>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import FlatTriangulation from "./Components/FlatTriangulation.vue";
 import ResizableWidget from "./Components/Shared/ResizeCell.vue";
 import PanZoomWidget from "./Components/Shared/PanZoom.vue";
@@ -30,7 +30,7 @@ export default class App extends Vue {
   @Prop({default: 5}) public padding!: number;
 
   get halfEdges() {
-	  return transform(this.vectors, (r, v, k) => r[k] = String(-Number(k)));
+	  return transform(this.vectors, (result, value, key) => (result as string[])[Number(key)] = String(-Number(key)));
   }
 
 /*

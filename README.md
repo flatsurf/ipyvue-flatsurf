@@ -23,7 +23,7 @@ jupyter lab build
 Development is probably best done in a dedicated conda environment
 
 ```bash
-conda create -c conda-forge -n flatsurf-widgets jupyterlab ipywidgets widgetsnbextension pip 
+conda create -c conda-forge -n flatsurf-widgets jupyterlab ipywidgets widgetsnbextension pip nodejs yarn
 conda activate flatsurf-widgets
 ```
 

@@ -14,9 +14,7 @@ TODO: Make all naming ressemble here the naming in libpolygon, i.e., things such
 import { Vue, Component, Prop } from "vue-property-decorator";
 import values from "lodash/values";
 import mapValues from "lodash/mapValues";
-import findIndex from "lodash/findIndex";
 import includes from "lodash/includes";
-import zip from "lodash-es/zip";
 import Flatten from "@flatten-js/core";
 
 import Triangulation from "./Primitives/Triangulation.vue";
