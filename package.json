@@ -63,7 +63,7 @@
     "d3": "^5.9.2",
     "expect.js": "^0.3.1",
     "fs-extra": "^8.1.0",
-    "gsap": "^3.1.1",
+    "gsap": "^3.6.0",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^1.1.0",
