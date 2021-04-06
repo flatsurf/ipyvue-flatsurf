@@ -1,35 +1,16 @@
-include LICENSE.txt
-include README.md
+graft ipyvue_flatsurf/nbextension
+graft ipyvue_flatsurf/labextension
 
-include setupbase.py
-include pytest.ini
-include .coverage.rc
-
-include package.json
-include webpack.config.js
-include flatsurf_widgets/labextension/*.tgz
-
-# Documentation
-graft docs
-exclude docs/\#*
-prune docs/build
-prune docs/gh-pages
-prune docs/dist
-
-# Examples
-graft examples
-
-# Tests
+graft js
 graft tests
-prune tests/build
-
-# Javascript files
-graft flatsurf_widgets/nbextension
-graft bootstrap
-graft src
 prune **/node_modules
-prune coverage
-prune lib
+
+include ipyvue-flatsurf.json
+
+include LICENSE
+include setup.py
+include pyproject.toml
+include install.json
 
 # Patterns to exclude from any directory
 global-exclude *~
@@ -37,3 +18,4 @@ global-exclude *.pyc
 global-exclude *.pyo
 global-exclude .git
 global-exclude .ipynb_checkpoints
+global-exclude *.map

@@ -1,1 +1,0 @@
-Geometric Primitives such as Polygons
