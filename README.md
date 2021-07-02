@@ -15,7 +15,7 @@ Development
 
 Install a local copy of this package:
 
-    git clone https://github.com/saraedum/ipyvue-flatsurf.git
+    git clone https://github.com/flatsurf/ipyvue-flatsurf.git
     cd ipyvue-flatsurf
     pip install -e .
 
@@ -34,6 +34,6 @@ directory:
     cd js
     yarn run build
     cd ..
-    pip install -e . --no-deps
+    pip install -e . --no-deps # for JupyterLab
 
 You then need to refresh the Notebook/JupyterLab page for the changes to take effect.
