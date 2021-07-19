@@ -1,0 +1,15 @@
+# This file lists the dependencies needed to build and test all of ipyvue-flatsurf.
+# Create a conda environment with these dependencies preinstalled with:
+# conda env create -f environment.yml
+name: ipyvue-flatsurf-build
+channels:
+  - flatsurf
+  - conda-forge
+  - defaults
+dependencies:
+  - pyflatsurf
+  - pytest
+  - ruamel.yaml
+  - sage-flatsurf
+  - pip:
+    - ipyvue-remote-component

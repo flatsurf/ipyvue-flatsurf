@@ -135,6 +135,13 @@ def decomposition_to_map(decomposition, deformation=None):
 class FlatSurface(VueTemplate):
     r"""
     A Flat Surfacae.
+
+    >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
+    >>> t = polygons.triangle(1, 1, 1)
+    >>> B = similarity_surfaces.billiard(t)
+    >>> S = B.minimal_cover('translation')
+    >>> V = FlatSurface(S)
+
     """
     def __init__(self, surface, deformation=None):
         super().__init__()
