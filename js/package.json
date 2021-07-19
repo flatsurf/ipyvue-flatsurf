@@ -32,7 +32,8 @@
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.9",
     "rimraf": "^3.0.2",
-    "webpack": "^5.45.1"
+    "webpack": "^5.45.1",
+    "vue": "^2.6.11"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
