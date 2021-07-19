@@ -9,5 +9,6 @@ channels:
 dependencies:
   - pyflatsurf
   - pytest
+  - sage-flatsurf
   - pip:
     - ipyvue-remote-component
