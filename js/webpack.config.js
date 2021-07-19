@@ -1,9 +1,6 @@
-var path = require('path');
-var version = require('./package.json').version;
-
-var rules = [
-    { test: /\.css$/, use: ['style-loader', 'css-loader']}
-]
+const path = require('path');
+const version = require('./package.json').version;
+const webpack = require('webpack');
 
 // Note that unfortunately, we cannot declare "vue" an external. JupyterVue
 // bundles all of Vue but does not export all of it again for us. (Not sure if
@@ -12,7 +9,28 @@ var rules = [
 // does not exist.
 
 module.exports = (env, argv) => {
-    var devtool = argv.mode === 'development' ? 'source-map' : false;
+    const module = {
+      rules: [
+        {test: /\.css$/, use: ['style-loader', 'css-loader']},
+      ]
+    };
+
+    const resolve = {
+      fallback: {
+        // vue-flatsurf uses assert which uses util which uses process.env
+        process: require.resolve('process/browser')
+      }
+    };
+
+    const plugins = [
+      new webpack.ProvidePlugin({
+        // vue-flatsurf uses assert which uses util which uses process.env
+        process: 'process/browser',
+      }),
+    ];
+
+    const devtool = argv.mode === 'development' ? 'source-map' : false;
+
     return [
         {// Notebook extension
         //
@@ -30,6 +48,8 @@ module.exports = (env, argv) => {
                 publicPath: '' // publicPath is set in extension.js
             },
             devtool,
+            resolve,
+            plugins,
             externals: ['jupyter-vue'],
         },
         {// Bundle for the notebook containing the custom widget views and models
@@ -46,9 +66,9 @@ module.exports = (env, argv) => {
                 publicPath: '',
             },
             devtool,
-            module: {
-                rules: rules
-            },
+            module,
+            resolve,
+            plugins,
             externals: ['@jupyter-widgets/base', 'jupyter-vue'],
         },
         {// Embeddable ipyvue-flatsurf bundle
@@ -73,9 +93,9 @@ module.exports = (env, argv) => {
                 publicPath: 'https://unpkg.com/ipyvue-flatsurf@' + version + '/dist/'
             },
             devtool,
-            module: {
-                rules: rules
-            },
+            module,
+            resolve,
+            plugins,
             externals: ['@jupyter-widgets/base', 'jupyter-vue'],
         }
     ];
