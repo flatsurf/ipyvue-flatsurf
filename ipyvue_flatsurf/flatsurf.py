@@ -223,9 +223,13 @@ def component_to_map(component, deformation=None):
         "inside": [halfEdge.id() for halfEdge in inside],
     }
 
-def decomposition_to_map(decomposition, deformation=None):
+def decomposition_to_map(decomposition, deformation=None, components=None):
     map = surface_to_map(decomposition.surface() if deformation is None else deformation.codomain())
-    map['components'] = [component_to_map(component, deformation) for component in list(decomposition.components())]
+    if components is None:
+        components = list(decomposition.components())
+    # TODO: This does not make the coloring consistent. Can we get a canonical numbering somehow?
+    components.sort(key = lambda c: c.area())
+    map['components'] = [component_to_map(component, deformation) for component in list(components)]
     return map
 
 class FlatSurface(VueTemplate):
