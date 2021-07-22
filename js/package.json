@@ -23,8 +23,10 @@
   "scripts": {
     "clean": "rimraf dist/ && rimraf ../ipyvue_flatsurf/labextension/ && rimraf ../ipyvue_flatsurf/nbextension",
     "prepublish": "yarn run clean && yarn run build:prod",
-    "build": "webpack --mode=development && yarn run build:labextension:dev",
-    "build:prod": "webpack --mode=production && yarn run build:labextension",
+    "build": "yarn run build:notebookextension:dev && yarn run build:labextension:dev",
+    "build:prod": "yarn run build:notebookextension && yarn run build:labextension",
+    "build:notebookextension": "webpack --mode=production",
+    "build:notebookextension:dev": "webpack --mode=development",
     "build:labextension": "jupyter labextension build .",
     "build:labextension:dev": "jupyter labextension build --development True .",
     "watch": "webpack --watch --mode=development"
@@ -38,7 +40,7 @@
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
     "lodash": "^4.17.4",
-    "vue-flatsurf": "^0.1.0"
+    "vue-flatsurf": "^0.2.0"
   },
   "jupyterlab": {
     "extension": "lib/labplugin",
