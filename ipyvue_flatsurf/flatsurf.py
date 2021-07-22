@@ -1,5 +1,5 @@
 from ipywidgets.widgets.widget import widget_serialization
-from traitlets import Unicode, Any
+from traitlets import Unicode, Any, List
 from ipyvue import VueTemplate
 
 from .force_load import force_load
@@ -243,24 +243,36 @@ class FlatSurface(VueTemplate):
     >>> V = FlatSurface(S)
 
     """
-    def __init__(self, surface, deformation=None):
+    def __init__(self, surface, deformation=None, inner=[]):
         super().__init__()
 
         if isinstance(surface, Decomposition):
             surface = surface.decomposition
         if "flatsurf.FlowDecomposition" in str(type(surface)):
             map = decomposition_to_map(surface, deformation)
+        elif "flatsurf.FlowComponent" in str(type(surface)):
+            map = decomposition_to_map(surface.decomposition(), deformation, [surface])
         else:
+            if (deformation is not None):
+                raise NotImplementedError()
             from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
             surface = to_pyflatsurf(surface)
             map = surface_to_map(surface)
 
         self.raw = _to_yaml(map)
+        self.forced = inner
 
     __force = Any(force_load, read_only=True).tag(sync=True, **widget_serialization)
 
     template = Unicode(r"""
-    <surface-viewer :raw="raw" />
+        <surface-viewer :raw="raw" :inner="forced" @update:inner="on_inner_update" />
     """).tag(sync=True)
 
+    def vue_on_inner_update(self, inner):
+        self.inner = inner
+
     raw = Unicode("").tag(sync=True)
+
+    forced = List([]).tag(sync=True)
+
+    inner = List([]).tag(sync=True)
