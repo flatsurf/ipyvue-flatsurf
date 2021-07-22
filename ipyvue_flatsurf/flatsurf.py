@@ -40,12 +40,20 @@ def component_to_map(component, deformation=None):
     from dataclasses import dataclass
 
     def deform(connection):
+        r"""
+        Return the list of saddle connections that make up this saddle
+        connection in the original surface before deforming it.
+        """
         from pyflatsurf import flatsurf
         if deformation is None:
             return [connection]
         assert(connection.surface() == deformation.domain())
         connections = deformation(flatsurf.Path[type(connection.surface())](connection))
-        return list(connections.value())
+        connections = list(connections.value())
+
+        vector = sum([c.vector() for c in connections], start=type(connections[0].vector())())
+        assert(vector == connection.vector())
+        return connections
 
     @dataclass
     class Touching:
@@ -66,9 +74,17 @@ def component_to_map(component, deformation=None):
 
     @dataclass
     class Crossing:
+        # The sequential id of this crossing within the "step".
         n: int
+        # The saddle connection which created this crossing.
         step: object
+        # The location of the intersection.
         intersection: object
+        # Whether this crossing is leaving or entering.
+        # At the initial point of a saddle connection, there is a leaving
+        # touching (out: True), then at every actual crossing, there is a pair
+        # of crossings, one entering (out: False) and one leaving. Finally, at
+        # the target of the saddle connection, there is an entering touching.
         out: bool
 
         def __lt__(self, rhs):
@@ -81,11 +97,14 @@ def component_to_map(component, deformation=None):
             if not self.out and rhs.out: return False
             assert False
 
+    # After this loop, touches[halfEdge] lists the crossings that enter or
+    # leave at this half edge.
     for connection in component.perimeter():
         for step in deform(connection.saddleConnection()):
             n = 1
             touches[step.source()].append(Touching(n, step, step.vector(), True))
 
+            assert len(step.path()) == len((-step).path())
             for intersection, intersection_ in zip(step.path(), reversed((-step).path())):
                 # TODO: Implement operator- for HalfEdgeIntersection so we do not need to -step
                 assert intersection.halfEdge() == -intersection_.halfEdge()
@@ -99,8 +118,84 @@ def component_to_map(component, deformation=None):
             n+= 1
             touches[step.target()].append(Touching(n, step, -step.vector(), False))
 
+    # Sort the touchings and crossings at the half edges such that they are in
+    # the order as they appear along the half edge.
     for halfEdge in touches:
         touches[halfEdge].sort()
+
+    # To be able to paint a picture of the entire component, we need to know
+    # which half edges are inside the component and not immediately related to
+    # the perimeter, e.g., because they are in a face that is completely in the
+    # interior of the component.
+
+    # For this, we determine of each half edge, whether it's beginning is part
+    # of this component and whether its end is part of this component.
+    start = {}
+    end = {}
+
+    for halfEdge in surface.halfEdges():
+        if not touches[halfEdge]:
+            previous = surface.previousAtVertex(halfEdge)
+            if not touches[previous]:
+                # This half edge is not directly involved in the perimeter. We can
+                # only figure out in a second pass whether it is entirely inside or
+                # outside the component.
+                continue
+
+            start[-halfEdge] = end[halfEdge] = start[halfEdge] = end[-halfEdge] = touches[previous][0].out
+        else:
+            crossings = [touch for touch in touches[halfEdge] if isinstance(touch, Crossing)]
+            if crossings:
+                # When we see a crossing going out of this half edge, we know that everything before it is in the component, and conversely.
+                start[halfEdge] = crossings[0].out
+                end[halfEdge] = not crossings[-1].out
+                continue
+
+            # The perimeter does not cross this half edge, it only touches the source vertex of this half edge.
+            for touch in touches[halfEdge]:
+                if touch.vector == surface.fromHalfEdge(halfEdge):
+                    if touch.out:
+                        # The half edge is part of the perimeter.
+                        start[halfEdge] = end[halfEdge] = True
+                        break
+                    else:
+                        # The half edge is not part of the perimeter, only it's opposite is.
+                        start[halfEdge] = end[halfEdge] = False
+                        break
+            else:
+                # The half edge is not part of the perimeter, the touching closest to the half edge decides whether it is inside or outside.
+                start[halfEdge] = end[halfEdge] = not touches[halfEdge][-1].out
+
+    # Walk around the vertices to fill in the blanks produced by half edges that do not show up in the perimeter at all.
+    visited = set()
+    def flood(source):
+        if source in visited:
+            return
+        if source not in start:
+            return
+
+        visited.add(source)
+
+        next = surface.nextAtVertex(source)
+
+        if -next not in end:
+            end[-next] = start[source]
+            start[-next] = start[source]
+            flood(-next)
+            if next not in start:
+                start[next] = start[source]
+                end[next] = start[source]
+                flood(next)
+
+    for halfEdge in surface.halfEdges():
+        flood(halfEdge)
+
+    assert(all(halfEdge in start for halfEdge in surface.halfEdges()))
+    assert(all(halfEdge in end for halfEdge in surface.halfEdges()))
+
+    inside = [halfEdge for halfEdge in surface.halfEdges() if start[halfEdge] and end[halfEdge] and not any(isinstance(touch, Crossing) for touch in touches[halfEdge])]
+
+    for halfEdge in touches:
         touches[halfEdge] = [(touch.step, touch.n, i) for (i, touch) in enumerate(touches[halfEdge])]
 
     touches = { step: sorted([ (touch[1], halfEdge.id(), touch[2]) for halfEdge in touches for touch in touches[halfEdge] if touch[0] == step ]) for connection in component.perimeter() for step in deform(connection.saddleConnection()) }
@@ -124,7 +219,8 @@ def component_to_map(component, deformation=None):
                 "halfEdge": touch[1],
                 "index": touch[2],
             } for touch in touches[step]],
-        } for connection in component.perimeter() for step in deform(connection.saddleConnection())]
+        } for connection in component.perimeter() for step in deform(connection.saddleConnection())],
+        "inside": [halfEdge.id() for halfEdge in inside],
     }
 
 def decomposition_to_map(decomposition, deformation=None, components=None):
@@ -162,7 +258,7 @@ class FlatSurface(VueTemplate):
             from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
             surface = to_pyflatsurf(surface)
             map = surface_to_map(surface)
-            
+
         self.raw = _to_yaml(map)
         self.forced = inner
 
