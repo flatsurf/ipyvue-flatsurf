@@ -39,6 +39,9 @@ def component_to_map(component, deformation=None):
 
     from dataclasses import dataclass
 
+    def perimeter(component):
+        return [connection for connection in component.perimeter() if component.cylinder() or (-connection).component() != component]
+
     def deform(connection):
         r"""
         Return the list of saddle connections that make up this saddle
@@ -99,7 +102,7 @@ def component_to_map(component, deformation=None):
 
     # After this loop, touches[halfEdge] lists the crossings that enter or
     # leave at this half edge.
-    for connection in component.perimeter():
+    for connection in perimeter(component):
         for step in deform(connection.saddleConnection()):
             n = 1
             touches[step.source()].append(Touching(n, step, step.vector(), True))
@@ -198,7 +201,7 @@ def component_to_map(component, deformation=None):
     for halfEdge in touches:
         touches[halfEdge] = [(touch.step, touch.n, i) for (i, touch) in enumerate(touches[halfEdge])]
 
-    touches = { step: sorted([ (touch[1], halfEdge.id(), touch[2]) for halfEdge in touches for touch in touches[halfEdge] if touch[0] == step ]) for connection in component.perimeter() for step in deform(connection.saddleConnection()) }
+    touches = { step: sorted([ (touch[1], halfEdge.id(), touch[2]) for halfEdge in touches for touch in touches[halfEdge] if touch[0] == step ]) for connection in perimeter(component) for step in deform(connection.saddleConnection()) }
 
     return {
         "cylinder": bool(component.cylinder()),
@@ -219,7 +222,7 @@ def component_to_map(component, deformation=None):
                 "halfEdge": touch[1],
                 "index": touch[2],
             } for touch in touches[step]],
-        } for connection in component.perimeter() for step in deform(connection.saddleConnection())],
+        } for connection in perimeter(component) for step in deform(connection.saddleConnection())],
         "inside": [halfEdge.id() for halfEdge in inside],
     }
 
