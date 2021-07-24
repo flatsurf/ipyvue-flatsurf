@@ -4,6 +4,15 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.3.0
+====================
+
+**Fixed:**
+
+* Compatibility with Python 3.7
+
+
+
 v0.2.0
 ====================
 
