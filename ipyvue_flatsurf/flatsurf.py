@@ -54,7 +54,7 @@ def component_to_map(component, deformation=None):
         connections = deformation(flatsurf.Path[type(connection.surface())](connection))
         connections = list(connections.value())
 
-        vector = sum([c.vector() for c in connections], start=type(connections[0].vector())())
+        vector = sum([c.vector() for c in connections], type(connections[0].vector())())
         assert(vector == connection.vector())
         return connections
 
