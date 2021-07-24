@@ -45,6 +45,9 @@ setup_args = dict(
     include_package_data=True,
     install_requires=[
         'ipyvue-remote-component>=1.0.2',
+        'ruamel.yaml>=0.17.10',
+        'sage-flatsurf>=0.4.0',
+        'pyflatsurf>=3.6.4',
     ],
     packages=find_packages(),
     zip_safe=False,

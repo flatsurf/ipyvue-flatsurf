@@ -7,15 +7,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - sagelib: "9.2"
+            python: "3.9.5"
+          - sagelib: "9.3"
+            python: "3.9.5"
+          - environment: "binder"
+            # Default Python version for binder:
+            # https://github.com/jupyterhub/repo2docker/blob/master/repo2docker/buildpacks/conda/environment.yml
+            python: "3.7"
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
-        with: { mamba-version: "*", channels: "flatsurf,conda-forge", channel-priority: true }
+        with: { mamba-version: "*", channels: "flatsurf,conda-forge", python-version: "${{ matrix.python }}", channel-priority: true }
       - name: Install Dependencies
         shell: bash -l {0}
         run: |
+          mamba install -n test sagelib=${{ matrix.sagelib }}
+          echo "sagelib ==${{ matrix.sagelib }}" >> $CONDA_PREFIX/conda-meta/pinned
           mamba env update --quiet -n test -f environment.yml
           conda list
+        if: ${{ matrix.environment != 'binder' }}
+      - name: Create binder environment
+        shell: bash -l {0}
+        run: |
+          wget -O repo2docker.yml https://github.com/jupyterhub/repo2docker/raw/master/repo2docker/buildpacks/conda/environment.yml
+          mamba install -n test --quiet -y pytest pytest-xdist
+          mamba env update -n test --quiet -f repo2docker.yml
+          mamba env update -n test --quiet -f binder/environment.yml
+          conda list
+        if: ${{ matrix.environment == 'binder' }}
       - name: Install ipyvue-flatsurf
         shell: bash -l {0}
         run: |
