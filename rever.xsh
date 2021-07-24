@@ -25,7 +25,7 @@ $CHANGELOG_FILENAME = 'ChangeLog'
 $CHANGELOG_TEMPLATE = 'TEMPLATE.rst'
 $CHANGELOG_NEWS = 'news'
 $CHANGELOG_CATEGORIES = ('Added', 'Changed', 'Removed', 'Fixed')
-$PUSH_TAG_REMOTE = 'git@github.com:saraedum/ipyvue-flatsurf.git'
+$PUSH_TAG_REMOTE = 'git@github.com:flatsurf/ipyvue-flatsurf.git'
 
 $PYPI_BUILD_COMMANDS = ['sdist', 'bdist_wheel']
 
