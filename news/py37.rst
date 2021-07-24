@@ -1,0 +1,3 @@
+**Fixed:**
+
+* Compatibility with Python 3.7
