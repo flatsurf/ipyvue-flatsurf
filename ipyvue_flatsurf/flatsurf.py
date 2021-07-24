@@ -255,6 +255,8 @@ class FlatSurface(VueTemplate):
             map = decomposition_to_map(surface, deformation)
         elif "flatsurf.FlowComponent" in str(type(surface)):
             map = decomposition_to_map(surface.decomposition(), deformation, [surface])
+        elif isinstance(surface, list):
+            map = decomposition_to_map(surface[0].decomposition(), deformation, surface)
         else:
             if (deformation is not None):
                 raise NotImplementedError()
