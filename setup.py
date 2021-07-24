@@ -18,9 +18,6 @@ log.set_verbosity(log.DEBUG)
 log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-name = 'ipyvue_flatsurf'
-LONG_DESCRIPTION = 'Real-Time Plots in Jupyter Notebooks and JupyterLab'
-
 js_dir = pjoin(here, 'js')
 
 # Representative files that should exist after a successful build
@@ -41,10 +38,10 @@ cmdclass['jsdeps'] = combine_commands(
 )
 
 setup_args = dict(
-    name=name,
-    version="0.0.0",
-    description='Real-Time Plots in Jupyter Notebooks and JupyterLab',
-    long_description=LONG_DESCRIPTION,
+    name='ipyvue-flatsurf',
+    version="0.1.0",
+    description='Visualizations for Translations Surfaces in Jupyter Notebooks and JupyterLab',
+    long_description='Visualizations for sage-flatsurf and pyflatsurf.',
     include_package_data=True,
     install_requires=[
         'ipyvue-remote-component>=1.0.2',

@@ -4,6 +4,24 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.1.0
+====================
+
+**Added:**
+
+* Visualization for an individual flow component.
+* Expose `inner` half edges, i.e., those that are visually glued.
+
+* Allow forcing half edges to be visually glued, see `examples/glueings.ipynb`.
+* Example notebook for visualization of cylinders in orthogonal directions.
+
+**Fixed:**
+
+* Fix shading of flow components. Sometimes bits of a flow component that was completely inside a face had been missing.
+* Do not show inner structure of minimal components but only the boundary of such components.
+
+
+
 v1.0.0
 ====================
 
