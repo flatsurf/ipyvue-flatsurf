@@ -4,6 +4,23 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.2.0
+====================
+
+**Added:**
+
+* Binder link to README.
+
+**Changed:**
+
+* Releases are now created on flatsurf/ipyvue-flatsurf and not on saraedum/ipyvue-flatsurf anymore.
+
+**Fixed:**
+
+* Fixed description text in setup.py and on PyPI.
+
+
+
 v0.1.0
 ====================
 
