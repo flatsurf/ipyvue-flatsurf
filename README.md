@@ -8,7 +8,14 @@ Installation
 
 To install use pip:
 
-    pip install ipyvue_flatsurf
+    pip install ./ipyvue_flatsurf
+
+Binder
+------
+
+You can try out sage-flatsurf and ipyvue-flatsurf here: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/master?filepath=%2Fexamples)
+
+Unfortunately, this environment might take quite a while to start.
 
 Development
 -----------
