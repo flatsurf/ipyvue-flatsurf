@@ -6,9 +6,17 @@ Visualize Flat Surfaces in Jupyter Notebooks and JupyterLab
 Installation
 ------------
 
-To install use pip:
+If you already have [sage-flatsurf](https://github.com/flatsurf/sage-flatsurf) and [pyflatsurf](https://github.com/flatsurf/flatsurf), you can install ipyvue-flatsurf with pip:
 
-    pip install ./ipyvue_flatsurf
+    pip install ipyvue-flatsurf
+
+Otherwise, we recommend to use mamba:
+
+* Install [mambaforge](https://github.com/conda-forge/miniforge#mambaforge)
+* `git clone https://github.com/flatsurf/ipyvue-flatsurf.git`
+* `mamba env create -n flatsurf -f ipyvue-flatsurf/binder/environment.yml`
+* `conda activate flatsurf`
+* `jupyter notebook ipyvue-flatsurf/examples`
 
 Binder
 ------
