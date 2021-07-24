@@ -18,7 +18,6 @@ log.set_verbosity(log.DEBUG)
 log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-name = 'ipyvue_flatsurf'
 LONG_DESCRIPTION = 'Real-Time Plots in Jupyter Notebooks and JupyterLab'
 
 js_dir = pjoin(here, 'js')
@@ -41,8 +40,8 @@ cmdclass['jsdeps'] = combine_commands(
 )
 
 setup_args = dict(
-    name=name,
-    version="0.0.0",
+    name='ipyvue-flatsurf',
+    version="0.1.0",
     description='Real-Time Plots in Jupyter Notebooks and JupyterLab',
     long_description=LONG_DESCRIPTION,
     include_package_data=True,
