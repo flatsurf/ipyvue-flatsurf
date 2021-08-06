@@ -267,17 +267,22 @@ class FlatSurface(VueTemplate):
         self.raw = _to_yaml(map)
         self.forced = inner
 
+        self.svg = None
+
     __force = Any(force_load, read_only=True).tag(sync=True, **widget_serialization)
 
     template = Unicode(r"""
-        <surface-viewer :raw="raw" :inner="forced" @update:inner="on_inner_update" />
+        <surface-viewer :raw="raw" :inner="forced" @update:inner="on_inner_update" @svg="on_svg" />
     """).tag(sync=True)
 
     def vue_on_inner_update(self, inner):
         self.inner = inner
 
+    def vue_on_svg(self, svg):
+        self.svg = svg
+
+    inner = List([]).tag(sync=True)
+
     raw = Unicode("").tag(sync=True)
 
     forced = List([]).tag(sync=True)
-
-    inner = List([]).tag(sync=True)
