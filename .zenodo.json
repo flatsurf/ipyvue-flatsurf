@@ -1,0 +1,12 @@
+{
+    "creators": [
+        {   
+            "orcid": "0000-0002-3930-9107",
+            "name": "Rüth, Julian"
+        }
+    ],    
+
+    "license": "GPL-3.0-or-later",
+    "title": "ipyvue-flatsurf",
+    "description": "<p>This project provides Jupyter Widgets for the <a href='https://flatsurf.github.io'>flatsurf suite</a>. In particular it provides interactive widgets for translation surfaces from <a href='https://flatsurf.github.io/sage-flatsurf'>sage-flatsurf</a> and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of <a href='https://flatsurf.github.io/sage-flatsurf'>sage-flatsurf</a> and <a href='https://github.com/flatsurf/flatsurf'>flatsurf</a> and actual visualization in the browser which is implemented in <a href='https://github.com/flatsurf/vue-flatsurf'>vue-flatsurf</a>.</p><p>Please visit our <a href='https://github.com/flasturf/ipyvue-flatsurf'>home page</a> for more infermation.</p>"
+}
