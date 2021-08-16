@@ -57,7 +57,7 @@ cmdclass['jsdeps'] = combine_commands(
 
 setup_args = dict(
     name='ipyvue-flatsurf',
-    version="0.3.0",
+    version="0.4.0",
     description='Visualizations for Translations Surfaces in Jupyter Notebooks and JupyterLab',
     long_description='Visualizations for sage-flatsurf and pyflatsurf.',
     include_package_data=True,

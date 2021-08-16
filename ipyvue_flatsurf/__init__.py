@@ -19,8 +19,8 @@
 from .flatsurf import FlatSurface
 
 
-version_info = (0, 3, 0)
-__version__ = "0.3.0"
+version_info = (0, 4, 0)
+__version__ = "0.4.0"
 
 
 def _jupyter_labextension_paths():
