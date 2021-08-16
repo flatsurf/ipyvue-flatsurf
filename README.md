@@ -6,6 +6,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL_3.0_or_later-blue.svg" alt="License: GPL 3.0 or later">
+  <a href="https://github.com/flatsurf/ipyvue-flatsurf/actions/workflows/test.yml"><img src="https://github.com/flatsurf/ipyvue-flatsurf/actions/workflows/test.yml/badge.svg" alt="Test"></a>
+  <a href="https://doi.org/10.5281/zenodo.5208761"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5208761.svg" alt="DOI 10.5281/zenodo.5208761"></a>
 </p>
 
 <p align="center">Jupyter Widgets for flatsurf</p>
@@ -73,7 +75,7 @@ You then need to refresh the Notebook/JupyterLab page for the changes to take ef
 How to Cite this Project
 ------------------------
 
-If you have used this project in the preparation of a publication, please cite it as described on our [zenodo page](TODO).
+If you have used this project in the preparation of a publication, please cite it as described on our [zenodo page](https://doi.org/10.5281/zenodo.5208761).
 
 Acknowledgements
 ----------------
