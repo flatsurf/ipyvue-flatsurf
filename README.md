@@ -11,7 +11,14 @@
 <p align="center">Jupyter Widgets for flatsurf</p>
 <hr>
 
-This projects provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for translation surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and [flatsurf](https://github.com/flatsurf/flatsurf) and actual visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
+This project provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for translation surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and [flatsurf](https://github.com/flatsurf/flatsurf) and actual visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
+
+There are two related projects in this repository:
+* a Python package [ipyvue-flatsurf](./ipyvue_flatsurf) and
+* the [frontend glue](./js) written in JavaScript.
+* the frontend glue written in JavaScript which is also called [ipyvue-flatsurf](./js).
+
+Note that this project is in an alpha stage. The interface is mostly a proof-of-concept and very likely to change substantially in the future.
 
 Installation
 ------------
