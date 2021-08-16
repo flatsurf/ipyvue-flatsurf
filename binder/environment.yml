@@ -20,4 +20,4 @@ dependencies:
   - pip
   - pip:
     - flipper
-    - ipyvue-flatsurf
+    - ipyvue-flatsurf==0.3.0
