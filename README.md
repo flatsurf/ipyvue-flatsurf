@@ -8,10 +8,10 @@
   <img src="https://img.shields.io/badge/License-GPL_3.0_or_later-blue.svg" alt="License: GPL 3.0 or later">
 </p>
 
-<p align="center">Visualization for flatsurf</p>
+<p align="center">Jupyter Widgets for flatsurf</p>
 <hr>
 
-Visualize Flat Surfaces in Jupyter Notebooks and JupyterLab
+This projects provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for translation surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and [flatsurf](https://github.com/flatsurf/flatsurf) and actual visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
 
 Installation
 ------------
