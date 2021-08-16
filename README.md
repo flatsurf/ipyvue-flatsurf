@@ -27,13 +27,12 @@ If you already have [sage-flatsurf](https://github.com/flatsurf/sage-flatsurf) a
 
     pip install ipyvue-flatsurf
 
-Otherwise, we recommend to use mamba:
+Otherwise, you can install the dependencies with conda. We recommend to download and install [mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
 
-* Install [mambaforge](https://github.com/conda-forge/miniforge#mambaforge)
-* `git clone https://github.com/flatsurf/ipyvue-flatsurf.git`
-* `mamba env create -n flatsurf -f ipyvue-flatsurf/binder/environment.yml`
-* `conda activate flatsurf`
-* `jupyter notebook ipyvue-flatsurf/examples`
+    git clone https://github.com/flatsurf/ipyvue-flatsurf.git
+    mamba env create -n flatsurf -f ipyvue-flatsurf/binder/environment.yml
+    conda activate flatsurf
+    jupyter notebook ipyvue-flatsurf/examples
 
 Binder
 ------
@@ -69,3 +68,19 @@ directory:
     pip install -e . --no-deps # for JupyterLab
 
 You then need to refresh the Notebook/JupyterLab page for the changes to take effect.
+
+How to Cite this Project
+------------------------
+
+If you have used this project in the preparation of a publication, please cite it as described on our [zenodo page](TODO).
+
+Acknowledgements
+----------------
+
+* Julian Rüth's contributions to this project have been supported by the Simons Foundation Investigator grant of Alex Eskin.
+
+Maintainers
+-----------
+
+* [@saraedum](https://github.com/saraedum)
+
