@@ -1,5 +1,15 @@
-ipyvue-flatsurf
-==================
+<p align="center">
+    <img alt="logo" src="https://github.com/flatsurf/ipyvue-flatsurf/raw/master/logo.svg?sanitize=true" width="300px">
+</p>
+
+<h1><p align="center">ipyvue-flatsurf</p></h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/License-GPL_3.0_or_later-blue.svg" alt="License: GPL 3.0 or later">
+</p>
+
+<p align="center">Visualization for flatsurf</p>
+<hr>
 
 Visualize Flat Surfaces in Jupyter Notebooks and JupyterLab
 
