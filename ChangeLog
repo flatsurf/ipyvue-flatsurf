@@ -4,6 +4,15 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.4.0
+====================
+
+**Added:**
+
+* Added SVG export, an example is in the `billiards` notebook.
+
+
+
 v0.3.0
 ====================
 
