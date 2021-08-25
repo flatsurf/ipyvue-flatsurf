@@ -10,7 +10,8 @@ dependencies:
   - sympy
   - scipy
   - ipywidgets
-  - notebook
+  # Work around https://github.com/flatsurf/ipyvue-flatsurf/issues/38
+  - notebook>=6.0.0,<6.3.0
   - pyflatsurf>=3.6.4,<4
   - matplotlib-base
   - surface-dynamics>=0.4.7
