@@ -1,3 +1,31 @@
+r"""
+Jupyter Widgets for flatsurf.
+
+This package adds display hooks for some of the objects in flatsurf, pyflatsurf,
+and sage-flatsurf.
+
+EXAMPLES:
+
+Importing this module adds display hooks::
+
+    >>> import ipyvue_flatsurf
+
+They get called automatically if a cell ends with such an object::
+
+    >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
+    >>> t = polygons.triangle(1, 1, 1)
+    >>> B = similarity_surfaces.billiard(t)
+    >>> S = B.minimal_cover('translation')
+    >>> S
+    TranslationSurface built from 6 polygons
+
+Running the above in a Jupyter notebook calls the `_ipython_display_` hook and
+displays an actual widget instead::
+
+    >>> S._ipython_display_()
+    TranslationSurfaceWidget(...)
+
+"""
 #*********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
@@ -16,7 +44,7 @@
 #  You should have received a copy of the GNU General Public License along with
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
 #*********************************************************************
-from .flatsurf import FlatSurface
+from ipyvue_flatsurf.widget import Widget
 
 
 version_info = (0, 4, 0)
