@@ -42,7 +42,7 @@ from flatsurf.geometry.translation_surface import TranslationSurface
 from flatsurf.geometry.gl2r_orbit_closure import Decomposition
 
 
-def Widget(x):
+def Widget(x, *args, **kwargs):
     r"""
     Create a widget from `x`.
 
@@ -57,12 +57,24 @@ def Widget(x):
     >>> Widget(S)
     TranslationSurfaceWidget(...)
 
+    A widget for a sage-flatsurf flow decomposition::
+
+    >>> from flatsurf import GL2ROrbitClosure
+    >>> O = GL2ROrbitClosure(S)
+    >>> D = next(O.decompositions(bound=64))
+    >>> Widget(D)
+    FlowDecompositionWidget(...)
+
     """
     if isinstance(x, TranslationSurface):
         from ipyvue_flatsurf.widgets.translation_surface_widget import TranslationSurfaceWidget
-        return TranslationSurfaceWidget(x)
+        return TranslationSurfaceWidget(x, *args, **kwargs)
+    if isinstance(x, Decomposition):
+        from ipyvue_flatsurf.widgets.flow_decomposition_widget import FlowDecompositionWidget
+        return FlowDecompositionWidget(x, *args, **kwargs)
 
     raise TypeError(f"No flatsurf widget available for {type(x)}")
 
 
 TranslationSurface._ipython_display_ = lambda self: Widget(self)._ipython_display_()
+Decomposition._ipython_display_ = lambda self: Widget(self)._ipython_display_()

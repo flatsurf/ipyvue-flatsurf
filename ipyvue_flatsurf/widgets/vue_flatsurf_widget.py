@@ -21,7 +21,7 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 # ********************************************************************
 
 from ipyvue import VueTemplate
-from traitlets import Unicode, Any
+from traitlets import Unicode, Any, List
 from ipywidgets.widgets.widget import widget_serialization
 from ipyvue_flatsurf.force_load import force_load
 
@@ -32,53 +32,38 @@ class VueFlatsurfWidget(VueTemplate):
     Widget component.
     """
 
-    def __init__(self, triangulation, action="glue"):
+    def __init__(self, triangulation, action="glue", flow_components=[]):
         VueTemplate.__init__(self)
-        self.template = VueFlatsurfWidget._create_template("triangulation", "action")
-        self.triangulation = VueFlatsurfWidget._to_yaml(VueFlatsurfWidget._encode_flat_triangulation(triangulation))
+        self.template = VueFlatsurfWidget._create_template(*[name[:-len('_prop')] for name in dir(type(self)) if name.endswith("_prop")])
+        self.triangulation = triangulation
         self.action = action
+        self.flow_components = flow_components
 
-    @classmethod
-    def _encode_flat_triangulation(cls, triangulation):
-        r"""
-        Return the flat triangulation encoded as a primitive type.
+    @property
+    def triangulation(self):
+        raise NotImplementedError("cannot parse the triangulation underlying a widget yet")
 
-        EXAMPLES::
+    @triangulation.setter
+    def triangulation(self, triangulation):
+        from ipyvue_flatsurf.encoding.flat_triangulation import encode_flat_triangulation
+        self.triangulation_prop = VueFlatsurfWidget._to_yaml(encode_flat_triangulation(triangulation))
 
-            >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
-            >>> t = polygons.triangle(1, 1, 1)
-            >>> B = similarity_surfaces.billiard(t)
-            >>> S = B.minimal_cover('translation')
+    @property
+    def action(self):
+        return self.action_prop
 
-            >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
-            >>> T = to_pyflatsurf(S)
+    @action.setter
+    def action(self, action):
+        self.action_prop = action
 
-            >>> VueFlatsurfWidget._encode_flat_triangulation(T) == {
-            ...   'vertices': [[1, -3, -9, 6, -7, 4], [-1, -5, 9, -8, 7, 2], [-2, -6, 5, -4, 8, 3]],
-            ...   'vectors': {
-            ...      1: {'x': 1.0, 'y': 0.0},
-            ...      2: {'x': -0.5, 'y': 0.8660254037844386},
-            ...      3: {'x': -0.5, 'y': -0.8660254037844386},
-            ...      4: {'x': 0.5, 'y': -0.8660254037844386},
-            ...      5: {'x': 0.5, 'y': 0.8660254037844386},
-            ...      6: {'x': -1.0, 'y': 0.0},
-            ...      7: {'x': 0.5, 'y': 0.8660254037844386},
-            ...      8: {'x': -1.0, 'y': 0.0},
-            ...      9: {'x': 0.5, 'y': -0.8660254037844386}
-            ...   }
-            ... }
-            True
+    @property
+    def flow_components(self):
+        raise NotImplementedError("cannot parse the flow components displayed in a widget yet")
 
-        """
-        return {
-            "vertices": [list(he.id() for he in triangulation.atVertex(v)) for v in triangulation.vertices()],
-            "vectors": {
-                he.id(): {
-                    "x": float(triangulation.fromHalfEdge(he).x()),
-                    "y": float(triangulation.fromHalfEdge(he).y()),
-                } for he in triangulation.halfEdges() if he.id() > 0
-            }
-        }
+    @flow_components.setter
+    def flow_components(self, flow_components, deformation=None):
+        from ipyvue_flatsurf.encoding.flow_component import encode_flow_component
+        self.flow_components_prop = [VueFlatsurfWidget._to_yaml(encode_flow_component(component, deformation)) for component in flow_components]
 
     @classmethod
     def _to_yaml(cls, x):
@@ -110,13 +95,15 @@ class VueFlatsurfWidget(VueTemplate):
 
         EXAMPLES::
 
-            >>> VueFlatsurfWidget._create_template("triangulation");
-            '<vue-flatsurf-widget :triangulation="triangulation" />'
+            >>> VueFlatsurfWidget._create_template("triangulation", "snake_case");
+            '<vue-flatsurf-widget :triangulation="triangulation_prop" :snake-case="snake_case_prop" />'
         """
-        return f"""<vue-flatsurf-widget { " ".join([f':{prop}="{prop}"' for prop in props]) } />"""
+        def kebab(name): return name.replace('_', '-')
+        return f"""<vue-flatsurf-widget { " ".join([f':{kebab(prop)}="{prop}_prop"' for prop in props]) } />"""
 
     __force = Any(force_load, read_only=True).tag(sync=True, **widget_serialization)
 
     template = Unicode("").tag(sync=True)
-    triangulation = Unicode("").tag(sync=True)
-    action = Any(None).tag(sync=True)
+    triangulation_prop = Unicode("").tag(sync=True)
+    action_prop = Any(None).tag(sync=True)
+    flow_components_prop = List([]).tag(sync=True)
