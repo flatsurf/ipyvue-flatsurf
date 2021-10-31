@@ -3,10 +3,8 @@ A Jupyter Widget for a sage-flatsurf Translation Surface.
 
 EXAMPLES:
 
-    >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
-    >>> t = polygons.triangle(1, 1, 1)
-    >>> B = similarity_surfaces.billiard(t)
-    >>> S = B.minimal_cover('translation')
+    >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
+    >>> S = TranslationSurfaceGenerators.square_torus()
     >>> TranslationSurfaceWidget(S)
     TranslationSurfaceWidget(...)
 

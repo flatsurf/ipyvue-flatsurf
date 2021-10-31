@@ -12,12 +12,10 @@ Importing this module adds display hooks::
 
 They get called automatically if a cell ends with such an object::
 
-    >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
-    >>> t = polygons.triangle(1, 1, 1)
-    >>> B = similarity_surfaces.billiard(t)
-    >>> S = B.minimal_cover('translation')
+    >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
+    >>> S = TranslationSurfaceGenerators.square_torus()
     >>> S
-    TranslationSurface built from 6 polygons
+    TranslationSurface built from 1 polygon
 
 Running the above in a Jupyter notebook calls the `_ipython_display_` hook and
 displays an actual widget instead::

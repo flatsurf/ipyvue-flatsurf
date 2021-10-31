@@ -27,15 +27,15 @@ def encode_flow_component(component, deformation=None):
 
     EXAMPLES::
 
-        >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces, GL2ROrbitClosure
-        >>> t = polygons.triangle(1, 1, 1)
-        >>> B = similarity_surfaces.billiard(t)
-        >>> S = B.minimal_cover('translation')
+        >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
+        >>> S = TranslationSurfaceGenerators.square_torus()
+
+        >>> from flatsurf import GL2ROrbitClosure
         >>> O = GL2ROrbitClosure(S)
         >>> D = next(O.decompositions(bound=64))
         >>> component = D.decomposition.components()[0]
         >>> encode_flow_component(component)
-        {'cylinder': True, 'perimeter': [...], 'inside': [1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9]}
+        {'cylinder': True, 'perimeter': [...], 'inside': [1, -1, 2, -2, 3, -3]}
 
     Using a deformation, a flow component can also be pulled back from a
     deformed surface::

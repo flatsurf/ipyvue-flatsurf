@@ -7,10 +7,8 @@ display hooks so these widgets are shown automatically in Jupyter Notebooks.
 
 EXAMPLES::
 
-    >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
-    >>> t = polygons.triangle(1, 1, 1)
-    >>> B = similarity_surfaces.billiard(t)
-    >>> S = B.minimal_cover('translation')
+    >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
+    >>> S = TranslationSurfaceGenerators.square_torus()
 
 This module provides an explicit `Widget` command to create a widget::
 
@@ -50,10 +48,8 @@ def Widget(x, *args, **kwargs):
 
     A widget from a sage-flatsurf translation surface::
 
-    >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
-    >>> t = polygons.triangle(1, 1, 1)
-    >>> B = similarity_surfaces.billiard(t)
-    >>> S = B.minimal_cover('translation')
+    >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
+    >>> S = TranslationSurfaceGenerators.square_torus()
     >>> Widget(S)
     TranslationSurfaceWidget(...)
 

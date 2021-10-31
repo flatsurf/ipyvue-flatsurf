@@ -27,28 +27,13 @@ def encode_flat_triangulation(triangulation):
 
     EXAMPLES::
 
-        >>> from flatsurf import translation_surfaces, polygons, similarity_surfaces
-        >>> t = polygons.triangle(1, 1, 1)
-        >>> B = similarity_surfaces.billiard(t)
-        >>> S = B.minimal_cover('translation')
+        >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
+        >>> S = TranslationSurfaceGenerators.square_torus()
 
         >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
         >>> T = to_pyflatsurf(S)
 
-        >>> encode_flat_triangulation(T) == {
-        ...   'vertices': [[1, -3, -9, 6, -7, 4], [-1, -5, 9, -8, 7, 2], [-2, -6, 5, -4, 8, 3]],
-        ...   'vectors': {
-        ...      1: {'x': 1.0, 'y': 0.0},
-        ...      2: {'x': -0.5, 'y': 0.8660254037844386},
-        ...      3: {'x': -0.5, 'y': -0.8660254037844386},
-        ...      4: {'x': 0.5, 'y': -0.8660254037844386},
-        ...      5: {'x': 0.5, 'y': 0.8660254037844386},
-        ...      6: {'x': -1.0, 'y': 0.0},
-        ...      7: {'x': 0.5, 'y': 0.8660254037844386},
-        ...      8: {'x': -1.0, 'y': 0.0},
-        ...      9: {'x': 0.5, 'y': -0.8660254037844386}
-        ...   }
-        ... }
+        >>> encode_flat_triangulation(T) == {'vertices': [[1, -3, 2, -1, 3, -2]], 'vectors': {1: {'x': 1.0, 'y': 1.0}, 2: {'x': -1.0, 'y': 0.0}, 3: {'x': 0.0, 'y': -1.0}}}
         True
 
     """
