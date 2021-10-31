@@ -50,8 +50,8 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
         Currently, this is not implemented. The triangulation can only be set
         but not recovered::
 
-            >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
-            >>> S = TranslationSurfaceGenerators.square_torus()
+            >>> from flatsurf import translation_surfaces
+            >>> S = translation_surfaces.square_torus();
 
             >>> from ipyvue_flatsurf import Widget
             >>> W = Widget(S)
@@ -70,8 +70,8 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
 
         EXAMPLES::
 
-            >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
-            >>> S = TranslationSurfaceGenerators.square_torus()
+            >>> from flatsurf import translation_surfaces
+            >>> S = translation_surfaces.square_torus();
 
             >>> from ipyvue_flatsurf import Widget
             >>> W = Widget(S)

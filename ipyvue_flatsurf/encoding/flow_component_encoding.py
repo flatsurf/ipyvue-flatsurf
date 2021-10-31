@@ -27,10 +27,8 @@ def encode_flow_component(component, deformation=None):
 
     EXAMPLES::
 
-        >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
-        >>> S = TranslationSurfaceGenerators.square_torus()
-
-        >>> from flatsurf import GL2ROrbitClosure
+        >>> from flatsurf import translation_surfaces, GL2ROrbitClosure
+        >>> S = translation_surfaces.square_torus()
         >>> O = GL2ROrbitClosure(S)
         >>> D = next(O.decompositions(bound=64))
         >>> component = D.decomposition.components()[0]

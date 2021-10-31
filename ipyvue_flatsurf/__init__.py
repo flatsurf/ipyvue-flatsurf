@@ -12,8 +12,8 @@ Importing this module adds display hooks::
 
 They get called automatically if a cell ends with such an object::
 
-    >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
-    >>> S = TranslationSurfaceGenerators.square_torus()
+    >>> from flatsurf import translation_surfaces
+    >>> S = translation_surfaces.square_torus()
     >>> S
     TranslationSurface built from 1 polygon
 

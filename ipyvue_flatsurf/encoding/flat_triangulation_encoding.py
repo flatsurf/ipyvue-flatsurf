@@ -27,8 +27,8 @@ def encode_flat_triangulation(triangulation):
 
     EXAMPLES::
 
-        >>> from flatsurf.geometry.similarity_surface_generators import TranslationSurfaceGenerators
-        >>> S = TranslationSurfaceGenerators.square_torus()
+        >>> from flatsurf import translation_surfaces
+        >>> S = translation_surfaces.square_torus()
 
         >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
         >>> T = to_pyflatsurf(S)
