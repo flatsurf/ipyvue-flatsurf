@@ -32,10 +32,11 @@ class VueFlatsurfWidget(VueTemplate):
     Widget component.
     """
 
-    def __init__(self, triangulation):
+    def __init__(self, triangulation, action="glue"):
         VueTemplate.__init__(self)
-        self.template = VueFlatsurfWidget._create_template("triangulation")
+        self.template = VueFlatsurfWidget._create_template("triangulation", "action")
         self.triangulation = VueFlatsurfWidget._to_yaml(VueFlatsurfWidget._encode_flat_triangulation(triangulation))
+        self.action = action
 
     @classmethod
     def _encode_flat_triangulation(cls, triangulation):
@@ -118,3 +119,4 @@ class VueFlatsurfWidget(VueTemplate):
 
     template = Unicode("").tag(sync=True)
     triangulation = Unicode("").tag(sync=True)
+    action = Any(None).tag(sync=True)

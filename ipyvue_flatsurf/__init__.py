@@ -23,10 +23,10 @@ Running the above in a Jupyter notebook calls the `_ipython_display_` hook and
 displays an actual widget instead::
 
     >>> S._ipython_display_()
-    TranslationSurfaceWidget(...)
+    {...}
 
 """
-#*********************************************************************
+# ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
 #        Copyright (C) 2021 Julian Rüth
@@ -43,8 +43,11 @@ displays an actual widget instead::
 #
 #  You should have received a copy of the GNU General Public License along with
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
-#*********************************************************************
+# ********************************************************************
+
 from ipyvue_flatsurf.widget import Widget
+
+Widget  # silence pyflakes
 
 
 version_info = (0, 4, 0)
