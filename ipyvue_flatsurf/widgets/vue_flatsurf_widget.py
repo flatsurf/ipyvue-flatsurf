@@ -21,7 +21,7 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 # ********************************************************************
 
 from ipyvue import VueTemplate
-from traitlets import Unicode, Any, List
+from traitlets import Unicode, Any, List, Bool
 from ipywidgets.widgets.widget import widget_serialization
 from ipyvue_flatsurf.force_load import force_load
 from ipyvue_async import CommWidget
@@ -98,6 +98,24 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
         from ipyvue_flatsurf.encoding.flow_component_encoding import encode_flow_component
         self.flow_components_prop = [VueFlatsurfWidget._to_yaml(encode_flow_component(component, deformation)) for component in flow_components]
 
+    @property
+    def labels(self):
+        raise NotImplementedError("TODO: Implement me.")
+
+    @labels.setter
+    def labels(self, value):
+        if value == "NUMERIC":
+            self.show_numeric_labels_prop = True
+            self.show_outer_labels_prop = False
+        elif value == "OUTER":
+            self.show_numeric_labels_prop = False
+            self.show_outer_labels_prop = True
+        elif value == "MIXED":
+            self.show_numeric_labels_prop = True
+            self.show_outer_labels_prop = True
+        else:
+            raise ValueError("TODO")
+
     @classmethod
     def _to_yaml(cls, x):
         r"""
@@ -152,3 +170,5 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
     triangulation_prop = Unicode("").tag(sync=True)
     action_prop = Any(None).tag(sync=True)
     flow_components_prop = List([]).tag(sync=True)
+    show_numeric_labels_prop = Bool(False).tag(sync=True)
+    show_outer_labels_prop = Bool(True).tag(sync=True)

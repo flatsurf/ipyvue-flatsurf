@@ -61,15 +61,68 @@ def Widget(x, *args, **kwargs):
     >>> Widget(D)
     FlowDecompositionWidget(...)
 
+    A widget for a flatsurf flow component::
+
+    TODO
+
+    A widget for a collection of flow components::
+
+    TODO
+
     """
     if isinstance(x, TranslationSurface):
         from ipyvue_flatsurf.widgets.translation_surface_widget import TranslationSurfaceWidget
         return TranslationSurfaceWidget(x, *args, **kwargs)
+
     if isinstance(x, Decomposition):
         from ipyvue_flatsurf.widgets.flow_decomposition_widget import FlowDecompositionWidget
         return FlowDecompositionWidget(x, *args, **kwargs)
 
+    if is_flow_component(x):
+        from ipyvue_flatsurf.widgets.flow_component_widget import FlowComponentWidget
+        return FlowComponentWidget(x, *args, **kwargs)
+
+    if is_iterable(x) and all([is_flow_component(y) for y in x]):
+        from ipyvue_flatsurf.widgets.flow_component_widget import FlowComponentWidget
+        return FlowComponentWidget(list(x), *args, **kwargs)
+
     raise TypeError(f"No flatsurf widget available for {type(x)}")
+
+
+def is_iterable(x):
+    r"""
+    Return whether `x` is iterable.
+    """
+    from collections.abc import Iterable
+    if isinstance(x, Iterable):
+        return True
+    try:
+        iter(x)
+    except TypeError:
+        return False
+    return True
+
+
+def is_flow_component(x):
+    r"""
+    Return whether `x` is a flow component.
+
+    TODO: Such methods should go into pyflatsurf instead and be implemented in a sane way.
+
+    EXAMPLES::
+
+        >>> from flatsurf import translation_surfaces
+        >>> S = translation_surfaces.square_torus()
+        >>> is_flow_component(S)
+        False
+
+        >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
+        >>> S = to_pyflatsurf(S)
+        >>> is_flow_component(S)
+        False
+
+    """
+    return "flatsurf.FlowComponent<" in str(type(x))
 
 
 TranslationSurface._ipython_display_ = lambda self: Widget(self)._ipython_display_()
