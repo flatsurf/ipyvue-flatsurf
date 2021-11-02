@@ -1,4 +1,30 @@
-#*********************************************************************
+r"""
+Jupyter Widgets for flatsurf.
+
+This package adds display hooks for some of the objects in flatsurf, pyflatsurf,
+and sage-flatsurf.
+
+EXAMPLES:
+
+Importing this module adds display hooks::
+
+    >>> import ipyvue_flatsurf
+
+They get called automatically if a cell ends with such an object::
+
+    >>> from flatsurf import translation_surfaces
+    >>> S = translation_surfaces.square_torus()
+    >>> S
+    TranslationSurface built from 1 polygon
+
+Running the above in a Jupyter notebook calls the `_ipython_display_` hook and
+displays an actual widget instead::
+
+    >>> S._ipython_display_()
+    {...}
+
+"""
+# ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
 #        Copyright (C) 2021 Julian Rüth
@@ -15,8 +41,11 @@
 #
 #  You should have received a copy of the GNU General Public License along with
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
-#*********************************************************************
-from .flatsurf import FlatSurface
+# ********************************************************************
+
+from ipyvue_flatsurf.widget import Widget
+
+Widget  # silence pyflakes
 
 
 version_info = (0, 4, 0)

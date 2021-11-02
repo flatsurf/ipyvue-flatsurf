@@ -66,6 +66,7 @@ setup_args = dict(
         'ruamel.yaml>=0.17.10',
         'sage-flatsurf>=0.4.0',
         'pyflatsurf>=3.6.4',
+        'ipyvue-async>=0.1.0',
     ],
     packages=find_packages(),
     zip_safe=False,
