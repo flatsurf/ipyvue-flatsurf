@@ -605,9 +605,9 @@ ansi-escapes@^4.2.1:
     type-fest "^0.21.3"
 
 ansi-regex@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.0.tgz#388539f55179bf39339c81af30a654d69f87cb75"
-  integrity sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
+  integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
 
 ansi-styles@^3.2.1:
   version "3.2.1"
@@ -2615,10 +2615,10 @@ v8-compile-cache@^2.2.0:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vue-flatsurf@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/vue-flatsurf/-/vue-flatsurf-0.8.0.tgz#e21e35256f846d19553d7aa3c1e10b3ef84dfdf1"
-  integrity sha512-4mzN8TBv/JrbycUsjxSK81F4OpMoKD1PxwBZxLCLo6I10ACXZk54rfuR+HS8rnUuCgv6QsTHGQlzQkcbTDEMaw==
+vue-flatsurf@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/vue-flatsurf/-/vue-flatsurf-0.8.1.tgz#30f70ec5fcfd67ed9ce3a6445e5f934cfdce64aa"
+  integrity sha512-oH/Fssfu4DEvftdxMUNQeNna+Pw9nDjAwS3Lxg+6u4Eh2RjMeAt1b+p9IknCtoyr4wzxq4q/mM94G9d4XgWzAw==
   dependencies:
     "@flatten-js/core" "^1.2.24"
     "@mdi/js" "^6.4.95"
