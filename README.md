@@ -17,8 +17,7 @@ This project provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.
 
 There are two related projects in this repository:
 * a Python package [ipyvue-flatsurf](./ipyvue_flatsurf) and
-* the [frontend glue](./js) written in JavaScript.
-* the frontend glue written in JavaScript which is also called [ipyvue-flatsurf](./js).
+* the [frontend glue](./js) written in JavaScript which is also called [ipyvue-flatsurf](./js).
 
 Note that this project is in an alpha stage. The interface is mostly a proof-of-concept and very likely to change substantially in the future.
 
