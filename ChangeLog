@@ -4,6 +4,17 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.5.2
+====================
+
+**Fixed:**
+
+* Fixed caching issue when drawing paths in the same widget.
+
+* Fixed a warning about the missing `FlowComponent::decomposition()` method.
+
+
+
 v0.5.1
 ====================
 
