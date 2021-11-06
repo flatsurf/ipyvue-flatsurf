@@ -13,4 +13,5 @@ dependencies:
   - sage-flatsurf
   - pip:
     - ipyvue-async >=0.1.0,<0.2
+    - ipyvue >=1.5.0,<2
     - jupyter_ui_poll >=0.2.1,<0.3

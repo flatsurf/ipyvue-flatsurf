@@ -67,6 +67,7 @@ setup_args = dict(
         'pyflatsurf>=3.6.4,<4',
         'ipyvue-async>=0.1.0,<0.2',
         'jupyter-ui-poll>=0.2.1,<0.3',
+        'ipyvue>=1.5.0,<2',
     ],
     packages=find_packages(),
     zip_safe=False,
