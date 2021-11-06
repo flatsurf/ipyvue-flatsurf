@@ -2588,10 +2588,10 @@ v8-compile-cache@^2.2.0:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vue-flatsurf@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/vue-flatsurf/-/vue-flatsurf-0.9.0.tgz#51195042c3ed27f421793f451be6681f7e73b5b3"
-  integrity sha512-EsW0JlW7b7sFLCfYtom4pwiKMQtvrqTEWuOcxJPFomUjdmTKXbbR0NjxNZFKEludCl9E/FlKN82GStPKLjUN6w==
+vue-flatsurf@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/vue-flatsurf/-/vue-flatsurf-0.9.1.tgz#511575fdc0861635141ce1e8bf78abfa47b3f77c"
+  integrity sha512-WUwVRULb75Vs8MvjzID2CStWR9L7fbumWC6BGHw563BvHIyp2dGMjzfA6EV7HXGp6m1fnz1MukreXTPTGVGhPA==
   dependencies:
     "@flatten-js/core" "^1.2.24"
     "@mdi/js" "^6.4.95"
