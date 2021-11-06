@@ -17,6 +17,25 @@ Typically, this module is not used directly, but the widget created through the
     >>> Widget(D)
     FlowDecompositionWidget(...)
 
+We can also pull back components through a deformation such as the one that is
+eliminating marked points::
+
+    >>> from flatsurf import polygons, similarity_surfaces, GL2ROrbitClosure
+    >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
+    >>> t = polygons.triangle(1, 1, 1)
+    >>> B = similarity_surfaces.billiard(t)
+    >>> S = B.minimal_cover('translation')
+    >>> deformation = to_pyflatsurf(S).eliminateMarkedPoints()
+    >>> O = GL2ROrbitClosure(deformation.codomain())
+    >>> D = next(O.decompositions(bound=64))
+    >>> FlowDecompositionWidget(D, deformation=deformation.section())
+    FlowDecompositionWidget(...)
+
+::
+
+    >>> Widget(D, deformation=deformation.section())
+    FlowDecompositionWidget(...)
+
 """
 # ********************************************************************
 #  This file is part of ipyvue-flatsurf.
@@ -42,10 +61,13 @@ from ipyvue_flatsurf.widgets.vue_flatsurf_widget import VueFlatsurfWidget
 
 class FlowDecompositionWidget(VueFlatsurfWidget):
     def __init__(self, decomposition, deformation=None):
+        if hasattr(decomposition, "decomposition"):
+            decomposition = decomposition.decomposition
+
         if deformation is not None:
             triangulation = deformation.codomain()
         else:
-            triangulation = decomposition.decomposition.surface()
+            triangulation = decomposition.surface()
         VueFlatsurfWidget.__init__(self, triangulation)
 
-        FlowDecompositionWidget.flow_components.fset(self, decomposition.decomposition.components(), deformation)
+        self.set_flow_components(decomposition.components(), deformation)

@@ -73,8 +73,10 @@ class Encoder:
 
     @property
     def encoded(self):
-        # TODO: docstring
-        start, end = self.start_end
+        r"""
+        Return an encoded version of this flow component.
+        """
+        start, end = self.in_component
 
         inside = [halfEdge for halfEdge in self.surface.halfEdges() if start[halfEdge] and end[halfEdge] and not any(isinstance(touch, Crossing) for touch in self.touches[halfEdge])]
 
@@ -82,33 +84,55 @@ class Encoder:
 
         touches = {step: sorted([(touch[1], halfEdge.id(), touch[2]) for halfEdge in touches for touch in touches[halfEdge] if touch[0] == step]) for connection in self.perimeter for step in self.pullback(connection.saddleConnection())}
 
+        from ipyvue_flatsurf.encoding.saddle_connection_encoding import encode_saddle_connection
+
         return {
             "cylinder": bool(self.component.cylinder()),
-            "perimeter": [{
-                "source": step.source().id(),
-                "target": step.target().id(),
-                "vertical": connection.vertical(),
-                "boundary": connection.boundary(),
-                "vector": {
-                    "x": float(step.vector().x()),
-                    "y": float(step.vector().y()),
-                },
-                "crossings": [{
-                    "halfEdge": intersection.halfEdge().id(),
-                    "at": intersection.at(),
-                } for intersection in step.path()],
-                "touches": [{
+            "perimeter": [dict(
+                vertical=connection.vertical(),
+                boundary=connection.boundary(),
+                touches=[{
                     "halfEdge": touch[1],
                     "index": touch[2],
                 } for touch in touches[step]],
-            } for connection in self.perimeter for step in self.pullback(connection.saddleConnection())],
+                **encode_saddle_connection(step),
+            ) for connection in self.perimeter for step in self.pullback(connection.saddleConnection())],
             "inside": [halfEdge.id() for halfEdge in inside],
         }
 
     @property
     @cache
     def touches(self):
-        # TODO: docstring
+        r"""
+        Return for each half edge the touches and crossings of a flow
+        connection with this half edge.
+
+        EXAMPLES::
+
+            >>> from flatsurf import translation_surfaces, GL2ROrbitClosure
+            >>> S = translation_surfaces.square_torus()
+            >>> O = GL2ROrbitClosure(S)
+            >>> D = next(O.decompositions(bound=64))
+            >>> component = D.decomposition.components()[0]
+
+            >>> from pyflatsurf import flatsurf
+            >>> Encoder(component).touches[flatsurf.HalfEdge(1)]
+            [Touching(n=1, step=1, out=True, vector=(1, 1)), Touching(n=2, step=-1, out=False, vector=(1, 1))]
+
+        ::
+
+            >>> S = translation_surfaces.mcmullen_L(1, 1, 1, 1)
+            >>> O = GL2ROrbitClosure(S)
+            >>> D = O.decomposition((1, 0))
+            >>> component = D.decomposition.components()[0]
+
+            >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
+            >>> encoder = Encoder(component)
+            >>> encoder.touches[flatsurf.HalfEdge(1)]
+            [Touching(n=1, step=1, out=True, vector=(1, 1)), Touching(n=2, step=-1, out=False, vector=(1, 1))]
+
+
+        """
         touches = {halfEdge: [] for halfEdge in self.surface.halfEdges()}
 
         # After this loop, touches[halfEdge] lists the crossings that enter or
@@ -116,21 +140,21 @@ class Encoder:
         for connection in self.perimeter:
             for step in self.pullback(connection.saddleConnection()):
                 n = 1
-                touches[step.source()].append(Touching(n, step, step.vector(), True))
+                touches[step.source()].append(Touching(n=n, step=step, vector=step.vector(), out=True))
 
                 assert len(step.path()) == len((-step).path())
                 for intersection, intersection_ in zip(step.path(), reversed((-step).path())):
-                    # TODO: Implement operator- for HalfEdgeIntersection so we do not need to -step
+                    # It seems that this could be simplified if we had a HalfEdgeIntersection::operator-.
                     assert intersection.halfEdge() == -intersection_.halfEdge()
 
                     n += 1
-                    touches[intersection.halfEdge()].append(Crossing(n, step, intersection, False))
+                    touches[intersection.halfEdge()].append(Crossing(n=n, step=step, intersection=intersection, out=False))
 
                     n += 1
-                    touches[intersection_.halfEdge()].append(Crossing(n, step, intersection_, True))
+                    touches[intersection_.halfEdge()].append(Crossing(n=n, step=step, intersection=intersection_, out=True))
 
                 n += 1
-                touches[step.target()].append(Touching(n, step, -step.vector(), False))
+                touches[step.target()].append(Touching(n=n, step=step, vector=-step.vector(), out=False))
 
         # Sort the touchings and crossings at the half edges such that they are in
         # the order as they appear along the half edge.
@@ -204,7 +228,8 @@ class Encoder:
 
         TODO: This is maybe not the right thing to do for non-cylinders. In
         particular, this breaks when there is only one minimal or
-        undetermined component as this excludes everything.
+        undetermined component as this excludes everything. See
+        https://github.com/flatsurf/ipyvue-flatsurf/issues/46.
 
         EXAMPLES::
 
@@ -219,23 +244,64 @@ class Encoder:
             >>> encoder.perimeter
             [3, 1, -3, -1]
 
+        ::
+
+            >>> S = translation_surfaces.mcmullen_L(1, 1, 1, 1)
+            >>> O = GL2ROrbitClosure(S)
+            >>> D = O.decomposition((1, 0))
+            >>> component = D.decomposition.components()[0]
+
+            >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
+            >>> encoder = Encoder(component)
+            >>> encoder.perimeter
+            [-1, -5, -8, 1, 2, 8]
+
+
         """
         return [connection for connection in self.component.perimeter() if
                 self.component.cylinder() or connection.boundary()]
 
     @property
     @cache
-    def start_end(self):
-        # TODO: docstring
-        # TODO: This is not a good name.
+    def in_component(self):
+        r"""
+        Return for each half edge whether its beginning is part this component
+        and whether its end is part of this component.
 
-        # To be able to paint a picture of the entire component, we need to know
-        # which half edges are inside the component and not immediately related to
-        # the perimeter, e.g., because they are in a face that is completely in the
-        # interior of the component.
+        To be able to paint a picture of the entire component, we need to know
+        which half edges are inside the component and not immediately related to
+        the perimeter, e.g., because they are in a face that is completely in the
+        interior of the component.
 
-        # For this, we determine of each half edge, whether its beginning is part
-        # of this component and whether its end is part of this component.
+        EXAMPLES::
+
+            >>> from flatsurf import translation_surfaces, GL2ROrbitClosure
+            >>> S = translation_surfaces.square_torus()
+            >>> O = GL2ROrbitClosure(S)
+            >>> D = next(O.decompositions(bound=64))
+            >>> component = D.decomposition.components()[0]
+
+            >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
+            >>> encoder = Encoder(component)
+            >>> encoder.in_component
+            ({1: True, -1: True, -2: True, 2: True, 3: True, -3: True}, {1: True, -1: True, 2: True, -2: True, 3: True, -3: True})
+
+        ::
+
+            >>> S = translation_surfaces.mcmullen_L(1, 1, 1, 1)
+            >>> O = GL2ROrbitClosure(S)
+            >>> D = O.decomposition((1, 0))
+            >>> component = D.decomposition.components()[0]
+
+            >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
+            >>> encoder = Encoder(component)
+            >>> encoder.in_component[0]
+            {1: True, -1: True, 2: True, -2: False, 3: True, -3: True, -4: False, 4: False, 5: False, -5: True, -7: True, 7: True, 8: True, -8: True, -9: True, 9: True, 6: False, -6: False}
+            >>> encoder.in_component[1]
+            {1: True, -1: True, 2: True, -2: False, -3: True, 3: True, 4: False, -4: False, 5: False, -5: True, 7: True, -7: True, 8: True, -8: True, 9: True, -9: True, 6: False, -6: False}
+
+
+        """
         start = {}
         end = {}
 
@@ -304,12 +370,31 @@ class Encoder:
 
 
 @dataclass
-class Touching:
-    # TODO: docstring
+class TouchingOrCrossing:
+    r"""
+    Base class for touchings and crossings, i.e., representing the moment when
+    a flow connection hits the triangulation.
+    """
+    # The sequential id of this touching or crossing within the "step".
     n: int
+    # The saddle connection which created this touching or crossing.
     step: object
-    vector: object
+    # Whether this crossing is leaving or entering.
+    # At the initial point of a saddle connection, there is a leaving
+    # touching (out: True), then at every actual crossing, there is a pair
+    # of crossings, one entering (out: False) and one leaving. Finally, at
+    # the target of the saddle connection, there is an entering touching.
     out: bool
+
+
+@dataclass
+class Touching(TouchingOrCrossing):
+    r"""
+    A touching of a flow connection and the triangulation, i.e., the moment
+    when flaw connection starts/ends at a vertex.
+    """
+    # The direction of the saddle connection that created this tuoching.
+    vector: object
 
     def __lt__(self, rhs):
         if isinstance(rhs, Crossing):
@@ -326,20 +411,13 @@ class Touching:
 
 
 @dataclass
-class Crossing:
-    # TODO: docstring
-    # The sequential id of this crossing within the "step".
-    n: int
-    # The saddle connection which created this crossing.
-    step: object
+class Crossing(TouchingOrCrossing):
+    r"""
+    A crossing of a flow connection and the triangulation, i.e., the moment
+    when flaw connection crosses over a half edge.
+    """
     # The location of the intersection.
     intersection: object
-    # Whether this crossing is leaving or entering.
-    # At the initial point of a saddle connection, there is a leaving
-    # touching (out: True), then at every actual crossing, there is a pair
-    # of crossings, one entering (out: False) and one leaving. Finally, at
-    # the target of the saddle connection, there is an entering touching.
-    out: bool
 
     def __lt__(self, rhs):
         if isinstance(rhs, Touching):
