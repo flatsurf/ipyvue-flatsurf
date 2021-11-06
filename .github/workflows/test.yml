@@ -10,8 +10,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - sagelib: "9.2"
-            python: "3.9.5"
           - sagelib: "9.3"
             python: "3.9.5"
           - environment: "binder"
