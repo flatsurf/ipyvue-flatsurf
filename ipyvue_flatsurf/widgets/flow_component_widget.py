@@ -1,7 +1,3 @@
-# TODO: We are claiming in an article that gluings.ipynb explains something
-# about (3, 4, 13). We should make sure that that's the case.
-
-
 r"""
 A Jupyter Widget for one or several sage-flatsurf Flow Components.
 
@@ -20,6 +16,26 @@ Typically, this module is not used directly, but the widget created through the
 
     >>> from ipyvue_flatsurf import Widget
     >>> Widget(components)
+    FlowComponentWidget(...)
+
+We can also pull back components through a deformation such as the one that is
+eliminating marked points::
+
+    >>> from flatsurf import polygons, similarity_surfaces, GL2ROrbitClosure
+    >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
+    >>> t = polygons.triangle(1, 1, 1)
+    >>> B = similarity_surfaces.billiard(t)
+    >>> S = B.minimal_cover('translation')
+    >>> deformation = to_pyflatsurf(S).eliminateMarkedPoints()
+    >>> O = GL2ROrbitClosure(deformation.codomain())
+    >>> D = next(O.decompositions(bound=64))
+    >>> components = D.decomposition.components()
+    >>> FlowComponentWidget(components, deformation=deformation.section())
+    FlowComponentWidget(...)
+
+::
+
+    >>> Widget(components, deformation=deformation.section())
     FlowComponentWidget(...)
 
 """
@@ -62,4 +78,4 @@ class FlowComponentWidget(VueFlatsurfWidget):
             triangulation = components[0].decomposition().surface()
         VueFlatsurfWidget.__init__(self, triangulation)
 
-        FlowComponentWidget.flow_components.fset(self, components, deformation)
+        self.set_flow_components(components, deformation)

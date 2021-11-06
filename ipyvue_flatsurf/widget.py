@@ -63,11 +63,15 @@ def Widget(x, *args, **kwargs):
 
     A widget for a flatsurf flow component::
 
-    TODO
+    >>> component = D.decomposition.components()[0]
+    >>> Widget(component)
+    FlowComponentWidget(...)
 
     A widget for a collection of flow components::
 
-    TODO
+    >>> components = D.decomposition.components()
+    >>> Widget(components)
+    FlowComponentWidget(...)
 
     """
     if isinstance(x, TranslationSurface):
@@ -81,6 +85,10 @@ def Widget(x, *args, **kwargs):
     if is_flow_component(x):
         from ipyvue_flatsurf.widgets.flow_component_widget import FlowComponentWidget
         return FlowComponentWidget(x, *args, **kwargs)
+
+    if is_flat_triangulation(x):
+        from ipyvue_flatsurf.widgets.flat_triangulation_widget import FlatTriangulationWidget
+        return FlatTriangulationWidget(x, *args, **kwargs)
 
     if is_iterable(x) and all([is_flow_component(y) for y in x]):
         from ipyvue_flatsurf.widgets.flow_component_widget import FlowComponentWidget
@@ -97,7 +105,7 @@ def is_iterable(x):
     if isinstance(x, Iterable):
         return True
     try:
-        iter(x)
+        next(iter(x))
     except TypeError:
         return False
     return True
@@ -107,7 +115,7 @@ def is_flow_component(x):
     r"""
     Return whether `x` is a flow component.
 
-    TODO: Such methods should go into pyflatsurf instead and be implemented in a sane way.
+    TODO: This method should go into pyflatsurf, see https://github.com/flatsurf/flatsurf/issues/279.
 
     EXAMPLES::
 
@@ -123,6 +131,27 @@ def is_flow_component(x):
 
     """
     return "flatsurf.FlowComponent<" in str(type(x))
+
+
+def is_flat_triangulation(x):
+    r"""
+    Return whether `x` is a flat triangulation.
+
+    TODO: This method should go into pyflatsurf, see https://github.com/flatsurf/flatsurf/issues/279.
+
+    EXAMPLES::
+
+        >>> from flatsurf import translation_surfaces
+        >>> S = translation_surfaces.square_torus()
+        >>> is_flat_triangulation(S)
+        False
+
+        >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
+        >>> is_flat_triangulation(to_pyflatsurf(S))
+        True
+
+    """
+    return "flatsurf.FlatTriangulation<" in str(type(x))
 
 
 TranslationSurface._ipython_display_ = lambda self: Widget(self)._ipython_display_()
