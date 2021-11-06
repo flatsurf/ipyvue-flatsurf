@@ -39,7 +39,7 @@ Binder
 ------
 
 You can try out sage-flatsurf and ipyvue-flatsurf here:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/0.5.1?filepath=%2Fexamples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/0.5.2?filepath=%2Fexamples)
 
 Unfortunately, this environment might take quite a while to start.
 
