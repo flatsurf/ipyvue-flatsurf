@@ -14,7 +14,7 @@ dependencies:
   - ipywidgets
   # Work around https://github.com/flatsurf/ipyvue-flatsurf/issues/38
   - notebook>=6.0.0,<6.3.0
-  - pyflatsurf>=3.9.0,<4
+  - pyflatsurf>=3.9.2,<4
   - matplotlib-base
   - surface-dynamics>=0.4.7
   - sage-flatsurf
