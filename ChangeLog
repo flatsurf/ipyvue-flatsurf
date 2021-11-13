@@ -4,6 +4,16 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.5.3
+====================
+
+**Fixed:**
+
+* Removed the limitation in the "paths" example notebook that intermediate connections cannot be mapped.
+* Fixed a typo in a path construction in the paths example notebook.
+
+
+
 v0.5.2
 ====================
 
