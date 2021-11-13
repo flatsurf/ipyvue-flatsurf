@@ -48,8 +48,8 @@ from ipyvue_flatsurf.widget import Widget
 Widget  # silence pyflakes
 
 
-version_info = (0, 5, 2)
-__version__ = "0.5.2"
+version_info = (0, 5, 3)
+__version__ = "0.5.3"
 
 
 def _jupyter_labextension_paths():

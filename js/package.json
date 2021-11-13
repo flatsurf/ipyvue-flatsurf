@@ -1,6 +1,6 @@
 {
   "name": "ipyvue-flatsurf",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Visualize Flat Surfaces in Jupyter Notebooks and JupyterLab",
   "author": "Julian Rüth",
   "main": "lib/index.js",
