@@ -4,6 +4,15 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.5.4
+====================
+
+**Fixed:**
+
+* Upgrade vue-flatsurf to display disconnected surfaces.
+
+
+
 v0.5.3
 ====================
 
