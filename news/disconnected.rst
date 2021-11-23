@@ -1,3 +1,3 @@
 **Fixed:**
 
-* Upgrade vue-flatsurf to allow display of disconnected surfaces.
+* Upgrade vue-flatsurf to display disconnected surfaces.
