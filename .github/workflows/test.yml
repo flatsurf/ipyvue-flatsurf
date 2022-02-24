@@ -44,4 +44,6 @@ jobs:
       - name: Run Doctests
         shell: bash -l {0}
         run: |
+          # Initialize cppyy once to silence "building pre-compiled headers" message that confuses doctests.
+          python -c 'import cppyy'
           pytest -vv --doctest-modules ipyvue_flatsurf
