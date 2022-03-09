@@ -12,7 +12,7 @@ dependencies:
   - ruamel.yaml
   # ipyvue-flatsurf relies on the availability of Decomposition in
   # flatsurf.geometry.gl2r_orbit_closure which was dropped in 0.4.4
-  - sage-flatsurf >=0.4.0,<0.4.4
+  - sage-flatsurf >=0.4.4,<0.5
   - pip:
     - ipyvue-async >=0.1.0,<0.2
     - ipyvue >=1.5.0,<2

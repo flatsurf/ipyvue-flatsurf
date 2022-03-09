@@ -20,7 +20,7 @@ This module provides an explicit `Widget` command to create a widget::
 # ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
-#        Copyright (C) 2021 Julian Rüth
+#        Copyright (C) 2021-2022 Julian Rüth
 #
 #  ipyvue-flatsurf is free software: you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -37,7 +37,6 @@ This module provides an explicit `Widget` command to create a widget::
 # ********************************************************************
 
 from flatsurf.geometry.translation_surface import TranslationSurface
-from flatsurf.geometry.gl2r_orbit_closure import Decomposition
 
 
 def Widget(x, *args, **kwargs):
@@ -78,7 +77,7 @@ def Widget(x, *args, **kwargs):
         from ipyvue_flatsurf.widgets.translation_surface_widget import TranslationSurfaceWidget
         return TranslationSurfaceWidget(x, *args, **kwargs)
 
-    if isinstance(x, Decomposition):
+    if is_flow_decomposition(x):
         from ipyvue_flatsurf.widgets.flow_decomposition_widget import FlowDecompositionWidget
         return FlowDecompositionWidget(x, *args, **kwargs)
 
@@ -133,6 +132,28 @@ def is_flow_component(x):
     return "flatsurf.FlowComponent<" in str(type(x))
 
 
+def is_flow_decomposition(x):
+    r"""
+    Return whether `x` is a flow decomposition.
+
+    TODO: This method should go into pyflatsurf, see https://github.com/flatsurf/flatsurf/issues/279.
+
+    EXAMPLES::
+
+        >>> from flatsurf import translation_surfaces
+        >>> S = translation_surfaces.square_torus()
+        >>> is_flow_decomposition(S)
+        False
+
+        >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
+        >>> S = to_pyflatsurf(S)
+        >>> is_flow_decomposition(S)
+        False
+
+    """
+    return "flatsurf.FlowDecomposition<" in str(type(x))
+
+
 def is_flat_triangulation(x):
     r"""
     Return whether `x` is a flat triangulation.
@@ -155,4 +176,3 @@ def is_flat_triangulation(x):
 
 
 TranslationSurface._ipython_display_ = lambda self: Widget(self)._ipython_display_()
-Decomposition._ipython_display_ = lambda self: Widget(self)._ipython_display_()
