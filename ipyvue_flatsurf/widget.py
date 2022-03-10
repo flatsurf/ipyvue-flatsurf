@@ -62,13 +62,13 @@ def Widget(x, *args, **kwargs):
 
     A widget for a flatsurf flow component::
 
-    >>> component = D.decomposition.components()[0]
+    >>> component = D.components()[0]
     >>> Widget(component)
     FlowComponentWidget(...)
 
     A widget for a collection of flow components::
 
-    >>> components = D.decomposition.components()
+    >>> components = D.components()
     >>> Widget(components)
     FlowComponentWidget(...)
 

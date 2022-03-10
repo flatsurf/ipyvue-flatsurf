@@ -33,7 +33,7 @@ def encode_path(path):
         >>> S = translation_surfaces.square_torus()
         >>> O = GL2ROrbitClosure(S)
         >>> D = next(O.decompositions(bound=64))
-        >>> component = D.decomposition.components()[0]
+        >>> component = D.components()[0]
         >>> perimeter = component.perimeter()
 
         >>> from pyflatsurf import flatsurf

@@ -33,7 +33,7 @@ def encode_flow_decomposition(decomposition, deformation=None):
         >>> S = translation_surfaces.square_torus()
         >>> O = GL2ROrbitClosure(S)
         >>> D = next(O.decompositions(bound=64))
-        >>> encode_flow_decomposition(D.decomposition)
+        >>> encode_flow_decomposition(D)
         [{'cylinder': True, 'perimeter': [...], 'inside': [1, -1, 2, -2, 3, -3]}]
 
     """

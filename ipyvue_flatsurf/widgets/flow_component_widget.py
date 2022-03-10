@@ -7,7 +7,7 @@ EXAMPLES:
     >>> S = translation_surfaces.square_torus()
     >>> O = GL2ROrbitClosure(S)
     >>> D = next(O.decompositions(bound=64))
-    >>> components = D.decomposition.components()
+    >>> components = D.components()
     >>> FlowComponentWidget(list(components))
     FlowComponentWidget...)
 
@@ -29,7 +29,7 @@ eliminating marked points::
     >>> deformation = to_pyflatsurf(S).eliminateMarkedPoints()
     >>> O = GL2ROrbitClosure(deformation.codomain())
     >>> D = next(O.decompositions(bound=64))
-    >>> components = D.decomposition.components()
+    >>> components = D.components()
     >>> FlowComponentWidget(components, deformation=deformation.section())
     FlowComponentWidget(...)
 
