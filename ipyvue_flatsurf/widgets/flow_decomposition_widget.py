@@ -61,9 +61,6 @@ from ipyvue_flatsurf.widgets.vue_flatsurf_widget import VueFlatsurfWidget
 
 class FlowDecompositionWidget(VueFlatsurfWidget):
     def __init__(self, decomposition, deformation=None):
-        if hasattr(decomposition, "decomposition"):
-            decomposition = decomposition.decomposition
-
         if deformation is not None:
             triangulation = deformation.codomain()
         else:

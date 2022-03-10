@@ -112,7 +112,7 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
             >>> S = translation_surfaces.square_torus()
             >>> O = GL2ROrbitClosure(S)
             >>> D = next(O.decompositions(bound=64))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf import Widget
             >>> W = Widget(S)
@@ -141,7 +141,7 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
 
             >>> from ipyvue_flatsurf import Widget
             >>> W = Widget(S)
-            >>> W.set_flow_components(D.decomposition.components(), deformation.section())
+            >>> W.set_flow_components(D.components(), deformation.section())
 
         """
         flow_components = list(flow_components)

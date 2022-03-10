@@ -34,7 +34,7 @@ def encode_flow_component(component, deformation=None):
         >>> S = translation_surfaces.square_torus()
         >>> O = GL2ROrbitClosure(S)
         >>> D = next(O.decompositions(bound=64))
-        >>> component = D.decomposition.components()[0]
+        >>> component = D.components()[0]
         >>> encode_flow_component(component)
         {'cylinder': True, 'perimeter': [...], 'inside': [1, -1, 2, -2, 3, -3]}
 
@@ -49,7 +49,7 @@ def encode_flow_component(component, deformation=None):
         >>> deformation = to_pyflatsurf(S).eliminateMarkedPoints()
         >>> O = GL2ROrbitClosure(deformation.codomain())
         >>> D = next(O.decompositions(bound=64))
-        >>> component = D.decomposition.components()[0]
+        >>> component = D.components()[0]
         >>> encode_flow_component(component, deformation=deformation.section())
         {'cylinder': True, 'perimeter': [...], 'inside': [1, -1, 3, -3, 4, -4, 6, -6, 7, -7, 8, -8, 9, -9]}
 
@@ -113,7 +113,7 @@ class Encoder:
             >>> S = translation_surfaces.square_torus()
             >>> O = GL2ROrbitClosure(S)
             >>> D = next(O.decompositions(bound=64))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from pyflatsurf import flatsurf
             >>> Encoder(component).touches[flatsurf.HalfEdge(1)]
@@ -124,7 +124,7 @@ class Encoder:
             >>> S = translation_surfaces.mcmullen_L(1, 1, 1, 1)
             >>> O = GL2ROrbitClosure(S)
             >>> D = O.decomposition((1, 0))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
@@ -174,7 +174,7 @@ class Encoder:
             >>> S = translation_surfaces.square_torus()
             >>> O = GL2ROrbitClosure(S)
             >>> D = next(O.decompositions(bound=64))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
@@ -193,7 +193,7 @@ class Encoder:
             >>> deformation = to_pyflatsurf(S).eliminateMarkedPoints()
             >>> O = GL2ROrbitClosure(deformation.codomain())
             >>> D = next(O.decompositions(bound=64))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> encoder = Encoder(component, deformation=deformation.section())
             >>> encoder.perimeter
@@ -237,7 +237,7 @@ class Encoder:
             >>> S = translation_surfaces.square_torus()
             >>> O = GL2ROrbitClosure(S)
             >>> D = next(O.decompositions(bound=64))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
@@ -249,7 +249,7 @@ class Encoder:
             >>> S = translation_surfaces.mcmullen_L(1, 1, 1, 1)
             >>> O = GL2ROrbitClosure(S)
             >>> D = O.decomposition((1, 0))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
@@ -279,7 +279,7 @@ class Encoder:
             >>> S = translation_surfaces.square_torus()
             >>> O = GL2ROrbitClosure(S)
             >>> D = next(O.decompositions(bound=64))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
@@ -291,7 +291,7 @@ class Encoder:
             >>> S = translation_surfaces.mcmullen_L(1, 1, 1, 1)
             >>> O = GL2ROrbitClosure(S)
             >>> D = O.decomposition((1, 0))
-            >>> component = D.decomposition.components()[0]
+            >>> component = D.components()[0]
 
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
