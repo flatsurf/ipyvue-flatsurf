@@ -4,6 +4,15 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.5.5
+====================
+
+**Fixed:**
+
+* Fixed integration with sage-flatsurf 0.4.4
+
+
+
 v0.5.4
 ====================
 
