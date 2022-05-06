@@ -66,10 +66,29 @@ directory:
 
     cd js
     yarn run build
-    cd ..
-    pip install -e . --no-deps # for JupyterLab
 
 You then need to refresh the Notebook/JupyterLab page for the changes to take effect.
+
+To work on vue-flatsurf at the same time, you might want to run `yarn link` in
+`vue-flatsurf/` and then `yarn link vue-flatsurf` in `js/`. When you made
+changes to `vue-flatsurf` you need to build vue-flatsurf and then rebuild in
+`js/` as explained above.
+
+More specifically, when working in Jupyter Lab:
+
+  (cd ../vue-flatsurf && yarn build:es:dev)
+  (cd js && yarn build:labextension:dev)
+
+In the classic notebook do:
+
+  (cd ../vue-flatsurf && yarn build:es:dev)
+  (cd js && yarn build:notebookextension:dev)
+
+To use the [Vue.js
+devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/), you
+should also install [this
+hack](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/) since
+otherwise, Vue won't be detected properly.
 
 How to Cite this Project
 ------------------------

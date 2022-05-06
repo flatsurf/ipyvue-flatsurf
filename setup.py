@@ -1,7 +1,7 @@
 #*********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
-#        Copyright (C) 2021 Julian Rüth
+#        Copyright (C) 2021-2022 Julian Rüth
 #
 #  ipyvue-flatsurf is free software: you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -67,7 +67,13 @@ setup_args = dict(
         'pyflatsurf>=3.9.0,<4',
         'ipyvue-async>=0.1.0,<0.2',
         'jupyter-ui-poll>=0.2.1,<0.3',
-        'ipyvue>=1.5.0,<2',
+        # We can only use versions of ipyvue that bundle the version of vue that
+        # vue-flatsurf was built against. Otherwise, the compiled single file
+        # components might contain render() functions that are not compatible
+        # with the vue version that ipyvue bundles. (So, when upgrading this
+        # pin, make sure to bump the pins in js/package.json as well
+        # accordingly.)
+        'ipyvue>=1.5.0,<=1.7.0',
     ],
     packages=find_packages(),
     zip_safe=False,
