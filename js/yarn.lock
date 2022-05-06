@@ -2595,10 +2595,10 @@ v8-compile-cache@^2.2.0:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vue-flatsurf@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/vue-flatsurf/-/vue-flatsurf-0.10.0.tgz#6d6516a29a0d90cec58eb4969d8fdcf52dce20a7"
-  integrity sha512-81IwPDRIQwMPtBnY9IfpD+tit7OdSMjU/KFa0FWF4/1Z0cZELkVHUZPHMjk40v9gz6+D8+GaiYlBGzBcjJoXtA==
+vue-flatsurf@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/vue-flatsurf/-/vue-flatsurf-0.10.1.tgz#9afc14d5b29ae1f52769dbea3ffc77c621a16d4b"
+  integrity sha512-MTxHPbLDHykRyMng6UJKK1dArLvy+LcuJH/fEyEJr2xDlsVSp7GPy0jJwVZF3OaN5W5tJx+33DQYD5BB19qFmg==
   dependencies:
     "@flatten-js/core" "^1.2.24"
     "@mdi/js" "^6.4.95"
@@ -2608,10 +2608,10 @@ vue-flatsurf@^0.10.0:
     lodash-es "^4.17.15"
     svgo "^2.3.1"
 
-vue@^2.6.10:
-  version "2.6.14"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
-  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
+vue@2.6.10:
+  version "2.6.10"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
 watchpack@^2.2.0:
   version "2.2.0"
