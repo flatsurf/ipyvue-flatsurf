@@ -76,13 +76,13 @@ changes to `vue-flatsurf` you need to build vue-flatsurf and then rebuild in
 
 More specifically, when working in Jupyter Lab:
 
-  (cd ../vue-flatsurf && yarn build:es:dev)
-  (cd js && yarn build:labextension:dev)
+    (cd ../vue-flatsurf && yarn build:es:dev)
+    (cd js && yarn build:labextension:dev)
 
 In the classic notebook do:
 
-  (cd ../vue-flatsurf && yarn build:es:dev)
-  (cd js && yarn build:notebookextension:dev)
+    (cd ../vue-flatsurf && yarn build:es:dev)
+    (cd js && yarn build:notebookextension:dev)
 
 To use the [Vue.js
 devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/), you
