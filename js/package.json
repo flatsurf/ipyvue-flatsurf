@@ -32,10 +32,11 @@
     "watch": "webpack --watch --mode=development"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.0.9",
+    "@jupyterlab/builder": "^4.0.2",
     "rimraf": "^3.0.2",
+    "vue": "2.6.10",
     "webpack": "^5.45.1",
-    "vue": "2.6.10"
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
