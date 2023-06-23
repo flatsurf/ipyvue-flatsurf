@@ -20,7 +20,7 @@ This module provides an explicit `Widget` command to create a widget::
 # ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
-#        Copyright (C) 2021-2022 Julian Rüth
+#        Copyright (C) 2021-2023 Julian Rüth
 #
 #  ipyvue-flatsurf is free software: you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -36,7 +36,9 @@ This module provides an explicit `Widget` command to create a widget::
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
-from flatsurf.geometry.translation_surface import TranslationSurface
+from sage.structure.parent import is_Parent
+from flatsurf.geometry.surface import Surface_base
+from flatsurf.geometry.categories import TranslationSurfaces
 
 
 def Widget(x, *args, **kwargs):
@@ -73,7 +75,7 @@ def Widget(x, *args, **kwargs):
     FlowComponentWidget(...)
 
     """
-    if isinstance(x, TranslationSurface):
+    if is_Parent(x) and x in TranslationSurfaces().FiniteType().WithoutBoundary():
         from ipyvue_flatsurf.widgets.translation_surface_widget import TranslationSurfaceWidget
         return TranslationSurfaceWidget(x, *args, **kwargs)
 
@@ -175,4 +177,5 @@ def is_flat_triangulation(x):
     return "flatsurf.FlatTriangulation<" in str(type(x))
 
 
-TranslationSurface._ipython_display_ = lambda self: Widget(self)._ipython_display_()
+# Surface_base._ipython_display_ = lambda self: Widget(self)._ipython_display_()
+Surface_base._repr_mimebundle_ = lambda self, *args, **kwargs: Widget(self)._repr_mimebundle_(*args, **kwargs)

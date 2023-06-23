@@ -63,7 +63,7 @@ setup_args = dict(
     include_package_data=True,
     install_requires=[
         'ruamel.yaml>=0.17.10,<0.18',
-        'sage-flatsurf>=0.4.4,<0.5',
+        'sage-flatsurf>=0.5,<0.6',
         'pyflatsurf>=3.9.0,<4',
         'ipyvue-async>=0.1.0,<0.2',
         'jupyter-ui-poll>=0.2.1,<0.3',
@@ -93,10 +93,9 @@ setup_args = dict(
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'Topic :: Multimedia :: Graphics',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
 )
 
