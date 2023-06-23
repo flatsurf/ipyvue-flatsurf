@@ -4,6 +4,15 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.5.6
+====================
+
+**Fixed:**
+
+* Fixed pin for vue.js to fix rendering in JupyterLab.
+
+
+
 v0.5.5
 ====================
 
