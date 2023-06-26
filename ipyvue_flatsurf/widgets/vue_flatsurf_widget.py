@@ -4,7 +4,7 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 # ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
-#        Copyright (C) 2021 Julian Rüth
+#        Copyright (C) 2021-2023 Julian Rüth
 #
 #  ipyvue-flatsurf is free software: you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -20,21 +20,28 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
-from ipyvue import VueTemplate
+from ipymuvue.widgets import VueWidget
 from traitlets import Unicode, Any, List, Bool
 from ipywidgets.widgets.widget import widget_serialization
-from ipyvue_async import CommWidget
 
 
-class VueFlatsurfWidget(VueTemplate, CommWidget):
+class VueFlatsurfWidget(VueWidget):
     r"""
     Generic base class for most other widgets to interface with vue-flatsurf's
     Widget component.
     """
 
     def __init__(self, triangulation, action="glue", flow_components=[]):
-        super().__init__()
-        self.template = VueFlatsurfWidget._create_template(*[name[:-len('_prop')] for name in dir(type(self)) if name.endswith("_prop")])
+        super().__init__(template=VueFlatsurfWidget._create_template(*[name[:-len('_prop')] for name in dir(type(self)) if name.endswith("_prop")]),
+            components={
+                "vue-flatsurf-widget": r"""
+<script>
+import { Widget } from "https://unpkg.com/vue-flatsurf@0.11.2/dist/vue-flatsurf.umd.js";
+
+export default Widget;
+</script>"""
+            })
+
         self.triangulation = triangulation
         self.action = action
         self.flow_components = flow_components
