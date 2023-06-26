@@ -16,9 +16,7 @@ dependencies:
   - pyflatsurf>=3.9.2,<4
   - matplotlib-base
   - surface-dynamics>=0.4.7
-  # ipyvue-flatsurf relies on the availability of Decomposition in
-  # flatsurf.geometry.gl2r_orbit_closure which was dropped in 0.4.4
-  - sage-flatsurf >=0.4.4,<0.5
+  - sage-flatsurf >=0.5,<0.6
   - jupytext
   - ruamel.yaml
   - pip

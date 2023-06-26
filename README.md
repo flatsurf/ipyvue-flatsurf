@@ -13,11 +13,7 @@
 <p align="center">Jupyter Widgets for flatsurf</p>
 <hr>
 
-This project provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for translation surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and [flatsurf](https://github.com/flatsurf/flatsurf) and actual visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
-
-There are two related projects in this repository:
-* a Python package [ipyvue-flatsurf](./ipyvue_flatsurf) and
-* the [frontend glue](./js) written in JavaScript which is also called [ipyvue-flatsurf](./js).
+This project provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and actual visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
 
 Note that this project is in an alpha stage. The interface is mostly a proof-of-concept and very likely to change substantially in the future.
 
@@ -60,29 +56,6 @@ When working with the classical notebook:
 When working with JupyterLab:
 
     jupyter labextension develop --overwrite ipyvue_flatsurf
-
-To rebuild the JavaScript code after making changes to anything in the `js/`
-directory:
-
-    cd js
-    yarn run build
-
-You then need to refresh the Notebook/JupyterLab page for the changes to take effect.
-
-To work on vue-flatsurf at the same time, you might want to run `yarn link` in
-`vue-flatsurf/` and then `yarn link vue-flatsurf` in `js/`. When you made
-changes to `vue-flatsurf` you need to build vue-flatsurf and then rebuild in
-`js/` as explained above.
-
-More specifically, when working in Jupyter Lab:
-
-    (cd ../vue-flatsurf && yarn build:es:dev)
-    (cd js && yarn build:labextension:dev)
-
-In the classic notebook do:
-
-    (cd ../vue-flatsurf && yarn build:es:dev)
-    (cd js && yarn build:notebookextension:dev)
 
 To use the [Vue.js
 devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/), you
