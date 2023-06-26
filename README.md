@@ -29,7 +29,7 @@ Otherwise, you can install the dependencies with conda. We recommend to download
     git clone https://github.com/flatsurf/ipyvue-flatsurf.git
     mamba env create -n flatsurf -f ipyvue-flatsurf/binder/environment.yml
     conda activate flatsurf
-    jupyter notebook ipyvue-flatsurf/examples
+    jupyter lab ipyvue-flatsurf/examples
 
 Binder
 ------
@@ -47,14 +47,6 @@ Install a local copy of this package:
     git clone https://github.com/flatsurf/ipyvue-flatsurf.git
     cd ipyvue-flatsurf
     pip install -e .
-
-When working with the classical notebook:
-
-    jupyter nbextension install --py --symlink --overwrite --sys-prefix ipyvue_flatsurf
-    jupyter nbextension enable --py --sys-prefix ipyvue_flatsurf
-
-When working with JupyterLab:
-
     jupyter labextension develop --overwrite ipyvue_flatsurf
 
 To use the [Vue.js
