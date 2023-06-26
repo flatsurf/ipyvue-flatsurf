@@ -23,7 +23,6 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 from ipyvue import VueTemplate
 from traitlets import Unicode, Any, List, Bool
 from ipywidgets.widgets.widget import widget_serialization
-from ipyvue_flatsurf.force_load import force_load
 from ipyvue_async import CommWidget
 
 
@@ -451,8 +450,6 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
         from ipyvue_flatsurf.encoding.saddle_connection_encoding import encode_saddle_connection
         self._saddle_connections = connections
         self.saddle_connections_prop = [VueFlatsurfWidget._to_yaml(encode_saddle_connection(connection)) for connection in connections]
-
-    __force = Any(force_load, read_only=True).tag(sync=True, **widget_serialization)
 
     template = Unicode("").tag(sync=True)
     triangulation_prop = Unicode("").tag(sync=True)
