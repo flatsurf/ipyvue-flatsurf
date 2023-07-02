@@ -252,7 +252,8 @@ export default Widget;
         EXAMPLES::
 
             >>> VueFlatsurfWidget._create_template("triangulation", "snake_case");
-            '<comm :refs="$refs"><vue-flatsurf-widget ref="flatsurf" :triangulation="triangulation_prop" :snake-case="snake_case_prop" /></comm>'
+            '<vue-flatsurf-widget ref="flatsurf" :triangulation="triangulation_prop" :snake-case="snake_case_prop" />'
+
         """
         def kebab(name): return name.replace('_', '-')
         return f"""<vue-flatsurf-widget ref="flatsurf" { " ".join([f':{kebab(prop)}="{prop}_prop"' for prop in props]) } />"""
