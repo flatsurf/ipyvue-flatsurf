@@ -36,7 +36,7 @@ class VueFlatsurfWidget(VueWidget):
             components={
                 "vue-flatsurf-widget": r"""
 <script>
-import { Widget } from "https://unpkg.com/vue-flatsurf@0.11.2/dist/vue-flatsurf.umd.js";
+import { Widget } from "https://unpkg.com/vue-flatsurf@0.12.1/dist/vue-flatsurf.umd.js";
 
 export default Widget;
 </script>"""
@@ -255,7 +255,7 @@ export default Widget;
             '<comm :refs="$refs"><vue-flatsurf-widget ref="flatsurf" :triangulation="triangulation_prop" :snake-case="snake_case_prop" /></comm>'
         """
         def kebab(name): return name.replace('_', '-')
-        return f"""<comm :refs="$refs"><vue-flatsurf-widget ref="flatsurf" { " ".join([f':{kebab(prop)}="{prop}_prop"' for prop in props]) } /></comm>"""
+        return f"""<vue-flatsurf-widget ref="flatsurf" { " ".join([f':{kebab(prop)}="{prop}_prop"' for prop in props]) } />"""
 
     @property
     async def svg(self):
@@ -278,7 +278,7 @@ export default Widget;
 
         """
         import asyncio
-        return await self.poll(self.query("flatsurf", "svg", return_when=asyncio.FIRST_COMPLETED))
+        return await self["flatsurf"].svg(return_when=asyncio.FIRST_COMPLETED)
 
     @property
     async def path(self):
@@ -319,14 +319,14 @@ export default Widget;
 
             import asyncio
 
-            path = await self.poll(self.query("flatsurf", "path", "completed", return_when=asyncio.FIRST_COMPLETED))
+            path = await self["flatsurf"].path("completed", return_when=asyncio.FIRST_COMPLETED)
 
             # TODO: Unfortunately, we have to query explicitly for the layout,
             # see https://github.com/flatsurf/vue-flatsurf/issues/55. Also we
             # cannot be sure that we are getting the layout from the one that
             # gave us the path, see
             # https://github.com/flatsurf/ipyvue-async/issues/1.
-            layout = await self.poll(self.query("flatsurf", "layout", "now", return_when=asyncio.FIRST_COMPLETED))
+            layout = await self["flatsurf"].layout("now", return_when=asyncio.FIRST_COMPLETED)
 
             S = self.triangulation
 
