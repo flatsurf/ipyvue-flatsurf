@@ -3,9 +3,7 @@
 # conda env create -f environment.yml
 name: ipyvue-flatsurf-build
 channels:
-  - flatsurf
   - conda-forge
-  - defaults
 dependencies:
   - pyflatsurf >=3.9.2,<4
   - pytest

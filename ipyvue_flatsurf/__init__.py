@@ -15,12 +15,13 @@ They get called automatically if a cell ends with such an object::
     >>> from flatsurf import translation_surfaces
     >>> S = translation_surfaces.square_torus()
     >>> S
-    TranslationSurface built from 1 polygon
+    Translation Surface in H_1(0) built from a square
 
-Running the above in a Jupyter notebook calls the `_ipython_display_` hook and
+Running the above in a Jupyter notebook calls the `_repr_mimebundle_` hook and
 displays an actual widget instead::
 
-    >>> S._ipython_display_()
+    >>> S._repr_mimebundle_()
+    Output()
     {...}
 
 """

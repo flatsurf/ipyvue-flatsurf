@@ -4,7 +4,7 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 # ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
-#        Copyright (C) 2021 Julian Rüth
+#        Copyright (C) 2021-2023 Julian Rüth
 #
 #  ipyvue-flatsurf is free software: you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -20,22 +20,28 @@ A generic base class interfacing with the vue_flatsurf frontend widgets.
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
-from ipyvue import VueTemplate
+from ipymuvue.widgets import VueWidget
 from traitlets import Unicode, Any, List, Bool
 from ipywidgets.widgets.widget import widget_serialization
-from ipyvue_flatsurf.force_load import force_load
-from ipyvue_async import CommWidget
 
 
-class VueFlatsurfWidget(VueTemplate, CommWidget):
+class VueFlatsurfWidget(VueWidget):
     r"""
     Generic base class for most other widgets to interface with vue-flatsurf's
     Widget component.
     """
 
     def __init__(self, triangulation, action="glue", flow_components=[]):
-        super().__init__()
-        self.template = VueFlatsurfWidget._create_template(*[name[:-len('_prop')] for name in dir(type(self)) if name.endswith("_prop")])
+        super().__init__(template=VueFlatsurfWidget._create_template(*[name[:-len('_prop')] for name in dir(type(self)) if name.endswith("_prop")]),
+            components={
+                "vue-flatsurf-widget": r"""
+<script>
+import { Widget } from "https://unpkg.com/vue-flatsurf@0.12.1/dist/vue-flatsurf.umd.js";
+
+export default Widget;
+</script>"""
+            })
+
         self.triangulation = triangulation
         self.action = action
         self.flow_components = flow_components
@@ -246,10 +252,11 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
         EXAMPLES::
 
             >>> VueFlatsurfWidget._create_template("triangulation", "snake_case");
-            '<comm :refs="$refs"><vue-flatsurf-widget ref="flatsurf" :triangulation="triangulation_prop" :snake-case="snake_case_prop" /></comm>'
+            '<vue-flatsurf-widget ref="flatsurf" :triangulation="triangulation_prop" :snake-case="snake_case_prop" />'
+
         """
         def kebab(name): return name.replace('_', '-')
-        return f"""<comm :refs="$refs"><vue-flatsurf-widget ref="flatsurf" { " ".join([f':{kebab(prop)}="{prop}_prop"' for prop in props]) } /></comm>"""
+        return f"""<vue-flatsurf-widget ref="flatsurf" { " ".join([f':{kebab(prop)}="{prop}_prop"' for prop in props]) } />"""
 
     @property
     async def svg(self):
@@ -272,7 +279,7 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
 
         """
         import asyncio
-        return await self.poll(self.query("flatsurf", "svg", return_when=asyncio.FIRST_COMPLETED))
+        return await self["flatsurf"].svg(return_when=asyncio.FIRST_COMPLETED)
 
     @property
     async def path(self):
@@ -313,14 +320,14 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
 
             import asyncio
 
-            path = await self.poll(self.query("flatsurf", "path", "completed", return_when=asyncio.FIRST_COMPLETED))
+            path = await self["flatsurf"].path("completed", return_when=asyncio.FIRST_COMPLETED)
 
             # TODO: Unfortunately, we have to query explicitly for the layout,
             # see https://github.com/flatsurf/vue-flatsurf/issues/55. Also we
             # cannot be sure that we are getting the layout from the one that
             # gave us the path, see
             # https://github.com/flatsurf/ipyvue-async/issues/1.
-            layout = await self.poll(self.query("flatsurf", "layout", "now", return_when=asyncio.FIRST_COMPLETED))
+            layout = await self["flatsurf"].layout("now", return_when=asyncio.FIRST_COMPLETED)
 
             S = self.triangulation
 
@@ -451,8 +458,6 @@ class VueFlatsurfWidget(VueTemplate, CommWidget):
         from ipyvue_flatsurf.encoding.saddle_connection_encoding import encode_saddle_connection
         self._saddle_connections = connections
         self.saddle_connections_prop = [VueFlatsurfWidget._to_yaml(encode_saddle_connection(connection)) for connection in connections]
-
-    __force = Any(force_load, read_only=True).tag(sync=True, **widget_serialization)
 
     template = Unicode("").tag(sync=True)
     triangulation_prop = Unicode("").tag(sync=True)
