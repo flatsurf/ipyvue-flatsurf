@@ -4,7 +4,6 @@
 name: ipyvue-flatsurf-build
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - pyflatsurf >=3.9.2,<4
   - pytest
