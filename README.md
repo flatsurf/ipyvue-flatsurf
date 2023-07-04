@@ -13,7 +13,7 @@
 <p align="center">Jupyter Widgets for flatsurf</p>
 <hr>
 
-This project provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotiens and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and actual visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
+This project provides Jupyter Widgets for the [flatsurf suite](https://flatsurf.github.io). In particular it provides interactive widgets for surfaces from [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their quotients and flow decompositions. Behind the scenes, this project provides the glue between the mathematical objects of [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf) and their visualization in the browser which is implemented in [vue-flatsurf](https://github.com/flatsurf/vue-flatsurf).
 
 Note that this project is in an alpha stage. The interface is mostly a proof-of-concept and very likely to change substantially in the future.
 
@@ -34,10 +34,10 @@ Otherwise, you can install the dependencies with conda. We recommend to download
 Binder
 ------
 
-You can try out sage-flatsurf and ipyvue-flatsurf here:
+You can try out sage-flatsurf and ipyvue-flatsurf online using Binder:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/0.5.6?filepath=%2Fexamples)
 
-Unfortunately, this environment might take quite a while to start.
+Unfortunately, the Binder environment might take quite a while to start.
 
 Development
 -----------
@@ -58,7 +58,7 @@ otherwise, Vue won't be detected properly.
 How to Cite this Project
 ------------------------
 
-If you have used this project in the preparation of a publication, please cite it as described on our [zenodo page](https://doi.org/10.5281/zenodo.5208761).
+If you have used this project in the preparation of a publication, please cite it as described on our [Zenodo page](https://doi.org/10.5281/zenodo.5208761).
 
 Acknowledgements
 ----------------
