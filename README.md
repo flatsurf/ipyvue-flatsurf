@@ -35,7 +35,7 @@ Binder
 ------
 
 You can try out sage-flatsurf and ipyvue-flatsurf online using Binder:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/0.5.6?filepath=%2Fexamples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/0.6.0?filepath=%2Fexamples)
 
 Unfortunately, the Binder environment might take quite a while to start.
 
