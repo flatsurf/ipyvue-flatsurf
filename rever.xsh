@@ -22,7 +22,6 @@ $ACTIVITIES = [
 $VERSION_BUMP_PATTERNS = [
     ('ipyvue_flatsurf/__init__.py', r'__version__ = ', r'__version__ = "$VERSION"'),
     ('ipyvue_flatsurf/__init__.py', r'version_info =', f'version_info = {tuple(int(x) for x in $VERSION.split("."))}'),
-    ('js/package.json', r'  "version": ', r'  "version": "$VERSION",'),
     ('setup.py', r'    version=', r'    version="$VERSION",'),
     ('README.md', r'\[!\[Binder\]\(https://mybinder.org/badge_logo.svg\)\]\(https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/', r'[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/$VERSION?filepath=%2Fexamples)'),
     ('binder/environment.yml', '    - ipyvue-flatsurf==', '    - ipyvue-flatsurf==$VERSION'),
