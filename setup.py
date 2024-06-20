@@ -46,7 +46,7 @@ setup_args = dict(
         'sage-flatsurf>=0.5,<0.6',
         'pyflatsurf>=3.9.0,<4',
         'jupyter-ui-poll>=0.2.1,<0.3',
-        'ipymuvue>=0.3.0,<0.4.0',
+        'ipymuvue>=0.3.0,<0.7.0',
     ],
     packages=find_packages(),
     zip_safe=False,
@@ -65,9 +65,10 @@ setup_args = dict(
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'Topic :: Multimedia :: Graphics',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ],
 )
 

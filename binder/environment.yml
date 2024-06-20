@@ -22,5 +22,5 @@ dependencies:
   - pip:
     - flipper
     - jupyter_ui_poll >=0.2.1,<0.3
-    - ipymuvue >=0.3.0,<0.4.0
+    - ipymuvue >=0.3.0,<0.7.0
     - ipyvue-flatsurf==0.6.0
