@@ -2,9 +2,6 @@
 branch=$(git branch --show-current)
 if branch.strip() != "master":
   raise Exception("You must be on the master branch to release.")
-# and that it is up to date with origin/master
-git fetch https://github.com/flatsurf/ipyvue-flatsurf.git
-git reset FETCH_HEAD
 git diff --exit-code
 git diff --cached --exit-code
 
@@ -21,7 +18,7 @@ $ACTIVITIES = [
 
 $VERSION_BUMP_PATTERNS = [
     ('ipyvue_flatsurf/__init__.py', r'__version__ = ', r'__version__ = "$VERSION"'),
-    ('ipyvue_flatsurf/__init__.py', r'version_info =', f'version_info = {tuple(int(x) for x in $VERSION.split("."))}'),
+    ('ipyvue_flatsurf/__init__.py', r'version_info =', f'version_info = ' + str(tuple(int(x) for x in $VERSION.split(".")))),
     ('setup.py', r'    version=', r'    version="$VERSION",'),
     ('README.md', r'\[!\[Binder\]\(https://mybinder.org/badge_logo.svg\)\]\(https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/', r'[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/$VERSION?filepath=%2Fexamples)'),
     ('binder/environment.yml', '    - ipyvue-flatsurf==', '    - ipyvue-flatsurf==$VERSION'),
