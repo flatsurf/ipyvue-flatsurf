@@ -46,7 +46,7 @@ setup_args = dict(
         'sage-flatsurf>=0.5,<0.6',
         'pyflatsurf>=3.9.0,<4',
         'jupyter-ui-poll>=0.2.1,<0.3',
-        'ipymuvue>=0.3.0,<0.4.0',
+        'ipymuvue>=0.3.0,<0.7.0',
     ],
     packages=find_packages(),
     zip_safe=False,

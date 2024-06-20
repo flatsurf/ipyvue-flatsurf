@@ -5,13 +5,21 @@ name: ipyvue-flatsurf-build
 channels:
   - conda-forge
 dependencies:
-  - pyflatsurf >=3.9.2,<4
-  - pytest
+  # functools.cache requires Python 3.9
+  - python=3.9
+  - sagelib
+  - sympy
+  - scipy
+  - ipywidgets
+  - jupyterlab
+  - pyflatsurf>=3.9.2,<4
+  - matplotlib-base
+  - surface-dynamics>=0.4.7
+  - sage-flatsurf >=0.5,<0.6
+  - jupytext
   - ruamel.yaml
-  # ipyvue-flatsurf relies on the availability of Decomposition in
-  # flatsurf.geometry.gl2r_orbit_closure which was dropped in 0.4.4
-  - sage-flatsurf >=0.4.4,<0.5
+  - pip
   - pip:
-    - ipyvue-async >=0.1.0,<0.2
-    - ipyvue >=1.5.0,<2
+    - flipper
     - jupyter_ui_poll >=0.2.1,<0.3
+    - ipymuvue >=0.3.0,<0.7.0
