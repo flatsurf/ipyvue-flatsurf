@@ -4,6 +4,15 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.6.1
+====================
+
+**Fixed:**
+
+* Fixed package dependencies in `environment.yml` for development.
+
+
+
 v0.6.0
 ====================
 
