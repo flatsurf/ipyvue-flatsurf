@@ -1,7 +1,7 @@
 # ********************************************************************
 #  This file is part of ipyvue-flatsurf.
 #
-#        Copyright (C) 2021-2023 Julian Rüth
+#        Copyright (C) 2021-2024 Julian Rüth
 #
 #  ipyvue-flatsurf is free software: you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -43,7 +43,7 @@ setup_args = dict(
     include_package_data=True,
     install_requires=[
         'ruamel.yaml>=0.17.10,<0.18',
-        'sage-flatsurf>=0.5,<0.6',
+        'sage-flatsurf>=0.5,<0.7',
         'pyflatsurf>=3.9.0,<4',
         'jupyter-ui-poll>=0.2.1,<0.3',
         'ipymuvue>=0.3.0,<0.7.0',
