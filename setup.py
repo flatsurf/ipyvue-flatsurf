@@ -37,7 +37,7 @@ data_files_spec = [
 
 setup_args = dict(
     name='ipyvue-flatsurf',
-    version="0.6.2",
+    version="0.6.3",
     description='Visualizations for Translations Surfaces in Jupyter Notebooks and JupyterLab',
     long_description='Visualizations for sage-flatsurf and pyflatsurf.',
     include_package_data=True,
