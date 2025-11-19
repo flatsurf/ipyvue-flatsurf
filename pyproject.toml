@@ -1,3 +1,67 @@
+[project]
+name = "ipyvue-flatsurf"
+version = "0.6.3"
+description = "Visualizations for Translations Surfaces in Jupyter Notebooks and JupyterLab"
+readme = "README.md"
+classifiers = [
+  'Development Status :: 4 - Beta',
+  'Framework :: IPython',
+  'Intended Audience :: Developers',
+  'Intended Audience :: Science/Research',
+  'Topic :: Multimedia :: Graphics',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+]
+keywords = [
+  'ipython',
+  'jupyter',
+  'widgets',
+]
+authors = [
+  { name = "Julian Rüth", email = "julian.rueth@fsfe.org" },
+]
+dependencies = [
+  'ruamel.yaml>=0.17.10,<0.19',
+  'sage-flatsurf>=0.5,<0.9',
+  'pyflatsurf>=3.9.0,<4',
+  'jupyter-ui-poll>=0.2.1,<0.3',
+  'ipymuvue>=0.3.0,<0.7.0',
+]
+
+[project.urls]
+Homepage = "https://github.com/flatsurf/ipyvue-flatsurf"
+Repository = "https://github.com/flatsurf/ipyvue-flatsurf.git"
+Issues = "https://github.com/flatsurf/ipyvue-flatsurf/issues"
+Changelog = "https://github.com/flatsurf/ipyvue-flatsurf/blob/master/ChangeLog"
+
 [build-system]
-requires = ["jupyter_packaging~=0.7.9", "jupyterlab>=3.0.0,==3.*", "setuptools>=40.8.0", "wheel"]
+requires = [
+  "jupyter_packaging~=0.7.9",
+  "jupyterlab>=3.0.0,==3.*",
+  "setuptools>=40.8.0",
+  "wheel"
+]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["ipyvue_flatsurf", "ipyvue_flatsurf.widgets", "ipyvue_flatsurf.encoding"]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64"]
+
+[tool.pixi.dependencies]
+"ruamel.yaml" = "*"
+sage-flatsurf = "*"
+pyflatsurf = "*"
+jupyter-ui-poll = ">=0.2.1,<0.3"
+jupyterlab = "*"
+pytest = "*"
+
+[tool.pixi.pypi-dependencies]
+ipyvue-flatsurf = { path = ".", editable = true }
+
+[tool.pixi.tasks.test]
+cmd = "pytest -vv --doctest-modules ipyvue_flatsurf"

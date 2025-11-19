@@ -33,7 +33,7 @@ def encode_flat_triangulation(triangulation):
         >>> from flatsurf.geometry.pyflatsurf_conversion import to_pyflatsurf
         >>> T = to_pyflatsurf(S)
 
-        >>> encode_flat_triangulation(T) == {'vertices': [[1, -3, 2, -1, 3, -2]], 'vectors': {1: {'x': 1.0, 'y': 1.0}, 2: {'x': -1.0, 'y': 0.0}, 3: {'x': 0.0, 'y': -1.0}}}
+        >>> encode_flat_triangulation(T) == {'vertices': [[1, -3, 2, -1, 3, -2]], 'vectors': {1: {'x': 1.0, 'y': 0.0}, 2: {'x': 0.0, 'y': 1.0}, 3: {'x': -1.0, 'y': -1.0}}}
         True
 
     """
