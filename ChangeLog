@@ -4,6 +4,20 @@ ipyvue-flatsurf Change Log
 
 .. current developments
 
+v0.6.4
+====================
+
+**Changed:**
+
+* Changed developer and CI setup to use pixi instead of conda directly.
+
+**Fixed:**
+
+* Fixed compatibility with sage-flatsurf 0.8.*
+* Fixed deprecation warnings
+
+
+
 v0.6.3
 ====================
 
