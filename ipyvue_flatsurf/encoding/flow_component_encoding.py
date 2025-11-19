@@ -117,7 +117,7 @@ class Encoder:
 
             >>> from pyflatsurf import flatsurf
             >>> Encoder(component).touches[flatsurf.HalfEdge(1)]
-            [Touching(n=1, step=1, out=True, vector=(1, 1)), Touching(n=2, step=-1, out=False, vector=(1, 1))]
+            [Touching(n=1, step=1, out=True, vector=(1, 0)), Touching(n=2, step=-1, out=False, vector=(1, 0))]
 
         ::
 
@@ -129,7 +129,7 @@ class Encoder:
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
             >>> encoder.touches[flatsurf.HalfEdge(1)]
-            [Touching(n=1, step=1, out=True, vector=(1, 1)), Touching(n=2, step=-1, out=False, vector=(1, 1))]
+            [Touching(n=2, step=-1, out=False, vector=(1, 0))]
 
 
         """
@@ -254,7 +254,7 @@ class Encoder:
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
             >>> encoder.perimeter
-            [-1, 4, 9, 1, 2, -9]
+            [-4, -8, 4, -1]
 
 
         """
@@ -296,9 +296,9 @@ class Encoder:
             >>> from ipyvue_flatsurf.encoding.flow_component_encoding import Encoder
             >>> encoder = Encoder(component)
             >>> encoder.in_component[0]
-            {-1: False, 1: False, 2: False, -2: True, 4: False, -4: True, 6: True, -6: True, -7: True, 7: True, 3: False, -3: False, 9: False, 8: False, -8: False, -5: False, -9: False, 5: False}
+            {1: True, -1: False, -2: True, 2: True, -3: True, 3: True, -4: False, 4: False, 6: True, -6: True, 7: True, -7: True, 8: True, -8: False, -9: True, 9: True, 5: False, -5: False}
             >>> encoder.in_component[1]
-            {1: False, -1: False, 2: False, -2: True, 4: False, -4: True, 6: True, -6: True, 7: True, -7: True, 3: False, -3: False, 9: False, 8: False, -8: False, -5: False, -9: False, 5: False}
+            {1: True, -1: False, 2: True, -2: True, 3: True, -3: True, 4: False, -4: False, 6: True, -6: True, 7: True, -7: True, 8: True, -8: False, 9: True, -9: True, 5: False, -5: False}
 
 
         """

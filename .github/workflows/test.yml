@@ -10,49 +10,16 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash -el {0}
+    runs-on: "${{ matrix.on }}"
     strategy:
       matrix:
-        include:
-          - sagelib: "10.0"
-            python: "3.11.8"
-          - sagelib: "10.1"
-            python: "3.11.8"
-          - sagelib: "10.2"
-            python: "3.11.8"
-          - sagelib: "10.3"
-            python: "3.11.8"
-          - environment: "binder"
-            # Default Python version for binder:
-            # https://github.com/jupyterhub/repo2docker/blob/main/repo2docker/buildpacks/conda/environment.yml
-            python: "3.10"
+        # Use macos-13 to run on osx-64
+        on: ["macos-13", "macos-14", "ubuntu-24.04"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
-        with: { miniforge-variant: "Mambaforge", miniforge-version: "latest", python-version: "${{ matrix.python }}" }
-      - name: Install Dependencies
-        run: |
-          mamba install -n test sagelib=${{ matrix.sagelib }}
-          echo "sagelib ==${{ matrix.sagelib }}" >> $CONDA_PREFIX/conda-meta/pinned
-          mamba env update --quiet -n test -f environment.yml
-          conda list
-        if: ${{ matrix.environment != 'binder' }}
-      - name: Create binder environment
-        run: |
-          wget -O repo2docker.yml https://github.com/jupyterhub/repo2docker/raw/main/repo2docker/buildpacks/conda/environment.yml
-          mamba install -n test --quiet -y pytest pytest-xdist
-          mamba env update -n test --quiet -f repo2docker.yml
-          mamba env update -n test --quiet -f binder/environment.yml
-          conda list
-        if: ${{ matrix.environment == 'binder' }}
-      - name: Install ipyvue-flatsurf
-        run: |
-          pip install -e .
+      - uses: actions/checkout@v5
+      - uses: prefix-dev/setup-pixi@v0.9.0
       - name: Run Doctests
         run: |
-          # Initialize cppyy once to silence "building pre-compiled headers" message that confuses doctests.
-          python -c 'import cppyy'
-          pytest -vv --doctest-modules ipyvue_flatsurf
+          # Silence spurious output during tests
+          pixi run python -c 'import cppyy'
+          pixi run test

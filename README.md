@@ -24,21 +24,6 @@ If you already have [sage-flatsurf](https://github.com/flatsurf/sage-flatsurf) a
 
     pip install ipyvue-flatsurf
 
-Otherwise, you can install the dependencies with conda. We recommend to download and install [mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
-
-    git clone https://github.com/flatsurf/ipyvue-flatsurf.git
-    mamba env create -n flatsurf -f ipyvue-flatsurf/binder/environment.yml
-    conda activate flatsurf
-    jupyter lab ipyvue-flatsurf/examples
-
-Binder
-------
-
-You can try out sage-flatsurf and ipyvue-flatsurf online using Binder:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/flatsurf/ipyvue-flatsurf/0.6.3?filepath=%2Fexamples)
-
-Unfortunately, the Binder environment might take quite a while to start.
-
 Development
 -----------
 
@@ -46,8 +31,7 @@ Install a local copy of this package:
 
     git clone https://github.com/flatsurf/ipyvue-flatsurf.git
     cd ipyvue-flatsurf
-    pip install -e .
-    jupyter labextension develop --overwrite ipyvue_flatsurf
+    pixi run jupyter lab  # to explore the examples/
 
 To use the [Vue.js
 devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/), you

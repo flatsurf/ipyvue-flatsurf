@@ -34,7 +34,7 @@ def encode_saddle_connection(connection):
         >>> T = to_pyflatsurf(S)
         >>> connection = next(iter(T.connections()))
         >>> encode_saddle_connection(connection)
-        {'source': 1, 'target': -1, 'vector': {'x': 1.0, 'y': 1.0}, 'crossings': []}
+        {'source': 1, 'target': -1, 'vector': {'x': 1.0, 'y': 0.0}, 'crossings': []}
 
     """
     return {
