@@ -3775,7 +3775,7 @@ packages:
 - pypi: ./
   name: ipyvue-flatsurf
   version: 0.6.3
-  sha256: 6f07adec46cfaac78c185d90b8fba871a33c8d60ef90921aa82d35b32f97da8c
+  sha256: 2bf30149a7cf1a1c3f8fade2d1e6cdea4eecd15aa937eb197f3d3ada7c382f15
   requires_dist:
   - ruamel-yaml>=0.17.10,<0.19
   - sage-flatsurf>=0.5,<0.9
