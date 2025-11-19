@@ -38,8 +38,6 @@ Changelog = "https://github.com/flatsurf/ipyvue-flatsurf/blob/master/ChangeLog"
 
 [build-system]
 requires = [
-  "jupyter_packaging~=0.7.9",
-  "jupyterlab>=3.0.0,==3.*",
   "setuptools>=40.8.0",
   "wheel"
 ]

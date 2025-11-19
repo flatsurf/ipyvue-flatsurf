@@ -3830,8 +3830,8 @@ packages:
   timestamp: 1748711175284
 - pypi: ./
   name: ipyvue-flatsurf
-  version: 0.6.3
-  sha256: 6b31da6a50ee829e63ef61a3f35b4e74e1deef695fb28f072b8fee891ae0e4ea
+  version: 0.6.4
+  sha256: de3c92b077d39ae9a49e8127a88fd4f09a933b1e315c5c99e82a32b1ee462ce1
   requires_dist:
   - ruamel-yaml>=0.17.10,<0.19
   - sage-flatsurf>=0.5,<0.9
