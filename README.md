@@ -24,13 +24,6 @@ If you already have [sage-flatsurf](https://github.com/flatsurf/sage-flatsurf) a
 
     pip install ipyvue-flatsurf
 
-Otherwise, you can install the dependencies with conda. We recommend to download and install [mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
-
-    git clone https://github.com/flatsurf/ipyvue-flatsurf.git
-    mamba env create -n flatsurf -f ipyvue-flatsurf/binder/environment.yml
-    conda activate flatsurf
-    jupyter lab ipyvue-flatsurf/examples
-
 Development
 -----------
 

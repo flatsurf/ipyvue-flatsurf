@@ -36,7 +36,7 @@ This module provides an explicit `Widget` command to create a widget::
 #  ipyvue-flatsurf. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
-from sage.structure.parent import is_Parent
+from sage.structure.parent import Parent
 from flatsurf.geometry.surface import Surface_base
 from flatsurf.geometry.categories import TranslationSurfaces
 
@@ -75,7 +75,7 @@ def Widget(x, *args, **kwargs):
     FlowComponentWidget(...)
 
     """
-    if is_Parent(x) and x in TranslationSurfaces().FiniteType().WithoutBoundary():
+    if isinstance(x, Parent) and x in TranslationSurfaces().FiniteType().WithoutBoundary():
         from ipyvue_flatsurf.widgets.translation_surface_widget import TranslationSurfaceWidget
         return TranslationSurfaceWidget(x, *args, **kwargs)
 
