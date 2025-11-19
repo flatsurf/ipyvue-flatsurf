@@ -1,6 +1,6 @@
 [project]
 name = "ipyvue-flatsurf"
-version = "0.6.3"
+version = "0.6.4"
 description = "Visualizations for Translations Surfaces in Jupyter Notebooks and JupyterLab"
 readme = "README.md"
 classifiers = [
